@@ -1,19 +1,36 @@
-name: Build React app CI
+name: Build React application CI
+
 on: [push]
+
 jobs:
-    install-dependencies:
-      runs-on: ubuntu-latest
+  install-dependencies:
+    runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v4
-        - name: Use Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: '18.x'
-        - uses: actions/cache@v3
-          with:
-            key: ${{ runner.os }}-build-dependencies-${{ hashFiles('**/package-lock.json') }}
-            path: |
-              ./node-modules
-        - run: npm install
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+      - uses: actions/cache@v3
+        with:
+          key: ${{ runner.os }}-build-dependencies-${{ hashFiles('**/package-lock.json') }}
+          path: |
+            ./node_modules
+      - run: npm install
 
+  check-linter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+      - uses: actions/cache@v3
+        with:
+          key: ${{ runner.os }}-build-dependencies-${{ hashFiles('**/package-lock.json') }}
+          path: |
+            ./node_modules
+      - run: npm run lint
