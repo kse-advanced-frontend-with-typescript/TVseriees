@@ -1,0 +1,29 @@
+.menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.line{
+    background-color: #00161C;
+    width:4.5rem;
+    height: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+}
+
+.menu-component{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+
+}
+
+.menu-text{
+    font-size: 1.8rem;
+    font-weight: bold;
+    font-family: "Joti One", serif;
+    color: #00161C;
+}
