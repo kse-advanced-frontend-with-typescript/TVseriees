@@ -1,10 +1,10 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {MenuButton} from '../Components/MenuButton/MenuButton';
+import {Footer} from "../Components/Footer/Footer";
 
-const meta : Meta<typeof  MenuButton>={
-    component: MenuButton,
-    title: 'MenuButton',
+const meta : Meta<typeof  Footer>={
+    component: Footer,
+    title: 'Footer',
     tags: ['autodocs']
 
 };

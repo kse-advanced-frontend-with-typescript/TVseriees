@@ -6,8 +6,12 @@
     height: 2.6rem;
     border-radius: 10%;
     text-shadow: 1px 1px 2px #040d17;
-
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    font-size: 1.2rem;
+    box-sizing: content-box;
 }
+
 .log-in{
     background-color: #ADE0F0;
     border: 0.3rem solid #338AA4;
@@ -16,4 +20,10 @@
 .sign-in{
     background-color: #0B3B4A;
     border: 0.6rem solid #00161C;
+}
+
+.button:hover{
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px 4px rgba(0, 0, 0, 0.4);
+
 }

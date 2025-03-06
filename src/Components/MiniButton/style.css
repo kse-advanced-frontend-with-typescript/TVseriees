@@ -1,0 +1,16 @@
+.mini-button {
+    width: 2rem;
+    height: 2.5rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+}
+
+
+.mini-button img:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 3px #01090c);
+
+}

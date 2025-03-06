@@ -1,11 +1,11 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {SLButton} from '../SignLogInButton/SLButton';
+import {SLButton} from '../Components/SignLogInButton/SLButton';
 
 
 const meta : Meta<typeof  SLButton>={
     component: SLButton,
-    title: 'Example/SLButtons',
+    title: 'SLButtons',
     tags: ['autodocs']
 
 };

@@ -2,13 +2,13 @@ import type {Meta, StoryObj} from '@storybook/react';
 import React from 'react';
 import styles from '../main.css';
 import {Title} from '../Components/Title/Title';
-import {MenuButton} from '../MenuButton/MenuButton';
-import {MiniButton} from '../MiniButton/MiniButton';
-import {SLButton} from '../SignLogInButton/SLButton';
+import {MenuButton} from '../Components/MenuButton/MenuButton';
+import {MiniButton} from '../Components/MiniButton/MiniButton';
+import {SLButton} from '../Components/SignLogInButton/SLButton';
 import search from '../../images/search.png';
 const meta : Meta<typeof  Title>={
     component: Title,
-    title: 'Example/Title',
+    title: 'Title',
     tags: ['autodocs']
 
 };
@@ -21,9 +21,9 @@ export const Primary: Story ={
         return (
             <Title>
                 <MenuButton/>
-                <h1 className={styles.title}>Title</h1>
+                <h1>Mooovieeess</h1>
                 <div className={styles.headerButtons}>
-                    <MiniButton imagePath={search}/>
+                    <MiniButton topic='search' size='medium'/>
                     <SLButton type={'log'}/>
                     <SLButton type={'sign'}/>
                 </div>

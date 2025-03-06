@@ -5,11 +5,10 @@ body{
     background-color: #00161C;
 }
 
-.title{
-    font-size: 3.5rem;
-}
+
 
 .header-buttons {
     display: flex;
     gap: 1rem;
+    align-items: center;
 }
