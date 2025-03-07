@@ -6,6 +6,7 @@ import star from './icons/star.png';
 import vote from './icons/vote.png';
 import call from './icons/call.png';
 import envelope from './icons/envelope.png';
+import cross from './icons/cross.png';
 
 import classNames from 'classnames';
 
@@ -22,13 +23,14 @@ export const Icon: React.FC<IconProps> = ({topic, size})=>{
             case 'vote': return vote;
             case 'envelope': return envelope;
             case 'call': return call;
+            case 'cross': return cross;
         }
     };
     return (
         <img
             className={classNames({
                 [styles.mini]: size === 'mini',
-                [styles.medium]: size === 'medium'
+                [styles.medium]: size === 'medium',
             })}
             src={getSource()}
             alt={`${topic} icon`}

@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {MenuButton} from '../Components/MenuButton/MenuButton';
+import {MenuButton, links} from '../Components/MenuButton/MenuButton';
 
 const meta : Meta<typeof  MenuButton>={
     component: MenuButton,
@@ -11,4 +11,8 @@ const meta : Meta<typeof  MenuButton>={
 
 export default meta;
 type Story = StoryObj<typeof meta>
-export const Primary: Story ={};
+export const Primary: Story ={
+    args:{
+        links: links
+    }
+};

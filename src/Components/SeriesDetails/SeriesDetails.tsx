@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './style.css';
 import {Rating} from '../Rating/Rating';
 
-export type SeriesDetailsProps = {
+type SeriesDetailsProps = {
     episode_run_time: number,
     first_air_date: string,
     created_by: string[],

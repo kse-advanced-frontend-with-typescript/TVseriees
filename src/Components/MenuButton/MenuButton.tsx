@@ -1,16 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './style.css';
+import {MenuExteded} from '../MenuExtended/MenuExtended';
+export const links: string[] = [ 'top-rated',
+    'on the air in the next 7 days',
+    'popular',
+    'to-watch',
+    'watched',
+    'favorite'];
 
-
-export const MenuButton: React.FC = ()=>{
-    return <button className={styles.menuComponent}>
+export const MenuButton: React.FC<{links: string[]}> = ({links})=>{
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
+    return <><button className={styles.menuComponent} onClick={()=>setIsMenuOpen(true)}>
         <div className={styles.menu}>
             <Line/>
             <Line/>
             <Line/>
         </div>
     <p className={styles.menuText}>Menu</p>
-    </button>;
+    </button>
+    {isMenuOpen && <MenuExteded links={links} onClose={()=>setIsMenuOpen(false)}/>}
+    </>;
 };
 
 const Line: React.FC = ()=>{
