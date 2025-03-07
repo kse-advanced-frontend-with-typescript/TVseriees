@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from './style.css';
 
-type MovieCardProps={
+type SeriesCardProps ={
     imagePath: string,
     name: string,
     year: number
 }
 
-export const MovieCard: React.FC<MovieCardProps> = ({imagePath, name, year})=>{
-    return <div className={styles.movieCard}>
+export const SeriesCard: React.FC<SeriesCardProps> = ({imagePath, name, year})=>{
+    return <div className={styles.seriesCard}>
         <img src={imagePath} alt={name + ' image'}/>
         <h3 >{name}</h3>
         <p>{year}</p>

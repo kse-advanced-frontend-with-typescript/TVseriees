@@ -16,3 +16,9 @@
     text-shadow: 0.5px 0.5px 1px #040d17;
 
 }
+
+.header-right-part {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}

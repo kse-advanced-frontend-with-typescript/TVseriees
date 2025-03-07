@@ -1,0 +1,7 @@
+.poster{
+    width: 24rem;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    max-height: 36rem;
+    object-fit: cover;
+    height: 32rem;
+}

@@ -1,4 +1,4 @@
-.movie-card {
+.series-card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,7 +10,7 @@
     cursor: pointer;
 }
 
-.movie-card img {
+.series-card img {
     object-fit: contain;
     margin: 1rem 0 0 0;
     max-width: 95%;
@@ -19,7 +19,7 @@
     cursor: default;
 }
 
-.movie-card h3 {
+.series-card h3 {
     margin-top: 0.6rem;
     font-weight: bold;
     font-size: 1.4rem;
@@ -28,18 +28,18 @@
     cursor: pointer;
 }
 
-.movie-card p {
+.series-card p {
     color: #666;
     margin-top: 0.1rem;
     font-size: 0.8rem;
 }
 
-.movie-card h3:hover{
+.series-card h3:hover{
     color: #93d5ea;
     transform: scale(1.1);
 }
 
-.movie-card:hover{
+.series-card:hover{
     box-shadow: 0 0 15px rgba(147, 213, 234, 0.6);
     transform: scale(1.1);
 }

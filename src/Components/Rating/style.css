@@ -1,0 +1,14 @@
+.rating{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-family: "Joti One", serif;
+
+}
+.group{
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+}
+
