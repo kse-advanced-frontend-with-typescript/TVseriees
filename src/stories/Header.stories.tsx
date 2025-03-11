@@ -1,6 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import React from 'react';
-import styles from '../main.css';
 import {Header, HeaderRight} from '../Components/Header/Header';
 import {MenuButton, links} from '../Components/MenuButton/MenuButton';
 import {MiniButton} from '../Components/MiniButton/MiniButton';

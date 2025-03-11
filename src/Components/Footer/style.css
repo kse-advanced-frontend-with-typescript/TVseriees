@@ -1,12 +1,11 @@
 .footer{
     background-color: #03242E;
     color: white;
-    padding: 2rem 0rem;
+    padding-bottom: 1.5rem;
 
 
 }
 .footer ul{
-    list-style: none;
     padding: 0;
 
 }
@@ -14,23 +13,27 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    padding: 0 6rem;
-    margin: 0 0 1rem 0;
+    padding: 2.5rem;
 
+}
 
+.footer-items > *{
+    max-width: 30%;
+    width: max-content;
 }
 .copyright{
     border-top: 0.1rem solid #5FB8D4;
     padding-top: 1.5rem;
-    margin-top: 2rem;
     text-align: center;
-
 }
+
 .contact{
     display: flex;
     align-items: center;
     gap: 0.8rem;
     margin-bottom: 0.8rem;
+    width: max-content;
+
 }
 .contact img{
     object-fit: contain;
@@ -44,34 +47,57 @@
     margin-bottom: 1rem;
     margin-top: 0;
     font-size: 1.5rem;
+    display: inline-block;
 }
 
 .footer p {
     margin: 0;
 }
 
-.about-section, .contacts-section {
-    max-width: 30%;
-}
-
-.contact:hover{
+.contact:hover, a:hover{
     text-decoration: underline #2e9bbb;
     color: #2e9bbb;
 }
+.links{
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    list-style-type: disc;
+    list-style-position: inside;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
 
 @media only screen and (max-width: 768px) {
+    .footer p, .footer li{
+        font-size: 0.8rem;
+    }
+    .footer h4 {
+        font-size: 1.1rem;
+
+    }
     .footer-items{
         flex-direction: column;
         align-items: center;
-        padding: 1rem 1rem;
         gap: 1.5rem;
         text-align: center;
+        padding: 1.5rem;
 
     }
+
     .aboutSection, .contactsSection {
         max-width: 100%;
     }
+    .links{
+        flex-direction: column;
+        gap: 0.4rem;
+        list-style-type: none;
+    }
 
-
+    .footer-items > *{
+        max-width: 100%;
+    }
 
 }
