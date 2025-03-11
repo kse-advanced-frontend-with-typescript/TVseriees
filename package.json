@@ -8,7 +8,7 @@
     "start": "webpack serve --open --mode=development",
     "build": "webpack --mode production",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
-    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

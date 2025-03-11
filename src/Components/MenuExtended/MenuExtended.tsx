@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './style.css';
 import {MiniButton} from '../MiniButton/MiniButton';
-import {AuthorizationButton} from "../AuthorizationButton/AuthorizationButton";
+import {AuthorizationButton} from '../AuthorizationButton/AuthorizationButton';
 
 
 

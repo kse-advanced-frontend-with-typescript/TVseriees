@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { SeriesCard } from '../Components/SeriesCard/SeriesCard';
-import image from '../Components/Icon/icons/ItExample.jpg';
 
 const meta: Meta<typeof SeriesCard> = {
     component: SeriesCard,
