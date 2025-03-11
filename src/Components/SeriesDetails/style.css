@@ -15,7 +15,7 @@
     font-family: "Joti One", serif;
     color: #020f1b;
     font-size: 1.9rem;
-    margin-top: 0.2rem;
+    margin: 0.2rem auto 0.7rem auto;
 }
 .series-details  h5{
     font-family: "Joti One", serif;
@@ -62,7 +62,7 @@
 
 .link{
     text-decoration: none;
-    color: #347886;
+    color:  #3c888a;
 }
 
 .link:hover{
