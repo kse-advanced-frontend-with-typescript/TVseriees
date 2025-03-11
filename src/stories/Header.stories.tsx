@@ -23,7 +23,7 @@ export const Primary: Story ={
                 <MenuButton links={links}/>
                 <h1>TV Serieees</h1>
                 <HeaderRight>
-                    <AuthorizationButton type={'log'}/>
+                    <AuthorizationButton type={'log-in'}/>
                     <AuthorizationButton type={'sign'}/>
                 </HeaderRight>
             </Header>
@@ -40,8 +40,25 @@ export const Secondary: Story ={
                 <h1>TV Serieees</h1>
                 <HeaderRight>
                     <MiniButton topic='search' size='medium' onClick={()=>alert('clicked')}/>
-                    <AuthorizationButton type={'log'}/>
+                    <AuthorizationButton type={'log-in'}/>
                     <AuthorizationButton type={'sign'}/>
+                </HeaderRight>
+            </Header>
+        );
+    }
+};
+
+export const Third: Story ={
+
+    render: () => {
+        return (
+            <Header>
+                <MenuButton links={links}/>
+                <h1>TV Serieees</h1>
+                <HeaderRight>
+                    <MiniButton topic='search' size='medium' onClick={()=>alert('clicked')}/>
+                    <h2>Username</h2>
+                    <AuthorizationButton type={'log-out'}/>
                 </HeaderRight>
             </Header>
         );

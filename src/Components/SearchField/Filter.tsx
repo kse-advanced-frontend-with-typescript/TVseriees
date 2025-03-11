@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from './style.css';
 import { MiniButton } from '../MiniButton/MiniButton';
-import classNames from "classnames";
+import classNames from 'classnames';
 
 type FilterProps = {
     options: string[],

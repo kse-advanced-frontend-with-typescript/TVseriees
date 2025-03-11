@@ -1,7 +1,16 @@
 .poster{
-    width: 24rem;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
-    max-height: 36rem;
     object-fit: cover;
-    height: 32rem;
+}
+
+.vertical{
+    width: 24rem;
+    height: auto;
+}
+
+.horizontal{
+    max-width: 30rem;
+    min-width: 15rem;
+    width: 100%;
+    height: auto;
 }

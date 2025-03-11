@@ -29,6 +29,7 @@
 }
 
 .search-bar{
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,7 +40,7 @@
     height: 2.9rem;
     box-sizing: border-box;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
-    margin: 0 auto;
+    margin: 3rem auto;
 
 }
 
@@ -78,3 +79,33 @@ input{
      width: 6rem;
      padding: 0 0.5rem;
  }
+
+@media only screen and (max-width: 768px) {
+
+    .filter-container{
+        gap: 1.6rem;
+    }
+    .filter-component{
+        width:90%;
+        font-size: 1.2rem;
+    }
+
+    .search-bar{
+        width: 90%;
+        margin: 1.6rem auto;
+    }
+
+    input{
+        font-size: 1.2rem;
+    }
+
+    .filter-component option {
+        font-size: 1.2rem;
+    }
+    .year{
+        width: 6rem;
+        padding: 0 0.5rem;
+    }
+
+
+}

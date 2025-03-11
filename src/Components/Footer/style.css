@@ -58,3 +58,20 @@
     text-decoration: underline #2e9bbb;
     color: #2e9bbb;
 }
+
+@media only screen and (max-width: 768px) {
+    .footer-items{
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 1rem;
+        gap: 1.5rem;
+        text-align: center;
+
+    }
+    .aboutSection, .contactsSection {
+        max-width: 100%;
+    }
+
+
+
+}

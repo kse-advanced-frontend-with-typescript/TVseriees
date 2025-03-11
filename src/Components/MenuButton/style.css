@@ -20,7 +20,6 @@
     display: flex;
     gap: 1rem;
     align-items: center;
-    padding: 1rem;
 }
 .menu-text{
     font-size: 1.8rem;

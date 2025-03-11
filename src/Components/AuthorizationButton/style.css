@@ -21,7 +21,11 @@
     background-color: #0B3B4A;
     border: 0.6rem solid #00161C;
 }
+.log-out{
+    background-color: #6762b7;
+    border: 0.3rem solid #222253;
 
+}
 .button:hover{
     transform: scale(1.1);
     box-shadow: 0 6px 12px 4px rgba(0, 0, 0, 0.4);

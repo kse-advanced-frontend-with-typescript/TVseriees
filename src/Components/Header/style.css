@@ -6,8 +6,9 @@
     font-family: "Joti One", cursive;
     color: black;
     font-weight: bold;
-    height: 7.5rem;
+    height:auto;
     align-items: center;
+    flex-wrap: wrap;
     padding: 1rem 2rem;
 }
 
@@ -22,4 +23,22 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+}
+
+h2 {
+    max-width: 20rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+@media only screen and (max-width: 768px) {
+    .header{
+        padding-top: 0;
+       justify-content: center;
+    }
+    .header h1{
+        margin-top: 0;
+        font-size: 2.5rem;
+    }
+
 }
