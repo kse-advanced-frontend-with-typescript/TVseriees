@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from './style.css';
-import {MenuExteded} from '../MenuExtended/MenuExtended';
+import {MenuExtended} from '../MenuExtended/MenuExtended';
 export const links: string[] = [ 'top-rated',
     'on the air in the next 7 days',
     'popular',
@@ -19,7 +19,7 @@ export const MenuButton: React.FC<{links: string[]}> = ({links})=>{
         </div>
     <p className={styles.menuText}>Menu</p>
     </button>
-    {isMenuOpen && <MenuExteded links={links} onClose={()=>setIsMenuOpen(false)}/>}
+    {isMenuOpen && <MenuExtended links={links} onClose={()=>setIsMenuOpen(false)}/>}
     </>;
 };
 

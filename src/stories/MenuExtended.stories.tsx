@@ -1,9 +1,9 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {MenuExteded} from '../Components/MenuExtended/MenuExtended';
+import {MenuExtended} from '../Components/MenuExtended/MenuExtended';
 
-const meta : Meta<typeof  MenuExteded>={
-    component: MenuExteded,
+const meta : Meta<typeof  MenuExtended>={
+    component: MenuExtended,
     title: 'MenuExteded',
     tags: ['autodocs']
 

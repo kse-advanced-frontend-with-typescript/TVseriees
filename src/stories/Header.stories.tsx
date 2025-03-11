@@ -64,3 +64,18 @@ export const Third: Story ={
         );
     }
 };
+export const Forth: Story ={
+
+    render: () => {
+        return (
+            <Header>
+                <MenuButton links={links}/>
+                <h1>TV Serieees</h1>
+                <HeaderRight>
+                    <h2>Username</h2>
+                    <AuthorizationButton type={'log-out'}/>
+                </HeaderRight>
+            </Header>
+        );
+    }
+};

@@ -9,8 +9,10 @@
 }
 
 .detail-items  h2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: "Joti One", serif;
-    text-align: center;
     color: #020f1b;
     font-size: 1.9rem;
     margin-top: 0.2rem;
@@ -28,6 +30,7 @@
     gap: 0;
     border-bottom: 1px solid rgb(91, 119, 126);
     font-size: 1.1rem;
+    text-align: start;
 }
 
 .item:nth-child(even){

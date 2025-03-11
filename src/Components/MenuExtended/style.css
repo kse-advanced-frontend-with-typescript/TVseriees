@@ -61,6 +61,15 @@ ul {
     text-decoration: underline;
 }
 
+.auth{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0.5rem;
+    gap: 0.8rem;
+}
+
 @media only screen and (max-width: 768px) {
     .menu {
        width: 100%;
