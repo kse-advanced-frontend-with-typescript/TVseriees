@@ -1,0 +1,20 @@
+.button{
+    color: #030718;
+    width: 20rem;
+    height: 7rem;
+    border-radius: 40%;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    font-size: 2rem;
+    font-family: "Joti One", serif;
+    border: 0.5rem solid #02021c;
+    background: linear-gradient(to bottom right, #0c042c, #4b4696);
+    animation: MovingGradient 1s linear infinite;
+
+}
+
+.button:hover{
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px 4px rgba(0, 0, 0, 0.4);
+
+}
