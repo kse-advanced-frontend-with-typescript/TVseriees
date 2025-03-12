@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import styles from './style.css';
-import {AuthorizationButton} from "../AuthorizationButton/AuthorizationButton";
-import {MiniButton} from "../MiniButton/MiniButton";
+import {AuthorizationButton} from '../AuthorizationButton/AuthorizationButton';
+import {MiniButton} from '../MiniButton/MiniButton';
 
 export const LogInForm: React.FC = () => {
     const [formData, setFormData] = useState({
