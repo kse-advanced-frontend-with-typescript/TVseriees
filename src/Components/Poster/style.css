@@ -14,3 +14,9 @@
     width: 100%;
     height: auto;
 }
+.small{
+    max-width: 20rem;
+    min-width: 10rem;
+    width: 100%;
+    height: auto;
+}

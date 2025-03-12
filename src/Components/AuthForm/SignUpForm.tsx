@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import styles from './style.css';
-import { AuthorizationButton } from '../Components/AuthorizationButton/AuthorizationButton';
-import { MiniButton } from '../Components/MiniButton/MiniButton';
+import { AuthorizationButton } from '../AuthorizationButton/AuthorizationButton';
+import { MiniButton } from '../MiniButton/MiniButton';
 
 export const SignUpForm: React.FC = () => {
     const [show, setShow] = useState(false);
