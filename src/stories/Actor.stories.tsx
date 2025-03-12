@@ -5,7 +5,6 @@ import {Actor} from '../Components/Actor/Actor';
 const meta : Meta<typeof  Actor>={
     component: Actor,
     title: 'Actor',
-    tags: ['autodocs']
 
 };
 

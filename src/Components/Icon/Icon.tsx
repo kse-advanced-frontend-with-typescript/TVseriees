@@ -7,11 +7,12 @@ import vote from './icons/vote.png';
 import call from './icons/call.png';
 import envelope from './icons/envelope.png';
 import cross from './icons/cross.png';
-
+import emptyStar from './icons/empty-star.png';
+import blackCross from './icons/black-cross.png';
 import classNames from 'classnames';
 
 type IconProps ={
-    topic: 'search' | 'arrow' | 'star' | 'vote' | 'cross' | 'envelope' | 'call';
+    topic: 'search' | 'arrow' | 'star' | 'vote' | 'cross' | 'envelope' | 'call' | 'empty-star' | 'black-cross';
     size: 'mini' | 'medium' ;
 }
 export const Icon: React.FC<IconProps> = ({topic, size})=>{
@@ -24,6 +25,8 @@ export const Icon: React.FC<IconProps> = ({topic, size})=>{
             case 'envelope': return envelope;
             case 'call': return call;
             case 'cross': return cross;
+            case 'empty-star': return emptyStar;
+            case 'black-cross' : return blackCross;
         }
     };
     return (

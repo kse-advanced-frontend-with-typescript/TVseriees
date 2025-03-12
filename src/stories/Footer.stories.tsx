@@ -5,7 +5,6 @@ import {Footer} from '../Components/Footer/Footer';
 const meta : Meta<typeof  Footer>={
     component: Footer,
     title: 'Footer',
-    tags: ['autodocs']
 
 };
 

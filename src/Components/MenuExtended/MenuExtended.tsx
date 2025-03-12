@@ -23,8 +23,8 @@ export const MenuExtended: React.FC<MenuExtendedProps>=({links, onClose, authori
         })}
     </ul>
         <div className={styles.auth}>
-            <AuthorizationButton type={authorized? 'log-out' : 'log-in'}/>
-            {!authorized && <AuthorizationButton type={'sign'}/>}
+            <AuthorizationButton type={authorized? 'log-out' : 'log-in'} form={false} onClick={()=>alert('clicked')}/>
+            {!authorized && <AuthorizationButton type={'sign'} form={false} onClick={()=>alert('clicked')}/>}
         </div>
 
     </div>;

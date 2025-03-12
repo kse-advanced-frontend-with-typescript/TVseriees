@@ -6,7 +6,6 @@ import {AuthorizationButton} from '../Components/AuthorizationButton/Authorizati
 const meta : Meta<typeof  AuthorizationButton>={
     component: AuthorizationButton,
     title: 'AuthorizationButton',
-    tags: ['autodocs']
 
 };
 

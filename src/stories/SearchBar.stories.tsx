@@ -5,7 +5,6 @@ import {SearchBar} from '../Components/SearchField/SearchBar';
 const meta : Meta<typeof  SearchBar>={
     component: SearchBar,
     title: 'SearchBar',
-    tags: ['autodocs']
 
 };
 

@@ -104,7 +104,6 @@ const exampleSeasonsData = [
 const meta : Meta<typeof  Seasons>={
     component: Seasons,
     title: 'Seasons',
-    tags: ['autodocs']
 
 };
 

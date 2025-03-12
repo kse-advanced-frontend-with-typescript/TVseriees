@@ -5,7 +5,6 @@ import {MenuExtended} from '../Components/MenuExtended/MenuExtended';
 const meta : Meta<typeof  MenuExtended>={
     component: MenuExtended,
     title: 'MenuExteded',
-    tags: ['autodocs']
 
 };
 

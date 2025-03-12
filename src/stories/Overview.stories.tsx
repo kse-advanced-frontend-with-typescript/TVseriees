@@ -5,7 +5,6 @@ import {Overview} from '../Components/Overview/Overview';
 const meta : Meta<typeof  Overview>={
     component: Overview,
     title: 'Overview',
-    tags: ['autodocs']
 
 };
 

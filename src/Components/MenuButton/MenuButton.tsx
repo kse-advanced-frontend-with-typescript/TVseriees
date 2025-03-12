@@ -8,7 +8,7 @@ export const links: string[] = [ 'top-rated',
     'watched',
     'favorite'];
 
-export const MenuButton: React.FC<{links: string[]}> = ({links})=>{
+export const MenuButton: React.FC<{authorized: boolean, links: string[]}> = ({authorized, links})=>{
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     
     return <><button className={styles.menuComponent} onClick={()=>setIsMenuOpen(true)}>
@@ -19,7 +19,7 @@ export const MenuButton: React.FC<{links: string[]}> = ({links})=>{
         </div>
     <p className={styles.menuText}>Menu</p>
     </button>
-    {isMenuOpen && <MenuExtended links={links} onClose={()=>setIsMenuOpen(false)}/>}
+    {isMenuOpen && <MenuExtended authorized={authorized} links={links} onClose={()=>setIsMenuOpen(false)}/>}
     </>;
 };
 

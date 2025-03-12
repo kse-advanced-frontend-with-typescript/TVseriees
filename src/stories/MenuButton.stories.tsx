@@ -5,7 +5,6 @@ import {MenuButton, links} from '../Components/MenuButton/MenuButton';
 const meta : Meta<typeof  MenuButton>={
     component: MenuButton,
     title: 'MenuButton',
-    tags: ['autodocs']
 
 };
 

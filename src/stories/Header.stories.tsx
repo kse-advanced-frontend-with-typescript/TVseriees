@@ -19,11 +19,11 @@ export const Primary: Story ={
     render: () => {
         return (
             <Header>
-                <MenuButton links={links}/>
+                <MenuButton authorized={false} links={links}/>
                 <h1>TV Serieees</h1>
                 <HeaderRight>
-                    <AuthorizationButton type={'log-in'}/>
-                    <AuthorizationButton type={'sign'}/>
+                    <AuthorizationButton type={'log-in'} form={false} onClick={()=>alert('clicked')}/>
+                    <AuthorizationButton type={'sign'} form={false} onClick={()=>alert('clicked')}/>
                 </HeaderRight>
             </Header>
         );
@@ -35,12 +35,12 @@ export const Secondary: Story ={
     render: () => {
         return (
             <Header>
-                <MenuButton links={links}/>
+                <MenuButton  authorized={false} links={links}/>
                 <h1>TV Serieees</h1>
                 <HeaderRight>
                     <MiniButton topic='search' size='medium' onClick={()=>alert('clicked')}/>
-                    <AuthorizationButton type={'log-in'}/>
-                    <AuthorizationButton type={'sign'}/>
+                    <AuthorizationButton type={'log-in'} form={false} onClick={()=>alert('clicked')}/>
+                    <AuthorizationButton type={'sign'} form={false} onClick={()=>alert('clicked')}/>
                 </HeaderRight>
             </Header>
         );
@@ -52,12 +52,12 @@ export const Third: Story ={
     render: () => {
         return (
             <Header>
-                <MenuButton links={links}/>
+                <MenuButton  authorized={true}links={links}/>
                 <h1>TV Serieees</h1>
                 <HeaderRight>
                     <MiniButton topic='search' size='medium' onClick={()=>alert('clicked')}/>
                     <h2>Username</h2>
-                    <AuthorizationButton type={'log-out'}/>
+                    <AuthorizationButton type={'log-out'} form={false} onClick={()=>alert('clicked')}/>
                 </HeaderRight>
             </Header>
         );
@@ -68,11 +68,11 @@ export const Forth: Story ={
     render: () => {
         return (
             <Header>
-                <MenuButton links={links}/>
+                <MenuButton  authorized={true} links={links}/>
                 <h1>TV Serieees</h1>
                 <HeaderRight>
                     <h2>Username</h2>
-                    <AuthorizationButton type={'log-out'}/>
+                    <AuthorizationButton type={'log-out'} form={false} onClick={()=>alert('clicked')}/>
                 </HeaderRight>
             </Header>
         );

@@ -4,7 +4,6 @@ import { SeriesCard } from '../Components/SeriesCard/SeriesCard';
 const meta: Meta<typeof SeriesCard> = {
     component: SeriesCard,
     title: 'SeriesCard',
-    tags: ['autodocs'],
 };
 
 export default meta;
