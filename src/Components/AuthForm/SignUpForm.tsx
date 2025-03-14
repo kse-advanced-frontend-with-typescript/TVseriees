@@ -3,11 +3,13 @@ import styles from './style.css';
 import { AuthorizationButton } from '../AuthorizationButton/AuthorizationButton';
 import { MiniButton } from '../MiniButton/MiniButton';
 
-export const SignUpForm: React.FC = () => {
+type SignUpFormProps= {
+    onSubmit: (username: string, email: string, password: string)=>void
+}
+export const SignUpForm: React.FC<SignUpFormProps> = ({onSubmit}) => {
     const [show, setShow] = useState(false);
     const [formData, setFormData] = useState({
-        name: '',
-        surname: '',
+        username: '',
         email: '',
         password: '',
         confirmPassword: ''
@@ -33,10 +35,8 @@ export const SignUpForm: React.FC = () => {
             setPasswordError('Passwords do not match!');
             return;
         }
-
-
         setPasswordError('');
-
+        onSubmit(formData.username, formData.email, formData.password);
         console.log('Form submitted', formData);
         alert('Signed up');
     };
@@ -45,6 +45,11 @@ export const SignUpForm: React.FC = () => {
         <>
             {!show && (
                 <form className={styles.form} onSubmit={submit}>
+                    {passwordError && (
+                        <p className={styles.errorMessage}>
+                            {passwordError}
+                        </p>
+                    )}
                     <MiniButton
                         topic='black-cross'
                         size='medium'
@@ -52,30 +57,19 @@ export const SignUpForm: React.FC = () => {
                     />
                     <input
                         type='text'
-                        id='name'
-                        placeholder='your name...'
-                        value={formData.name}
+                        id='username'
+                        placeholder='username...'
+                        value={formData.username}
                         onChange={handleChange}
                         required
-                        aria-label='Name'
-                    />
-                    <input
-                        type='text'
-                        id='surname'
-                        placeholder='your surname...'
-                        value={formData.surname}
-                        onChange={handleChange}
-                        required
-                        aria-label='Surname'
                     />
                     <input
                         type='email'
                         id='email'
-                        placeholder='your email...'
+                        placeholder='email...'
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        aria-label='Email'
                     />
                     <input
                         type='password'
@@ -85,7 +79,6 @@ export const SignUpForm: React.FC = () => {
                         minLength={8}
                         onChange={handleChange}
                         required
-                        aria-label='Password'
                     />
                     <input
                         type='password'
@@ -95,14 +88,10 @@ export const SignUpForm: React.FC = () => {
                         onChange={handleChange}
                         minLength={8}
                         required
-                        aria-label='Confirm Password'
                     />
-                    {passwordError && (
-                        <p className={styles.errorMessage}>
-                            {passwordError}
-                        </p>
-                    )}
+
                     <AuthorizationButton
+                        warning={false}
                         type='sign'
                         form={true}
                         onClick={()=>submit}

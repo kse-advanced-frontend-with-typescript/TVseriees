@@ -10,6 +10,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     font-size: 1.2rem;
     box-sizing: content-box;
+    text-align: center;
 }
 
 .log-in{
@@ -24,10 +25,40 @@
 .log-out{
     background-color: #6762b7;
     border: 0.3rem solid #222253;
+    color: #06061a;
 
+}
+.warning{
+    padding: 1rem;
+    font-size: 1.4rem;
+    width: 6.2rem;
+    border-radius: 30%;
+}
+.delete{
+    background-color: #5b375e;
+    border: 0.3rem solid #2a0228;
+    color: #1a0221;
+}
+
+.cancel{
+    background-color: #477a5d;
+    border: 0.3rem solid #021e10;
+    color: #021808;
 }
 .button:hover{
     transform: scale(1.1);
     box-shadow: 0 6px 12px 4px rgba(0, 0, 0, 0.4);
 
+}
+
+.error-message{
+    color: #36053b;
+}
+
+@media only screen and (max-width: 768px) {
+    .warning{
+        padding: 0.3rem;
+        font-size: 1.2rem;
+        width: 5.9rem;
+    }
 }

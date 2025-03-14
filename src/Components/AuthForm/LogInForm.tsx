@@ -3,12 +3,12 @@ import styles from './style.css';
 import {AuthorizationButton} from '../AuthorizationButton/AuthorizationButton';
 import {MiniButton} from '../MiniButton/MiniButton';
 
-export const LogInForm: React.FC = () => {
+export const LogInForm: React.FC<{onSubmit: (email: string, password: string)=>void}> = ({onSubmit}) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
-    //const [passwordError, setPasswordError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {id, value} = e.target;
@@ -30,6 +30,11 @@ export const LogInForm: React.FC = () => {
         <>
             {!show && (
                     <form className={styles.form} onSubmit={submit}>
+                        {passwordError && (
+                            <p className={styles.errorMessage}>
+                                {passwordError}
+                            </p>
+                        )}
                         <MiniButton
                             topic='black-cross'
                             size='medium'
@@ -55,6 +60,7 @@ export const LogInForm: React.FC = () => {
                             aria-label='Password'
                         />
                         <AuthorizationButton
+                            warning={false}
                             type='log-in'
                             form={true}
                             onClick={()=>submit}

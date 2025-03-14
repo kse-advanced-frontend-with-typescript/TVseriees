@@ -11,10 +11,8 @@ export const Actor: React.FC<ActorProps> = ({name, knownFor})=>{
             <h3>Known for:</h3>
             <p>
                 {knownFor.map((item, index) => (
-                    <React.Fragment key={index}>
-                        {index > 0 && ', '}
-                        <a href='#'>{item}</a>
-                    </React.Fragment>
+                        <>{index > 0 && ', '}
+                        <a href='#'>{item}</a></>
                 ) )}
             </p>
         </article>

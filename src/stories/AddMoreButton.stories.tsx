@@ -1,17 +1,25 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {AddMoreButton} from '../AddMoreButton/AddMoreButton';
+import {Button} from '../Components/Button/Button';
+import {fn} from '@storybook/test';
 
-const meta : Meta<typeof  AddMoreButton>={
-    component: AddMoreButton,
+const meta : Meta<typeof  Button>={
+    component: Button,
     title: 'AddMoreButton',
 
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>
-export const Primary: Story ={
+export const ShowMore: Story ={
     args: {
-        onClick:  ()=>{alert('show more !');}
+        purpose: 'Show more',
+        onClick:  fn
+    }
+};
+export const Delete: Story ={
+    args: {
+        purpose: 'Delete',
+        onClick: fn
     }
 };

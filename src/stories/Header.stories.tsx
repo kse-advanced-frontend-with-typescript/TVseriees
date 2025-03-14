@@ -4,6 +4,8 @@ import {Header, HeaderRight} from '../Components/Header/Header';
 import {MenuButton, links} from '../Components/MenuButton/MenuButton';
 import {MiniButton} from '../Components/MiniButton/MiniButton';
 import {AuthorizationButton} from '../Components/AuthorizationButton/AuthorizationButton';
+import {fn} from '@storybook/test';
+
 const meta : Meta<typeof  Header>={
     component: Header,
     title: 'Header',
@@ -22,8 +24,8 @@ export const Primary: Story ={
                 <MenuButton authorized={false} links={links}/>
                 <h1>TV Serieees</h1>
                 <HeaderRight>
-                    <AuthorizationButton type={'log-in'} form={false} onClick={()=>alert('clicked')}/>
-                    <AuthorizationButton type={'sign'} form={false} onClick={()=>alert('clicked')}/>
+                    <AuthorizationButton type={'log-in'} form={false} onClick={fn}/>
+                    <AuthorizationButton type={'sign'} form={false} onClick={fn}/>
                 </HeaderRight>
             </Header>
         );
@@ -38,9 +40,9 @@ export const Secondary: Story ={
                 <MenuButton  authorized={false} links={links}/>
                 <h1>TV Serieees</h1>
                 <HeaderRight>
-                    <MiniButton topic='search' size='medium' onClick={()=>alert('clicked')}/>
-                    <AuthorizationButton type={'log-in'} form={false} onClick={()=>alert('clicked')}/>
-                    <AuthorizationButton type={'sign'} form={false} onClick={()=>alert('clicked')}/>
+                    <MiniButton topic='search' size='medium' onClick={fn}/>
+                    <AuthorizationButton type={'log-in'} form={false} onClick={fn}/>
+                    <AuthorizationButton type={'sign'} form={false} onClick={fn}/>
                 </HeaderRight>
             </Header>
         );
@@ -55,9 +57,9 @@ export const Third: Story ={
                 <MenuButton  authorized={true}links={links}/>
                 <h1>TV Serieees</h1>
                 <HeaderRight>
-                    <MiniButton topic='search' size='medium' onClick={()=>alert('clicked')}/>
+                    <MiniButton topic='search' size='medium' onClick={fn}/>
                     <h2>Username</h2>
-                    <AuthorizationButton type={'log-out'} form={false} onClick={()=>alert('clicked')}/>
+                    <AuthorizationButton type={'log-out'} form={false} onClick={fn}/>
                 </HeaderRight>
             </Header>
         );
@@ -72,7 +74,7 @@ export const Forth: Story ={
                 <h1>TV Serieees</h1>
                 <HeaderRight>
                     <h2>Username</h2>
-                    <AuthorizationButton type={'log-out'} form={false} onClick={()=>alert('clicked')}/>
+                    <AuthorizationButton type={'log-out'} form={false} onClick={fn}/>
                 </HeaderRight>
             </Header>
         );
