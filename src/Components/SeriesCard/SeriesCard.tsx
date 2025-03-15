@@ -9,7 +9,6 @@ type ButtonStates = {
     circle: boolean;
 };
 
-
 type SeriesCardProps = {
     imagePath: string;
     name: string;
@@ -19,33 +18,52 @@ type SeriesCardProps = {
 };
 
 export const SeriesCard: React.FC<SeriesCardProps> = ({imagePath, name, topicOfCard, voteCount=0, averageVote=0}) => {
-    return (
-        <div className={styles.seriesCard}>
-            <img className={styles.image} src={imagePath} alt={`${name} image`}/>
-            <div className={styles.h3}><h3>{name}</h3></div>
-            {topicOfCard === 'usual' && (<UsualButtons/>)}
-            {topicOfCard === 'favourites' && (<OtherButtons displayType="heart" voteCount={voteCount} averageVote={averageVote}/>)}
-            {topicOfCard === 'to-watch' && (<OtherButtons displayType="star" voteCount={voteCount} averageVote={averageVote}/>)}
-            {topicOfCard === 'watched'  && (<OtherButtons displayType="circle" voteCount={voteCount} averageVote={averageVote}/>)}
-        </div>
-    );
+    const [cardVisible, setCardVisible] = useState(true);
+    return <>{cardVisible && ( <div className={styles.seriesCard}>
+        <img className={styles.image} src={imagePath} alt={`${name} image`}/>
+        <div className={styles.h3}><h3>{name}</h3></div>
+        {topicOfCard === 'usual' && (<UsualButtons/>)}
+        {topicOfCard === 'favourites' && (
+            <OtherButtons
+                displayType="heart"
+                voteCount={voteCount}
+                averageVote={averageVote}
+                onButtonClick={() => setCardVisible(!cardVisible)}
+            />
+        )}
+        {topicOfCard === 'to-watch' && (
+            <OtherButtons
+                displayType="star"
+                voteCount={voteCount}
+                averageVote={averageVote}
+                onButtonClick={() => setCardVisible(!cardVisible)}
+            />
+        )}
+        {topicOfCard === 'watched' && (
+            <OtherButtons
+                displayType="circle"
+                voteCount={voteCount}
+                averageVote={averageVote}
+                onButtonClick={() => setCardVisible(!cardVisible)}
+            />
+        )}
+    </div>)}</>;
 };
 
 type OtherButtonsProps = {
     voteCount: number;
     averageVote: number;
-    displayType: 'star' | 'heart' | 'circle' ;
+    displayType: 'star' | 'heart' | 'circle';
+    onButtonClick: () => void;
 };
 
-const OtherButtons: React.FC<OtherButtonsProps> = ({voteCount, averageVote, displayType}) => {
-    const [cardVisible, setCardVisible] = useState(true);
-    return <>
-    {cardVisible && (<div className={styles.buttonsRating}>
-        <Rating averageVote={averageVote} voteCount={voteCount} size='small'/>
-        <MiniButton topic={displayType} size='mini' onClick={()=>setCardVisible(!cardVisible)}/>
-    </div>)}
-    </>;
-
+const OtherButtons: React.FC<OtherButtonsProps> = ({voteCount, averageVote, displayType, onButtonClick}) => {
+    return (
+        <div className={styles.buttonsRating}>
+            <Rating averageVote={averageVote} voteCount={voteCount} size='small'/>
+            <MiniButton topic={displayType} size='mini' onClick={onButtonClick}/>
+        </div>
+    );
 };
 
 const UsualButtons: React.FC = () => {

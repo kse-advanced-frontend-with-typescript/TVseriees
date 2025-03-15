@@ -50,9 +50,7 @@ export const SeasonTab: React.FC<Season> = ({index, episodes})=>{
 
 const Episode: React.FC<{episode: EpisodeType}> = ({episode})=>{
     return <div className={styles.episode}>
-        <h2 className={styles.episodeNumber}>Episode {episode.index}</h2>
-        <div className={styles.episodeInfo}>
-        <Poster path={episode.imagePath} name={episode.name} layout='horizontal'/>
+        <div className={styles.episodeNumber}><h3>Episode {episode.index}</h3></div>
         <div className={styles.episodeOverview}>
             <h2>{episode.name}</h2>
             <article>{episode.overview}</article>
@@ -62,6 +60,7 @@ const Episode: React.FC<{episode: EpisodeType}> = ({episode})=>{
             </p>
             <Rating averageVote={episode.averageVote} voteCount={episode.voteCount} size='usual'/>
         </div>
-        </div>
+        <div><Poster path={episode.imagePath} name={episode.name} layout='horizontal'/></div>
+
     </div>;
 };
