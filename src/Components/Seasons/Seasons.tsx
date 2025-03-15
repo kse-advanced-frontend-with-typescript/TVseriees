@@ -60,7 +60,7 @@ const Episode: React.FC<{episode: EpisodeType}> = ({episode})=>{
                 <span style={{color: '#020f1b'}}>Duration: </span>
                 <span style={{fontFamily: '"Indie Flower", cursive', fontWeight: 'bold'}}>{episode.duration} minutes</span>
             </p>
-            <Rating averageVote={episode.averageVote} voteCount={episode.voteCount}/>
+            <Rating averageVote={episode.averageVote} voteCount={episode.voteCount} size='usual'/>
         </div>
         </div>
     </div>;

@@ -11,8 +11,13 @@ import emptyStar from './icons/empty-star.png';
 import blackCross from './icons/black-cross.png';
 import classNames from 'classnames';
 import caret from './icons/caret.png';
+import circle from './icons/circle.png';
+import emptyCircle from './icons/empty-circle.png';
+import heart from './icons/heart.png';
+import emptyHeart from './icons/empty-heart.png';
 type IconProps ={
-    topic: 'search' | 'arrow' | 'star' | 'vote' | 'cross' | 'envelope' | 'call' | 'empty-star' | 'black-cross' | 'left-caret' | 'right-caret';
+    topic: 'search' | 'arrow' | 'star' | 'vote' | 'cross' | 'envelope' | 'call' | 'empty-star' | 'black-cross' | 'left-caret' | 'right-caret'
+    | 'heart' | 'empty-heart' | 'empty-circle' | 'circle';
     size: 'mini' | 'medium' ;
 }
 export const Icon: React.FC<IconProps> = ({topic, size})=>{
@@ -29,6 +34,10 @@ export const Icon: React.FC<IconProps> = ({topic, size})=>{
             case 'black-cross' : return blackCross;
             case 'left-caret':
             case 'right-caret': return caret;
+            case 'heart': return heart;
+            case 'empty-heart': return emptyHeart;
+            case 'empty-circle': return emptyCircle;
+            case 'circle': return circle;
         }
     };
     return (

@@ -3,16 +3,16 @@
     flex-direction: column;
     align-items: center;
     background-color: #022731;
-    width: 18%;
+    width: 20%;
     height: auto;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
     color: #338AA4;
     cursor: pointer;
 }
 
-.series-card img {
+.series-card .image {
     object-fit: contain;
-    margin: 1rem 0 0 0;
+    margin: 0.1rem 0 0 0;
     max-width: 95%;
     max-height: 80%;
     width: 100%;
@@ -20,13 +20,32 @@
     cursor: default;
 }
 
-.series-card h3 {
+.series-card .h3 {
+    box-sizing: border-box;
     margin-top: 0.6rem;
+    padding: 0 0.7rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.series-card h3 {
     font-weight: bold;
-    font-size: 2rem;
-    margin-bottom: 0;
+    font-size: 1.5rem;
+    margin: 0;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
 }
 
 .series-card p {
@@ -35,14 +54,32 @@
     font-size: 1.3rem;
 }
 
-.series-card h3:hover{
+.series-card h3:hover {
     color: #93d5ea;
     transform: scale(1.1);
 }
 
-.series-card:hover{
+.series-card:hover {
     box-shadow: 0 0 15px rgba(147, 213, 234, 0.6);
     transform: scale(1.1);
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.buttons-rating{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+
 }
 @media only screen and (max-width: 768px) {
     .series-card {
@@ -50,11 +87,10 @@
     }
 
     .series-card h3 {
-        font-size: 1.7rem;
+        font-size: 1.4rem;
     }
 
     .series-card p {
         font-size: 1.1rem;
     }
-
 }

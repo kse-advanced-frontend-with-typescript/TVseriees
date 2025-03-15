@@ -27,7 +27,7 @@ export const SeriesDetails: React.FC<SeriesDetailsProps> = (props) => {
         <div className={styles.detailItems}>
             <h2>{props.name}</h2>
             <Details {...props}/>
-            <Rating averageVote={props.vote_average} voteCount={props.vote_count}/>
+            <Rating averageVote={props.vote_average} voteCount={props.vote_count} size='usual'/>
         </div>
     );
 };
@@ -65,10 +65,10 @@ const SeriesCast: React.FC<{cast: { id: number, actor: string }[]}> = ({cast}) =
             <h5 className={styles.label}>Cast:</h5>
             <p>
                 {cast.map((obj, index) => (
-                    <React.Fragment key={obj.id}>
+                    <>
                         {index > 0 && ', '}
-                        <a className={styles.link} href='#'>{obj.actor}</a>
-                    </React.Fragment>
+                        <a key={obj.id} className={styles.link} href='#'>{obj.actor}</a>
+                    </>
                 ))}
             </p>
         </div>

@@ -34,7 +34,7 @@
 }
 
 .item:nth-child(even){
-    background-color: #1b4754;
+    background-color: rgba(47, 125, 148, 0.8);
     color: #0c2121;
 
 }
@@ -44,7 +44,7 @@
 
 }
 .item:last-child{
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.7rem;
 }
 .item h5,
 .item p{

@@ -1,6 +1,6 @@
 .warning{
-    border: 0.5rem solid #500456;
-    background-color: #94bae3;
+    border: 0.5rem solid rgba(246, 64, 145, 0.53);
+    background-color: rgba(188, 154, 227, 0.71);
     color: #00161C;
     gap: 1.5rem;
     width: 35%;
