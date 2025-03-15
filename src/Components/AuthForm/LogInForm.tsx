@@ -22,6 +22,7 @@ export const LogInForm: React.FC<{onSubmit: (email: string, password: string)=>v
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         alert('Signed in');
+        onSubmit(formData.email, formData.password);
         console.log(formData);
     };
 

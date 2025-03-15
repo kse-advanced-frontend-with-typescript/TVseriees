@@ -1,5 +1,4 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import React from 'react';
 import {Warning} from '../Components/Warning/Warning';
 import {fn} from '@storybook/test';
 

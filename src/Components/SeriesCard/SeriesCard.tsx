@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from './style.css';
-import { MiniButton } from "../MiniButton/MiniButton";
-import { Rating } from "../Rating/Rating";
+import { MiniButton } from '../MiniButton/MiniButton';
+import { Rating } from '../Rating/Rating';
 
 type ButtonStates = {
     star: boolean;

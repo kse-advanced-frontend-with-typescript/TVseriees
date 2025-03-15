@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './style.css';
 import {Icon} from '../Icon/Icon';
-import classNames from "classnames";
+import classNames from 'classnames';
 
 export const Rating: React.FC<{averageVote: number, voteCount: number, size: 'small' | 'usual'}> = ({averageVote, voteCount, size = 'usual'}) => {
     return (

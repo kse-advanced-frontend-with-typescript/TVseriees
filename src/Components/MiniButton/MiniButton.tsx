@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './style.css';
 import {Icon} from '../Icon/Icon';
-import classNames from "classnames";
+import classNames from 'classnames';
 type MiniButtonProps ={
     topic: 'search' | 'arrow' | 'cross' | 'black-cross' | 'star' | 'empty-star' | 'left-caret' | 'right-caret'
         | 'heart' | 'empty-heart' | 'empty-circle' | 'circle';

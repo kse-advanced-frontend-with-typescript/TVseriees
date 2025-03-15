@@ -1,7 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-
-import {ParentComponent} from "../Components/PageNavigator/PageNavigator";
-import {fn} from "@storybook/test";
+import {ParentComponent} from '../Components/PageNavigator/PageNavigator';
 
 const meta : Meta<typeof  ParentComponent>={
     component: ParentComponent,

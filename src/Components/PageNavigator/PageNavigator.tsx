@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './style.css';
 import classNames from 'classnames';
-import {MiniButton} from "../MiniButton/MiniButton";
+import {MiniButton} from '../MiniButton/MiniButton';
 
 type PageNavigatorProps = {
     activePage: number,
