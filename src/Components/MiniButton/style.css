@@ -9,9 +9,12 @@
 }
 
 
-.mini-button img:hover {
+.mini-button:not([disabled]) img:hover {
     transform: scale(1.1);
     filter: drop-shadow(0 0 3px #01090c);
 
+}
+.mini-button.right:not([disabled]) img:hover {
+    transform: scaleX(-1) scale(1.1);
 }
 

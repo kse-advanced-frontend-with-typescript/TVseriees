@@ -1,34 +1,96 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './style.css';
 import classNames from 'classnames';
+import {MiniButton} from "../MiniButton/MiniButton";
 
 type PageNavigatorProps = {
-    pages: number,
-    onPageChange?: (page: number) => void
+    activePage: number,
+    pages: number[]
+    onPageChange: (page: number)=>void
+    onLeftArrowClick: () => void,
+    onRightArrowClick: () => void,
+    buttonStates: {
+        leftArrow: boolean,
+        rightArrow: boolean
+    }
+
 }
 
 type SubNavType = {
     type: 'active' | 'normal',
     index: number,
-    onClick: ()=>void
+    onClick: ()=>void,
 }
-export const PageNavigator: React.FC<PageNavigatorProps> = ({pages, onPageChange})=>{
-    const [active, setActive] = useState(1);
 
-    const changePage = (page: number)=>{
-        if(page >=1 && page <=pages){
-            setActive(page);
-            onPageChange?.(page);
-        }
+const determinePageToShow = (activePage: number, pageCount: number): number[] =>{
+    if(pageCount <= 5 || activePage <= 3) return Array.from({length: Math.min(5, pageCount)}, (_, i)=>i+1);
+    if(activePage > pageCount - 3) return Array.from({length: 5}, (_, i)=> pageCount - 4 + i);
+    return [activePage-2, activePage-1, activePage, activePage+1, activePage+2];
+};
+
+export const ParentComponent: React.FC<{page: number, pageCount: number}> = ({page, pageCount}) => {
+    const [currentPage, setCurrentPage] = useState(page);
+    const [visiblePages, setVisiblePages] = useState(determinePageToShow(page, pageCount));
+    const [buttonStates, setButtonStates] = useState({
+        leftArrow: visiblePages[0] > 1,
+        rightArrow: visiblePages[visiblePages.length - 1] < pageCount
+    });
+    const handlePageChange = (newPage: number) => {
+        setCurrentPage(newPage);
+        setVisiblePages(determinePageToShow(newPage, pageCount));
     };
-    return <div className={styles.tabs}>
 
+    const handleLeftArrowClick = () => {
+        if (visiblePages[0] <= 1) return;
+        setVisiblePages(visiblePages.map(p => p - 1));
+    };
+
+    const handleRightArrowClick = () => {
+        if (visiblePages[visiblePages.length - 1] >= pageCount) return;
+        setVisiblePages(visiblePages.map(p => p + 1));
+    };
+
+    useEffect(() => {
+        setButtonStates({
+            leftArrow: visiblePages[0] === 1,
+            rightArrow: visiblePages[visiblePages.length - 1] === pageCount
+        });
+    }, [visiblePages, pageCount]);
+    return (
+        <>
+            <PageNavigator
+                pages={visiblePages}
+                activePage={currentPage}
+                onPageChange={handlePageChange}
+                onLeftArrowClick={handleLeftArrowClick}
+                onRightArrowClick={handleRightArrowClick}
+                buttonStates={buttonStates}
+            />
+        </>
+    );
+};
+
+const PageNavigator: React.FC<PageNavigatorProps> = ({activePage, onPageChange, pages, onLeftArrowClick, onRightArrowClick, buttonStates}) => {
+    return <div className={styles.pages}>
+        <MiniButton topic='left-caret' isDisabled={buttonStates.leftArrow} size='medium' onClick={onLeftArrowClick}/>
+        {pages.map(page => (
+            <PageItem
+                key={page}
+                onClick={() => onPageChange(page)}
+                type={page === activePage ? 'active' : 'normal'}
+                index={page}
+            />
+        ))}
+        <MiniButton topic='right-caret' isDisabled={buttonStates.rightArrow} size='medium' onClick={onRightArrowClick}/>
     </div>;
 };
 
-const SubNav: React.FC<SubNavType> = ({type, index, onClick})=>{
-    return <a className={classNames(styles.subnav,{
+const PageItem: React.FC<SubNavType> = ({type, index, onClick})=>{
+    return <a className={classNames(styles.page,{
             [styles.active]: type === 'active'
         }
-        )} href='#'>{index}</a>;
+    )} href='#' onClick={e=>{
+        e.preventDefault();
+        onClick();
+    }}>{index}</a>;
 };

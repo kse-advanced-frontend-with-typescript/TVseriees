@@ -24,8 +24,8 @@ export const Primary: Story ={
                 <MenuButton authorized={false} links={links}/>
                 <h1>TV Serieees</h1>
                 <HeaderRight>
-                    <AuthorizationButton type={'log-in'} form={false} onClick={fn}/>
-                    <AuthorizationButton type={'sign'} form={false} onClick={fn}/>
+                    <AuthorizationButton type={'log-in'} onClick={fn}/>
+                    <AuthorizationButton type={'sign'} onClick={fn}/>
                 </HeaderRight>
             </Header>
         );
@@ -41,8 +41,8 @@ export const Secondary: Story ={
                 <h1>TV Serieees</h1>
                 <HeaderRight>
                     <MiniButton topic='search' size='medium' onClick={fn}/>
-                    <AuthorizationButton type={'log-in'} form={false} onClick={fn}/>
-                    <AuthorizationButton type={'sign'} form={false} onClick={fn}/>
+                    <AuthorizationButton  type={'log-in'} onClick={fn}/>
+                    <AuthorizationButton type={'sign'}  onClick={fn}/>
                 </HeaderRight>
             </Header>
         );
@@ -57,9 +57,9 @@ export const Third: Story ={
                 <MenuButton  authorized={true}links={links}/>
                 <h1>TV Serieees</h1>
                 <HeaderRight>
-                    <MiniButton topic='search' size='medium' onClick={fn}/>
+                    <MiniButton topic='search' size='medium'onClick={fn}/>
                     <h2>Username</h2>
-                    <AuthorizationButton type={'log-out'} form={false} onClick={fn}/>
+                    <AuthorizationButton  type={'log-out'} onClick={fn}/>
                 </HeaderRight>
             </Header>
         );
@@ -74,7 +74,7 @@ export const Forth: Story ={
                 <h1>TV Serieees</h1>
                 <HeaderRight>
                     <h2>Username</h2>
-                    <AuthorizationButton type={'log-out'} form={false} onClick={fn}/>
+                    <AuthorizationButton type={'log-out'} onClick={fn}/>
                 </HeaderRight>
             </Header>
         );

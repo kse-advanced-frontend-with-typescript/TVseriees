@@ -10,9 +10,9 @@ import cross from './icons/cross.png';
 import emptyStar from './icons/empty-star.png';
 import blackCross from './icons/black-cross.png';
 import classNames from 'classnames';
-
+import caret from './icons/caret.png';
 type IconProps ={
-    topic: 'search' | 'arrow' | 'star' | 'vote' | 'cross' | 'envelope' | 'call' | 'empty-star' | 'black-cross';
+    topic: 'search' | 'arrow' | 'star' | 'vote' | 'cross' | 'envelope' | 'call' | 'empty-star' | 'black-cross' | 'left-caret' | 'right-caret';
     size: 'mini' | 'medium' ;
 }
 export const Icon: React.FC<IconProps> = ({topic, size})=>{
@@ -27,6 +27,8 @@ export const Icon: React.FC<IconProps> = ({topic, size})=>{
             case 'cross': return cross;
             case 'empty-star': return emptyStar;
             case 'black-cross' : return blackCross;
+            case 'left-caret':
+            case 'right-caret': return caret;
         }
     };
     return (
@@ -34,6 +36,7 @@ export const Icon: React.FC<IconProps> = ({topic, size})=>{
             className={classNames({
                 [styles.mini]: size === 'mini',
                 [styles.medium]: size === 'medium',
+                [styles.mirror]: topic === 'right-caret'
             })}
             src={getSource()}
             alt={`${topic} icon`}

@@ -4,8 +4,8 @@ import classNames from 'classnames';
 
 type AuthorizationButtonProps = {
     type: 'log-in' | 'sign' | 'log-out' | 'delete everything' | 'cancel',
-    warning: boolean
-    form: boolean,
+    warning?: boolean
+    form?: boolean,
     onClick: ()=>void;
 }
 
