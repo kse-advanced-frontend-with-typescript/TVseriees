@@ -23,7 +23,7 @@ export const AuthorizationButton: React.FC<AuthorizationButtonProps> = ({warning
             buttonText = 'Log Out';
             break;
         case 'delete everything':
-            buttonText = 'Delete Everything';
+            buttonText = 'Delete';
             break;
         case 'cancel':
             buttonText = 'Cancel';

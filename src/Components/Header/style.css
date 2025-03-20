@@ -2,7 +2,7 @@
 .header{
     display: flex;
     justify-content: space-between;
-    background-color: #5FB8D4;
+    background-color: rgba(95, 184, 212, 0.82);
     font-family: "Joti One", cursive;
     color: #00161C;
     font-weight: bold;
@@ -10,6 +10,7 @@
     align-items: center;
     flex-wrap: wrap;
     padding: 1rem 2rem;
+    position: sticky;
 }
 
 
@@ -26,7 +27,6 @@
 }
 
 h2 {
-    max-width: 20rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

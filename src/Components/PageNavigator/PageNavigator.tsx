@@ -16,7 +16,7 @@ type PageNavigatorProps = {
 
 }
 
-type SubNavType = {
+type PageItemProps = {
     type: 'active' | 'normal',
     index: number,
     onClick: ()=>void,
@@ -85,7 +85,7 @@ const PageNavigator: React.FC<PageNavigatorProps> = ({activePage, onPageChange, 
     </div>;
 };
 
-const PageItem: React.FC<SubNavType> = ({type, index, onClick})=>{
+const PageItem: React.FC<PageItemProps> = ({type, index, onClick})=>{
     return <a className={classNames(styles.page,{
             [styles.active]: type === 'active'
         }
