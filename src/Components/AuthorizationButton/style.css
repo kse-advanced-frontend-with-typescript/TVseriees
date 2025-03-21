@@ -47,10 +47,13 @@
 }
 .button:hover{
     transform: scale(1.1);
-    box-shadow: 0 6px 12px 4px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 0 100px rgba(2, 1, 19, 0.8);
 
 }
+.warning:hover{
+    box-shadow: inset 0 0 0 100px rgba(149, 67, 238, 0.53);
 
+}
 .error-message{
     color: #36053b;
 }

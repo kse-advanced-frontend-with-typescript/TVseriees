@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './style.css';
 import { MiniButton } from '../MiniButton/MiniButton';
 import { Rating } from '../Rating/Rating';
@@ -9,45 +9,62 @@ type ButtonStates = {
     circle: boolean;
 };
 
-type SeriesCardProps = {
+type SeriesCardBaseProps = {
     imagePath: string;
     name: string;
-    voteCount?: number;
-    averageVote?: number;
-    topicOfCard: 'favourites' | 'to-watch' | 'watched' | 'usual';
 };
 
-export const SeriesCard: React.FC<SeriesCardProps> = ({imagePath, name, topicOfCard, voteCount=0, averageVote=0}) => {
-    const [cardVisible, setCardVisible] = useState(true);
-    return <>{cardVisible && ( <div className={styles.seriesCard}>
-        <img className={styles.image} src={imagePath} alt={`${name} image`}/>
-        <div className={styles.h3}><h3>{name}</h3></div>
-        {topicOfCard === 'usual' && (<UsualButtons/>)}
-        {topicOfCard === 'favourites' && (
-            <OtherButtons
-                displayType="heart"
-                voteCount={voteCount}
-                averageVote={averageVote}
-                onButtonClick={() => setCardVisible(!cardVisible)}
-            />
-        )}
-        {topicOfCard === 'to-watch' && (
-            <OtherButtons
-                displayType="star"
-                voteCount={voteCount}
-                averageVote={averageVote}
-                onButtonClick={() => setCardVisible(!cardVisible)}
-            />
-        )}
-        {topicOfCard === 'watched' && (
-            <OtherButtons
-                displayType="circle"
-                voteCount={voteCount}
-                averageVote={averageVote}
-                onButtonClick={() => setCardVisible(!cardVisible)}
-            />
-        )}
-    </div>)}</>;
+type UsualCardProps = {
+    onStarClick: ()=>void
+    onHeartClick: ()=>void
+    onCircleClick: ()=>void
+};
+
+type SeriesCardProps =
+    (SeriesCardBaseProps & UsualCardProps &{
+        topicOfCard: 'usual'
+    }) |
+    (SeriesCardBaseProps & {
+        topicOfCard: 'favourites' | 'to-watch' | 'watched'
+        voteCount: number
+        averageVote: number
+        onIconClick: () => void;
+    });
+
+export const SeriesCard: React.FC<SeriesCardProps> = (props) => {
+    const { imagePath, name, topicOfCard} = props;
+
+    return (
+        <div className={styles.seriesCard}>
+            <img className={styles.image} src={imagePath} alt={`${name} image`}/>
+            <div className={styles.h3}><h3>{name}</h3></div>
+            {topicOfCard === 'usual' && (<UsualButtons onCircleClick={props.onCircleClick} onHeartClick={props.onHeartClick} onStarClick={props.onStarClick}/>)}
+            {topicOfCard === 'favourites' && (
+                <OtherButtons
+                    displayType="heart"
+                    voteCount={props.voteCount}
+                    averageVote={props.averageVote}
+                    onButtonClick={props.onIconClick}
+                />
+            )}
+            {topicOfCard === 'to-watch' && (
+                <OtherButtons
+                    displayType="star"
+                    voteCount={props.voteCount}
+                    averageVote={props.averageVote}
+                    onButtonClick={props.onIconClick}
+                />
+            )}
+            {topicOfCard === 'watched' && (
+                <OtherButtons
+                    displayType="circle"
+                    voteCount={props.voteCount}
+                    averageVote={props.averageVote}
+                    onButtonClick={props.onIconClick}
+                />
+            )}
+        </div>
+    );
 };
 
 type OtherButtonsProps = {
@@ -66,34 +83,35 @@ const OtherButtons: React.FC<OtherButtonsProps> = ({voteCount, averageVote, disp
     );
 };
 
-const UsualButtons: React.FC = () => {
+const UsualButtons: React.FC<UsualCardProps> = ({onHeartClick, onStarClick, onCircleClick}) => {
     const [topic, setTopic] = React.useState<ButtonStates>({
         star: false,
         heart: false,
         circle: false,
     });
-    const onClick = (type: keyof ButtonStates) => {
+    const onClick = (type: keyof ButtonStates, callback: ()=>void) => {
         setTopic(previousState => ({
             ...previousState,
             [type]: !previousState[type]
         }));
+        callback();
     };
     return (
         <div className={styles.buttons}>
             <MiniButton
                 topic={topic.star ? 'star' : 'empty-star'}
                 size='mini'
-                onClick={() => onClick('star')}
+                onClick={() => onClick('star', onStarClick)}
             />
             <MiniButton
                 topic={topic.heart ? 'heart' : 'empty-heart'}
                 size='mini'
-                onClick={() => onClick('heart')}
+                onClick={() => onClick('heart', onHeartClick)}
             />
             <MiniButton
                 topic={topic.circle ? 'circle' : 'empty-circle'}
                 size='mini'
-                onClick={() => onClick('circle')}
+                onClick={() => onClick('circle', onCircleClick)}
             />
         </div>
     );

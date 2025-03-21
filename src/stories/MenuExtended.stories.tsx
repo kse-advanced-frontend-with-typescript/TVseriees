@@ -7,17 +7,29 @@ const meta : Meta<typeof  MenuExtended>={
     title: 'MenuExteded',
 
 };
+const personalizedLinks = ['favourites', 'to-watch', 'watched'];
 
 export default meta;
 type Story = StoryObj<typeof meta>
-export const Primary: Story ={
+export const Authorized: Story ={
     args: {
         links: [
             'top-rated',
             'on the air in the next 7 days',
             'popular',
-            'to-watch',
-            'watched',
-            'favorite'
-        ]
+
+        ],
+        personalizedLinks: personalizedLinks,
+        authorized: true
+    }};
+
+export const UnAuthorized: Story ={
+    args: {
+        links: [
+            'top-rated',
+            'on the air in the next 7 days',
+            'popular',
+
+        ],
+        authorized: false
     }};

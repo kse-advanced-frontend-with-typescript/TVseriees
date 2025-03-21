@@ -28,7 +28,7 @@ const determinePageToShow = (activePage: number, pageCount: number): number[] =>
     return [activePage-2, activePage-1, activePage, activePage+1, activePage+2];
 };
 
-export const ParentComponent: React.FC<{page: number, pageCount: number}> = ({page, pageCount}) => {
+export const PageParentComponent: React.FC<{page: number, pageCount: number, onPageSelect: (page: number)=>void}> = ({page, pageCount, onPageSelect}) => {
     const [currentPage, setCurrentPage] = useState(page);
     const [visiblePages, setVisiblePages] = useState(determinePageToShow(page, pageCount));
     const [buttonStates, setButtonStates] = useState({
@@ -36,6 +36,7 @@ export const ParentComponent: React.FC<{page: number, pageCount: number}> = ({pa
         rightArrow: visiblePages[visiblePages.length - 1] < pageCount
     });
     const handlePageChange = (newPage: number) => {
+        onPageSelect(newPage);
         setCurrentPage(newPage);
         setVisiblePages(determinePageToShow(newPage, pageCount));
     };

@@ -14,12 +14,12 @@ type Story = StoryObj<typeof meta>
 export const ShowMore: Story ={
     args: {
         purpose: 'Show more',
-        onClick:  fn
+        onClick:  fn()
     }
 };
 export const Delete: Story ={
     args: {
         purpose: 'Delete',
-        onClick: fn
+        onClick: fn()
     }
 };

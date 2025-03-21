@@ -14,12 +14,16 @@ type Story = StoryObj<typeof meta>
 export const DeleteEverything: Story ={
     args:{
         onClick: fn(),
-        purpose: 'delete everything'
+        purpose: 'delete everything',
+        onCancel: fn(),
+        message: 'Are you sure?'
     }
 };
 export const LogOut: Story ={
     args:{
         onClick: fn(),
-        purpose: 'log-out'
+        purpose: 'log-out',
+        onCancel: fn(),
+        message: 'Are you sure?'
     }
 };

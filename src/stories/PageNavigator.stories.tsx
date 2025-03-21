@@ -1,8 +1,8 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {ParentComponent} from '../Components/PageNavigator/PageNavigator';
+import {PageParentComponent} from '../Components/PageNavigator/PageNavigator';
 
-const meta : Meta<typeof  ParentComponent>={
-    component: ParentComponent,
+const meta : Meta<typeof  PageParentComponent>={
+    component: PageParentComponent,
     title: 'PageNavigator',
     tags: ['autodocs']
 
