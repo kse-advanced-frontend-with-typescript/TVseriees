@@ -4,7 +4,7 @@
   "description": "Coursework",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles --passWithNoTests",
     "start": "webpack serve --open --mode=development",
     "build": "webpack --mode production",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
@@ -47,6 +47,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.4.0",
+    "react-router-dom": "^7.4.0",
     "ts-loader": "^9.5.2"
   },
   "devDependencies": {

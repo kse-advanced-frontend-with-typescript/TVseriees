@@ -2,13 +2,9 @@ import React from 'react';
 import styles from './style.css';
 import {Icon} from '../Icon/Icon';
 
-type ContactProp = {
+export type ContactProp = {
     typeOfContact: 'email' | 'call',
     contact: string
-}
-
-type ContactsProps = {
-    contacts: ContactProp[];
 }
 
 const myContacts: ContactProp[] = [
@@ -23,7 +19,13 @@ const links: string[] = [
     'watched',
     'favorite'
 ];
-export const Footer: React.FC = () => {
+
+type FooterProps = {
+    links: string[]
+    contacts: ContactProp[]
+
+}
+export const Footer: React.FC<FooterProps> = ({links, contacts}) => {
     const currentYear = new Date().getFullYear();
     return <footer className={styles.footer}>
         <div className={styles.footerItems}>
@@ -32,14 +34,14 @@ export const Footer: React.FC = () => {
                 <p>Discover and explore your favorite TV series from around the world.</p>
             </div>
             <Links links={links}/>
-            <Contacts  contacts={myContacts}/>
+            <Contacts  contacts={contacts}/>
         </div>
         <p className={styles.copyright}>&copy; {currentYear} TV Serieees. All rights reserved.</p>
 
     </footer>;
 };
 
-const Contacts: React.FC<ContactsProps> = ({contacts}) => {
+const Contacts: React.FC<{contacts: ContactProp[]}> = ({contacts}) => {
     return <div className={styles.contactsSection}>
         <h4>Contacts</h4>
         <ul>

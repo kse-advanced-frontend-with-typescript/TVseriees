@@ -20,7 +20,7 @@ type UsualCardProps = {
     onCircleClick: ()=>void
 };
 
-type SeriesCardProps =
+export type SeriesCardProps =
     (SeriesCardBaseProps & UsualCardProps &{
         topicOfCard: 'usual'
     }) |
