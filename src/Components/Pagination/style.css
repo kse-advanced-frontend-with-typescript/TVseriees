@@ -1,6 +1,14 @@
-pagination{
+.pagination{
     display: flex;
     justify-content: center;
-    gap: 2rem;
     align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .pagination{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
 }

@@ -14,19 +14,22 @@ export const poster = {
     path: 'https://m.media-amazon.com/images/I/81FX6up7PhL._AC_UF894,1000_QL80_.jpg'
 };
 export const seriesData = [
-    {
+    {   id: 1,
         imagePath: '/images/breaking-bad.jpg',
         name: 'Breaking Bad',
     },
     {
+        id: 1,
         imagePath: '/images/stranger-things.jpg',
         name: 'Stranger Things',
     },
     {
+        id: 1,
         imagePath: '/images/the-crown.jpg',
         name: 'The Crown',
     },
     {
+        id: 1,
         imagePath: '/images/the-mandalorian.jpg',
         name: 'The Mandalorian',
     }
@@ -184,9 +187,9 @@ export const details = {
 
 export const actordata= {name: 'Tom Hanks',
     knownFor: [
-    'Forrest Gump',
-    'Saving Private Ryan',
-    'Cast Away',
-    'The Green Mile',
-    'Toy Story'
+        {id: 1, name: 'Forrest Gump'},
+        {id: 1, name:'Saving Private Ryan'},
+        {id: 1, name:'Cast Away'},
+        {id: 1, name:'The Green Mile'},
+        {id: 1, name:'Toy Story'}
 ]};

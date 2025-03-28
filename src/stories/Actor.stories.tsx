@@ -15,11 +15,11 @@ export const Primary: Story ={
     args:{
         name: 'Tom Hanks',
         knownFor: [
-            'Forrest Gump',
-            'Saving Private Ryan',
-            'Cast Away',
-            'The Green Mile',
-            'Toy Story'
+            {id: 1, name: 'Forrest Gump'},
+            {id: 1, name:'Saving Private Ryan'},
+            {id: 1, name:'Cast Away'},
+            {id: 1, name:'The Green Mile'},
+            {id: 1, name:'Toy Story'}
         ]
     }
 };

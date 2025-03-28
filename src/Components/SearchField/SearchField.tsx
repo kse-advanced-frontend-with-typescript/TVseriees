@@ -20,7 +20,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({genres, languages, coun
     const [year, setYear] = useState<string>('');
 
     return (
-        <>
+        <div className={styles.search}>
             <div className={styles.filterContainer}> <Year value={year} onInput={setYear}/>
                 <FieldFilter
                     typeOfField='genre'
@@ -47,6 +47,6 @@ export const SearchField: React.FC<SearchFieldProps> = ({genres, languages, coun
                 />
             </div>
             <SearchBar />
-        </>
+        </div>
     );
 };

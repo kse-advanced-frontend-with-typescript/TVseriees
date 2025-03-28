@@ -6,14 +6,14 @@ import {Header, HeaderRight} from './Components/Header/Header';
 import {MenuButton} from './Components/MenuButton/MenuButton';
 import {links, myContacts} from './ExampleData';
 import {AuthorizationButton} from './Components/AuthorizationButton/AuthorizationButton';
-import {Icon} from './Components/Icon/Icon';
 import {LoginPage} from './Pages/AuthPage/LoginPage';
 import {SignPage} from './Pages/AuthPage/SignPage';
-import {MiniButton} from "./Components/MiniButton/MiniButton";
-
+import {MiniButton} from './Components/MiniButton/MiniButton';
+import styles from './main.css';
+import {SeriePage} from './Pages/SeriePage/SeriePage';
 export const App: React.FC = ()=>{
     return (
-        <><Header>
+        <div className={styles.wrapper}><Header>
             <MenuButton authorized={false} links={links}/>
             <h1>TVSerieees</h1>
             <HeaderRight>
@@ -22,14 +22,17 @@ export const App: React.FC = ()=>{
             <Link to={'/sign'}><AuthorizationButton type={'sign'} /></Link>
             </HeaderRight>
         </Header>
-            <Routes>
-                <Route path='/' element={<Main />}/>
-                <Route path='login' element={<LoginPage/>}/>
-                <Route path='sign' element={<SignPage/>}/>
-            </Routes>
+            <div className={styles.contentArea}>
+                <Routes>
+                    <Route path='/' element={<Main />}/>
+                    <Route path='login' element={<LoginPage/>}/>
+                    <Route path='sign' element={<SignPage/>}/>
+                    <Route path='serie/:id' element={<SeriePage/>}/>
+                </Routes>
+            </div>
             <Footer links={links} contacts={myContacts}/>
 
-        </>
+        </div>
 
     );
 };

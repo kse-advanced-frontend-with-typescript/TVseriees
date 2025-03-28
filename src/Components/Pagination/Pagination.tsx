@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './style.css';
-import {PageParentComponent} from "../PageNavigator/PageNavigator";
-import {Button} from "../Button/Button";
+import {PageParentComponent} from '../PageNavigator/PageNavigator';
+import {Button} from '../Button/Button';
 
 
 type PaginationProps = {

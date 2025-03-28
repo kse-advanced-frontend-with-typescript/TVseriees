@@ -1,8 +1,8 @@
 import {Static, Type} from '@sinclair/typebox';
 import {TypeCompiler} from '@sinclair/typebox/compiler';
-import {schemaErrorToError} from "../../schemaErrorToError";
-import {convertToType} from "../../convertToType";
-const baseImageUrl = "https://image.tmdb.org/t/p/";
+import {schemaErrorToError} from '../../schemaErrorToError';
+import {convertToType} from '../../convertToType';
+const baseImageUrl = 'https://image.tmdb.org/t/p/';
 
 const getHeaders = (api_key: string): Headers =>{
     const headers = new Headers();
