@@ -2,6 +2,7 @@ import {Static, Type} from '@sinclair/typebox';
 import {TypeCompiler} from '@sinclair/typebox/compiler';
 import {schemaErrorToError} from '../../schemaErrorToError';
 import {convertToType} from '../../convertToType';
+import {poster} from "../../../ExampleData";
 const baseImageUrl = 'https://image.tmdb.org/t/p/';
 
 const getHeaders = (api_key: string): Headers =>{
@@ -14,7 +15,7 @@ const getHeaders = (api_key: string): Headers =>{
 
 const ImageSchema = Type.Object({
     posters: Type.Array(Type.Object(
-        {file_path: Type.String()}
+        {file_path: Type.Union([Type.String(), Type.Null()])}
     ))
 });
 const SerieDetailsSchema = Type.Object({
@@ -39,18 +40,17 @@ const SerieDetailsSchema = Type.Object({
 const SerieCardItemResultSchema = Type.Object({
     page: Type.Number(),
     results: Type.Array(Type.Object({
-        id: Type.Number(),
-        name: Type.String(),
-        poster_path: Type.String()
-    })),
+            id: Type.Number(),
+            name: Type.String(),
+            poster_path: Type.Union([Type.String(), Type.Null()])
+        })),
     total_pages: Type.Number(),
     total_results: Type.Number()
 });
-
-export type  SerieDetails = Static<typeof SerieDetailsSchema>
+export type SerieDetails = Static<typeof SerieDetailsSchema>
 export type SeriesResult = Static<typeof SerieCardItemResultSchema>
 
-export const initSeriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
+export const seriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
 
     const get = async (page: number = 1): Promise<SeriesResult> => {
 
@@ -72,20 +72,21 @@ export const initSeriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
     };
 
     const getImages = async (id: number): Promise<string[]> => {
-        const headers = new Headers();
-        headers.set('Content-Type', 'application/json');
-        headers.set('cache-control', 'no-cache');
-        headers.set('Authorization', `Bearer ${api_key}`);
         const response = await fetchAPI(`https://api.themoviedb.org/3/tv/${id}/image`, {
             headers: getHeaders(api_key)
         });
         if (!response.ok) throw Error(`Could not fetch map item: ${response.statusText}`);
         const data = await response.json();
         const imageData = convertToType(data, ImageSchema);
-        return imageData.posters.map(poster =>`https://image.tmdb.org/t/p/original${poster.file_path}`);
+        return imageData.posters.filter(poster=> poster.file_path != null).map(poster =>`https://image.tmdb.org/t/p/original${poster.file_path}`);
     };
 
     // const getReviews = async (id: number): Promise<string[]> =>{
     //
     // };
+    return {
+        get,
+        getDetails,
+        getImages
+    };
 };

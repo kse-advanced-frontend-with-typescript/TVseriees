@@ -3,6 +3,7 @@ import styles from './style.css';
 import {MiniButton} from '../MiniButton/MiniButton';
 import {AuthorizationButton} from '../AuthorizationButton/AuthorizationButton';
 import classNames from 'classnames';
+import {Link} from "react-router";
 
 
 
@@ -24,8 +25,12 @@ export const MenuExtended: React.FC<MenuExtendedProps>=({links, personalizedLink
         <Links links={links}/>
         {authorized && <Links className='pers' links={personalizedLinks}/>}
         <div className={styles.auth}>
-            <AuthorizationButton warning={false} type={authorized? 'log-out' : 'log-in'} form={false} onClick={()=>alert('clicked')}/>
-            {!authorized && <AuthorizationButton type={'sign'} onClick={()=>alert('clicked')}/>}
+            {authorized && <AuthorizationButton type={'log-out'} onClick={()=>alert('clicked')}/>}
+            {!authorized && <div className={styles.auth}>
+                <Link to={'sign'}><AuthorizationButton type={'sign'}/></Link>
+                <Link to={'login'}><AuthorizationButton type={'log-in'}/></Link>
+            </div>
+            }
         </div>
 
     </div>;
