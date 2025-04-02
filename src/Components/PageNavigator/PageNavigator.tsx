@@ -57,14 +57,18 @@ export const PageParentComponent: React.FC<{page: number, pageCount: number, onP
             rightArrow: visiblePages[visiblePages.length - 1] === pageCount
         });
     }, [visiblePages, pageCount]);
-    return <PageNavigator
+    return (
+        <>
+            <PageNavigator
                 pages={visiblePages}
                 activePage={currentPage}
                 onPageChange={handlePageChange}
                 onLeftArrowClick={handleLeftArrowClick}
                 onRightArrowClick={handleRightArrowClick}
                 buttonStates={buttonStates}
-            />;
+            />
+        </>
+    );
 };
 
 const PageNavigator: React.FC<PageNavigatorProps> = ({activePage, onPageChange, pages, onLeftArrowClick, onRightArrowClick, buttonStates}) => {

@@ -1,16 +1,19 @@
 .form{
-
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     background-color: rgba(148, 186, 227, 0.85);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 3rem 1.2rem;
-    gap: 2rem;
+    padding: 1rem;
+    gap: 10px;
     width:50%;
     border: 0.2rem solid #6762b7;
-    margin: 2rem auto;
+    z-index: 1000;
 }
 
 .form input{
@@ -33,5 +36,9 @@ input::placeholder{
 @media only screen and (max-width: 768px) {
     .form {
         width: 85%;
+        top: 2%;
+        left: 50%;
+        transform: translateX(-50%);
+        position: absolute;
     }
 }

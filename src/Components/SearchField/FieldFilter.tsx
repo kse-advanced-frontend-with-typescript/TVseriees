@@ -26,8 +26,8 @@ export const FieldFilter: React.FC<FieldProps> = ({typeOfField, fields, value, o
             className={styles.filterInput}
         />
         <datalist id={datalistId}>
-            {fields.map((f, index) => (
-                <option key={index} value={f} />
+            {fields.map(f => (
+                <option key={f} value={f} />
             ))}
         </datalist>
     </div>;

@@ -4,7 +4,7 @@ import {MiniButton} from '../MiniButton/MiniButton';
 import {Poster} from '../Poster/Poster';
 import {Rating} from '../Rating/Rating';
 
-export type Season = {
+type Season = {
     index: number,
     episodes: EpisodeType[]
 }
@@ -24,7 +24,7 @@ export const Seasons: React.FC<{seasons: Season[]}> = ({seasons}) => {
 type EpisodeType = {
     index: number,
     name: string,
-    duration: number | 'unknown',
+    duration: number,
     averageVote: number,
     voteCount: number,
     overview: string,

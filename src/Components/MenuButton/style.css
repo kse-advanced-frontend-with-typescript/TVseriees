@@ -39,34 +39,3 @@
     transform: scale(1.1);
 
 }
-
-@media only screen and (max-width: 768px) {
-
-    .line{
-        width:4.2rem;
-        height: 0.4rem;
-    }
-    .menu-component{
-        gap: 0.8rem;
-    }
-
-    .menu-text{
-        font-size: 1.6rem;
-        font-weight: bold;
-        font-family: "Joti One", serif;
-        text-shadow: 0.5px 0.5px 1px #040d17;
-        color: #00161C;
-    }
-
-    .menu-component:hover .line {
-        background-color: #07637e;
-        transform: scale(1.1);
-    }
-
-    .menu-component:hover .menu-text {
-        color: #07637e;
-        transform: scale(1.1);
-
-    }
-
-}

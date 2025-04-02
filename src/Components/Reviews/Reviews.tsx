@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './style.css';
-export type ReviewType = {
+type ReviewType = {
     content: string,
     author: string
 }

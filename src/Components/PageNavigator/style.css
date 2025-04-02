@@ -1,12 +1,11 @@
 .pages{
     display: flex;
-    width: 100%;
-    margin: 0 auto;
+    width: 30%;
     align-items: center;
 }
 
 .page{
-    font-size: 1.5rem;
+    font-size: 2rem;
     border: 0.1rem solid #5FB8D4;
     padding: 0.5rem;
     background-color: rgba(88, 218, 224, 0.39);

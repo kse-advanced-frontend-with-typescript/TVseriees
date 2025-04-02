@@ -6,7 +6,7 @@ type MiniButtonProps ={
     topic: 'search' | 'arrow' | 'cross' | 'black-cross' | 'star' | 'empty-star' | 'left-caret' | 'right-caret'
         | 'heart' | 'empty-heart' | 'empty-circle' | 'circle';
     size: 'mini' | 'medium' ;
-    onClick?: ()=>void;
+    onClick: ()=>void;
     isDisabled?: boolean
 
 }

@@ -1,11 +1,13 @@
 import React, { FormEvent, useState } from 'react';
 import styles from './style.css';
 import { AuthorizationButton } from '../AuthorizationButton/AuthorizationButton';
+import { MiniButton } from '../MiniButton/MiniButton';
 
 type SignUpFormProps= {
     onSubmit: (username: string, email: string, password: string)=>void
 }
 export const SignUpForm: React.FC<SignUpFormProps> = ({onSubmit}) => {
+    const [show, setShow] = useState(false);
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -41,13 +43,18 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({onSubmit}) => {
 
     return (
         <>
-
+            {!show && (
                 <form className={styles.form} onSubmit={submit}>
                     {passwordError && (
                         <p className={styles.errorMessage}>
                             {passwordError}
                         </p>
                     )}
+                    <MiniButton
+                        topic='black-cross'
+                        size='medium'
+                        onClick={() => setShow(!show)}
+                    />
                     <input
                         type='text'
                         id='username'
@@ -90,7 +97,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({onSubmit}) => {
                         onClick={()=>submit}
                     />
                 </form>
-
+            )}
         </>
     );
 };

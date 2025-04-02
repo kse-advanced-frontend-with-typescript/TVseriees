@@ -1,58 +1,73 @@
-import React, {FormEvent, useEffect, useRef, useState} from 'react';
+import React, { FormEvent, useState } from 'react';
 import styles from './style.css';
 import {AuthorizationButton} from '../AuthorizationButton/AuthorizationButton';
+import {MiniButton} from '../MiniButton/MiniButton';
 
-export const LogInForm: React.FC<{onSubmit: (email: string, password: string)=>void, passError?: string}> = ({onSubmit, passError}) => {
-    const email = useRef<HTMLInputElement>(null);
-    const password = useRef<HTMLInputElement>(null);
+export const LogInForm: React.FC<{onSubmit: (email: string, password: string)=>void}> = ({onSubmit}) => {
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
+    const [passwordError, setPasswordError] = useState('');
 
-    const [passwordError, setPasswordError] = useState(passError || '');
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {id, value} = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [id]: value
+        }));
 
-    useEffect(() => {
-        if(passError) setPasswordError(passError);
-    }, [passError]);
+    };
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         alert('Signed in');
-        if(email.current && password.current){
-            onSubmit(email.current.value, password.current.value);
-            console.log(email.current.value);
-            console.log(password.current.value);
-        }
+        onSubmit(formData.email, formData.password);
+        console.log(formData);
     };
 
+    const [show, setShow] = useState(false);
     return (
         <>
-            <form className={styles.form} onSubmit={submit}>
-                {passwordError && (
-                    <p className={styles.errorMessage}>
-                        {passwordError}
-                    </p>
-                )}
-                <input
-                    ref={email}
-                    type='email'
-                    id='email'
-                    placeholder='your email...'
-                    required
-                    aria-label='Email'
-                />
-                <input
-                    ref={password}
-                    type='password'
-                    id='password'
-                    placeholder='password...'
-                    minLength={8}
-                    required
-                    aria-label='Password'
-                />
-                <AuthorizationButton
-                    warning={false}
-                    type='log-in'
-                    form={true}
-                />
-            </form>
+            {!show && (
+                    <form className={styles.form} onSubmit={submit}>
+                        {passwordError && (
+                            <p className={styles.errorMessage}>
+                                {passwordError}
+                            </p>
+                        )}
+                        <MiniButton
+                            topic='black-cross'
+                            size='medium'
+                            onClick={() => setShow(!show)}
+                        />
+                        <input
+                            type='email'
+                            id='email'
+                            placeholder='your email...'
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                            aria-label='Email'
+                        />
+                        <input
+                            type='password'
+                            id='password'
+                            placeholder='password...'
+                            value={formData.password}
+                            minLength={8}
+                            onChange={handleChange}
+                            required
+                            aria-label='Password'
+                        />
+                        <AuthorizationButton
+                            warning={false}
+                            type='log-in'
+                            form={true}
+                            onClick={()=>submit}
+                        />
+                    </form>
+            )}
         </>
     );
 };
