@@ -6,7 +6,7 @@ type AuthorizationButtonProps = {
     type: 'log-in' | 'sign' | 'log-out' | 'delete everything' | 'cancel',
     warning?: boolean
     form?: boolean,
-    onClick: ()=>void;
+    onClick?: ()=>void;
 }
 
 export const AuthorizationButton: React.FC<AuthorizationButtonProps> = ({warning, type, form, onClick}) => {

@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './style.css';
 import {Rating} from '../Rating/Rating';
+import {Link} from 'react-router';
 
-type SeriesDetailsProps = {
-    episode_run_time: number,
+export type SerieDetails = {
+    episode_run_time: number | 'unknown',
     first_air_date: string,
     created_by: string[],
     genres: string[],
@@ -18,10 +19,12 @@ type SeriesDetailsProps = {
     vote_count: number,
     cast: {
         id: number,
-        actor: string
-    }[]
+        name: string
+    }[] | 'unknown',
+    overview: string,
+    poster_path: string
 };
-
+type SeriesDetailsProps = Omit<SerieDetails, 'overview' | 'poster_path'>;
 export const SeriesDetails: React.FC<SeriesDetailsProps> = (props) => {
     return (
         <div className={styles.detailItems}>
@@ -45,7 +48,7 @@ const Details: React.FC<SeriesDetailsProps> = (props) => {
             <DetailItem label='Number of episodes:' value={props.number_of_episodes.toString()}/>
             <DetailItem label='Episode runtime (minutes):' value={props.episode_run_time.toString()}/>
             <DetailItem label='Production companies:' value={props.production_companies.join(', ')}/>
-            <SeriesCast cast={props.cast}/>
+            {props.cast!='unknown' && (<SeriesCast cast={props.cast}/>)}
         </div>
     );
 };
@@ -59,17 +62,19 @@ const DetailItem: React.FC<{label: string, value: string}> = ({label, value}) =>
     );
 };
 
-const SeriesCast: React.FC<{cast: { id: number, actor: string }[]}> = ({cast}) => {
+const SeriesCast: React.FC<{cast: { id: number, name: string }[] | 'unknown'}> = ({cast}) => {
     return (
         <div className={styles.item}>
             <h5 className={styles.label}>Cast:</h5>
             <p>
-                {cast.map((obj, index) => (
-                    <>
-                        {index > 0 && ', '}
-                        <a key={obj.id} className={styles.link} href='#'>{obj.actor}</a>
-                    </>
-                ))}
+                {cast !== 'unknown' ?
+                    cast.map((obj, index) => (
+                        <>
+                            {index > 0 && ', '}
+                            <Link to={`/actor/${obj.id}`} key={index} className={styles.link}>{obj.name}</Link>
+                        </>
+                    )) : 'unknown'
+                }
             </p>
         </div>
     );

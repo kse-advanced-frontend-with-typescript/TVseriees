@@ -2,41 +2,36 @@ import React from 'react';
 import styles from './style.css';
 import {MiniButton} from '../MiniButton/MiniButton';
 import {AuthorizationButton} from '../AuthorizationButton/AuthorizationButton';
-import classNames from 'classnames';
+import {Link} from 'react-router';
+import {Links} from '../Footer/Footer';
+import {LinksSection} from '../LinkSection/LinkSection';
 
 
 
 type MenuExtendedProps ={
-    links: string[],
-    personalizedLinks?: string[],
+    links: Links,
     onClose: ()=>void,
     authorized: boolean
 }
 
 
-export const MenuExtended: React.FC<MenuExtendedProps>=({links, personalizedLinks = [], onClose, authorized})=>{
+export const MenuExtended: React.FC<MenuExtendedProps>=({links,  onClose, authorized})=>{
     return <div className={styles.menu}>
         <div className={styles.menuTop}>
             <h3>Menu</h3>
             <MiniButton topic='cross' size='medium' onClick={onClose}/>
         </div>
 
-        <Links links={links}/>
-        {authorized && <Links className='pers' links={personalizedLinks}/>}
+        <LinksSection links={links} style={'menu'}/>
         <div className={styles.auth}>
-            <AuthorizationButton warning={false} type={authorized? 'log-out' : 'log-in'} form={false} onClick={()=>alert('clicked')}/>
-            {!authorized && <AuthorizationButton type={'sign'} onClick={()=>alert('clicked')}/>}
+            {authorized && <AuthorizationButton type={'log-out'} onClick={()=>alert('clicked')}/>}
+            {!authorized && <div className={styles.auth}>
+                <Link to={'sign'}><AuthorizationButton type={'sign'}/></Link>
+                <Link to={'login'}><AuthorizationButton type={'log-in'}/></Link>
+            </div>
+            }
         </div>
 
     </div>;
 };
 
-const Links: React.FC<{className?: string, links: string[]}> = ({className, links}) => {
-    return (
-        <ul className={classNames(styles.menuItems, className && styles[className])}>
-            {links.map((link, index) => {
-                return <li key={index}><a href='#'>{link}</a></li>;
-            })}
-        </ul>
-    );
-};

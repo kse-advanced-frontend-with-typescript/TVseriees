@@ -1,14 +1,10 @@
 import React, {useState} from 'react';
 import styles from './style.css';
 import {MenuExtended} from '../MenuExtended/MenuExtended';
-export const links: string[] = [ 'top-rated',
-    'on the air in the next 7 days',
-    'popular',
-    'to-watch',
-    'watched',
-    'favorite'];
+import {Links} from '../Footer/Footer';
 
-export const MenuButton: React.FC<{authorized: boolean, links: string[]}> = ({authorized, links})=>{
+
+export const MenuButton: React.FC<{authorized: boolean, links: Links}> = ({authorized, links})=>{
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     
     return <><button className={styles.menuComponent} onClick={()=>setIsMenuOpen(true)}>

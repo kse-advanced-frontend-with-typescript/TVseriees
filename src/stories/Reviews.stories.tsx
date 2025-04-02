@@ -1,8 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
-
 import {Reviews} from '../Components/Reviews/Reviews';
 
-const meta : Meta<typeof  Reviews>={
+const meta : Meta<typeof Reviews>={
     component: Reviews,
     title: 'Reviews',
 
@@ -12,7 +11,7 @@ export default meta;
 type Story = StoryObj<typeof meta>
 export const Primary: Story ={
     args: {
-        reviews: [
+        reviews:  [
             {
                 content: 'An absolutely mind-blowing series that perfectly blends nostalgia, horror, and coming-of-age drama. The young cast is phenomenal!',
                 author: 'Emily Thompson'

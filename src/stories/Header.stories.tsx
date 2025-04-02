@@ -1,10 +1,11 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import React from 'react';
 import {Header, HeaderRight} from '../Components/Header/Header';
-import {MenuButton, links} from '../Components/MenuButton/MenuButton';
+import {MenuButton} from '../Components/MenuButton/MenuButton';
 import {MiniButton} from '../Components/MiniButton/MiniButton';
 import {AuthorizationButton} from '../Components/AuthorizationButton/AuthorizationButton';
 import {fn} from '@storybook/test';
+import {links} from '../ExampleData';
 
 const meta : Meta<typeof  Header>={
     component: Header,

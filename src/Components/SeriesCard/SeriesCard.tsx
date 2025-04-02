@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './style.css';
 import { MiniButton } from '../MiniButton/MiniButton';
 import { Rating } from '../Rating/Rating';
+import {Link} from 'react-router';
+
 
 type ButtonStates = {
     star: boolean;
@@ -11,7 +13,8 @@ type ButtonStates = {
 
 type SeriesCardBaseProps = {
     imagePath: string;
-    name: string;
+    name: string,
+    id: number
 };
 
 type UsualCardProps = {
@@ -20,7 +23,7 @@ type UsualCardProps = {
     onCircleClick: ()=>void
 };
 
-type SeriesCardProps =
+export type SeriesCardProps =
     (SeriesCardBaseProps & UsualCardProps &{
         topicOfCard: 'usual'
     }) |
@@ -37,7 +40,7 @@ export const SeriesCard: React.FC<SeriesCardProps> = (props) => {
     return (
         <div className={styles.seriesCard}>
             <img className={styles.image} src={imagePath} alt={`${name} image`}/>
-            <div className={styles.h3}><h3>{name}</h3></div>
+            <Link to={`serie/${props.id}`}><div className={styles.h3}>{name}</div></Link>
             {topicOfCard === 'usual' && (<UsualButtons onCircleClick={props.onCircleClick} onHeartClick={props.onHeartClick} onStarClick={props.onStarClick}/>)}
             {topicOfCard === 'favourites' && (
                 <OtherButtons

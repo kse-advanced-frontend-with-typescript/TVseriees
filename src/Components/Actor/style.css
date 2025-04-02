@@ -27,7 +27,7 @@
 .actor p{
     padding-top: 0.4rem;
 }
-a{
+.actor .link{
     color:  #3c888a;
     text-decoration: none;
 
