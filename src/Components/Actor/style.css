@@ -1,0 +1,42 @@
+.actor{
+    background-color: #0B3B4A;
+    max-width: 65%;
+    width: 100%;
+    padding: 1.5rem;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+
+}
+.actor h2{
+    margin: 0;
+    padding-bottom: 0.4rem;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+
+}
+
+.actor article p{
+    font-family: "Indie Flower", cursive;
+    text-align: justify;
+    color: #3c888a;
+    font-weight: bold;
+    font-size: 1.2rem;
+
+}
+.actor h3, .actor p{
+    margin: 0;
+}
+.actor p{
+    padding-top: 0.4rem;
+}
+.actor .link{
+    color:  #3c888a;
+    text-decoration: none;
+
+}
+a:hover{
+    text-decoration: underline;
+}
+.actor h2, .actor h3{
+    color: #020f1b;
+
+}
+

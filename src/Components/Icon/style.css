@@ -1,0 +1,17 @@
+
+.medium {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+}
+.mini{
+    width: 1.3rem;
+    height: 1.3rem;
+    object-fit: contain;
+
+}
+
+.mirror{
+    transform: scaleX(-1);
+}
+

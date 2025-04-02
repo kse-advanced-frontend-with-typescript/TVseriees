@@ -1,0 +1,47 @@
+.reviews{
+    background-color: #0B3B4A;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 1.5rem 1.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+}
+p{
+    margin: 0;
+}
+.review{
+    font-family: "Indie Flower", cursive;
+    font-weight: bold;
+    padding: 1rem;
+    font-size: 1.2rem;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
+.review:nth-child(even){
+    background-color: #94bae3;
+    color: #00161C;
+}
+.review:nth-child(odd){
+    background-color: #6762b7;
+    color: #00161C;
+}
+
+.author{
+    font-family: 'Joti One', serif;
+}
+
+@media only screen and (max-width: 768px) {
+    .reviews{
+        padding: 1.2rem 1.4rem;
+    }
+    .review{
+
+        padding: 0.8rem;
+        font-size: 1rem;
+
+    }
+
+}

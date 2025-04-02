@@ -1,0 +1,22 @@
+.poster{
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    object-fit: cover;
+}
+
+.vertical{
+    width: 24rem;
+    height: auto;
+}
+
+.horizontal{
+    max-width: 30rem;
+    min-width: 15rem;
+    width: 100%;
+    height: auto;
+}
+.small{
+    max-width: 20rem;
+    min-width: 10rem;
+    width: 100%;
+    height: auto;
+}

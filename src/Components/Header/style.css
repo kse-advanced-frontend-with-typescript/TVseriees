@@ -1,0 +1,46 @@
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(95, 184, 212, 0.82);
+    font-family: "Joti One", cursive;
+    color: #00161C;
+    font-weight: bold;
+    height:auto;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1rem 2rem;
+    position: sticky;
+}
+
+
+.header h1{
+    font-size: 3rem;
+    text-shadow: 0.5px 0.5px 1px #040d17;
+
+}
+
+.header-right-part {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+h2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+@media only screen and (max-width: 768px) {
+    .header{
+        flex-direction: column;
+       justify-content: center;
+        margin-bottom: 0.5rem;
+        gap: 0.7rem;
+    }
+    .header h1{
+        margin-top: 0;
+        font-size: 2rem;
+    }
+
+}

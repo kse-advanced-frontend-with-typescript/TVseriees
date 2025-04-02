@@ -1,0 +1,33 @@
+.pictures-container{
+    width: 85%;
+    padding: 1rem;
+    background-color: #011a21;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+
+}
+.pictures{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-evenly;
+
+
+}
+.pictures-container h2{
+    margin-top: 0.3rem;
+    color: #163b5d;
+    font-size: 2rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .pictures-container h2{
+        margin-bottom: 0.5rem;
+        font-size: 1.8rem;
+    }
+}

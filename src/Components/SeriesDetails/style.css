@@ -1,0 +1,111 @@
+.detail-items{
+    padding: 1rem;
+    background-color: #0B3B4A;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    font-family: "Indie Flower", cursive;
+    width: 100%;
+    max-width: 50%;
+    height: auto;
+}
+
+.detail-items  h2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Joti One", serif;
+    color: #020f1b;
+    font-size: 1.9rem;
+    margin: 0.2rem auto 0.7rem auto;
+}
+.series-details  h5{
+    font-family: "Joti One", serif;
+    color: #051c1e;
+    font-size: 1.2rem;
+}
+.item {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    border-bottom: 1px solid rgb(91, 119, 126);
+    font-size: 1.1rem;
+    text-align: start;
+}
+
+.item:nth-child(even){
+    background-color: rgba(47, 125, 148, 0.8);
+    color: #0c2121;
+
+}
+.item:nth-child(odd){
+    background-color: #0e2b33;
+    color: #3c888a;
+
+}
+.item:last-child{
+    margin-bottom: 0.7rem;
+}
+.item h5,
+.item p{
+    margin: 0;
+    padding: 0.3rem;
+    font-weight: bold;
+}
+.label {
+    font-family: "Joti One", serif;
+
+}
+.series-description{
+    background-color: #244650;
+}
+
+.link{
+    text-decoration: none;
+    color:  #3c888a;
+}
+
+.link:hover{
+    text-decoration: underline;
+
+}
+
+.rating {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(91, 119, 126);
+}
+
+@media only screen and (max-width: 768px) {
+
+    .detail-items{
+        padding: 1rem;
+        max-width: 90%;
+        width: 100%;
+    }
+
+    .detail-items  h2{
+        font-size: 1.6rem;
+        margin-top: 0.1rem;
+    }
+    .series-details  h5{
+        font-size: 1rem;
+    }
+    .item {
+        font-size: 1rem;
+    }
+
+    .item:last-child{
+        margin-bottom: 0.3rem;
+    }
+    .item h5,
+    .item p{
+        padding: 0.2rem;
+    }
+
+    .rating {
+        margin-top: 0.8rem;
+        padding-top: 0.8rem;
+    }
+
+}
