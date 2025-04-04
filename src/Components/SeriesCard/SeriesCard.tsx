@@ -40,7 +40,7 @@ export const SeriesCard: React.FC<SeriesCardProps> = (props) => {
     return (
         <div className={styles.seriesCard}>
             <img className={styles.image} src={imagePath} alt={`${name} image`}/>
-            <Link to={`serie/${props.id}`}><div className={styles.h3}>{name}</div></Link>
+            <Link to={`/serie/${props.id}`}><div className={styles.h3}>{name}</div></Link>
             {topicOfCard === 'usual' && (<UsualButtons onCircleClick={props.onCircleClick} onHeartClick={props.onHeartClick} onStarClick={props.onStarClick}/>)}
             {topicOfCard === 'favourites' && (
                 <OtherButtons

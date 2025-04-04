@@ -4,10 +4,10 @@ import {SerieDetails, SeriesDetails} from '../../Components/SeriesDetails/Series
 import {Season, Seasons} from '../../Components/Seasons/Seasons';
 import {Reviews} from '../../Components/Reviews/Reviews';
 import {useParams} from 'react-router';
-import {seriesAPI, Cast, Review} from '../../modules/clients/series';
+import {seriesAPI, Review} from '../../modules/clients/series';
 import {Overview} from '../../Components/Overview/Overview';
 import {SeriesPictures} from '../../Components/SeriesPictures/SeriesPictures';
-
+import style from './style.css';
 type PageState = {
     loading: boolean,
     error: string,
@@ -75,33 +75,35 @@ export const SeriePage: React.FC = () => {
     }, [id]);
 
     return (
-        <>
+        <div className={style.seriePage}>
             {pageState.loading && <div>Loading...</div>}
             {pageState.error && <div>{pageState.error}</div>}
             {
                 !pageState.loading && !pageState.error && pageState.details && (
                     <>
-                        <Poster
-                            path={pageState.details.poster_path}
-                            name={pageState.details.name}
-                            layout='vertical'
-                        />
-                        <SeriesDetails
-                            cast={pageState.details.cast}
-                            episode_run_time={pageState.details.episode_run_time}
-                            first_air_date={pageState.details.first_air_date}
-                            created_by={pageState.details.created_by}
-                            genres={pageState.details.genres}
-                            name={pageState.details.name}
-                            number_of_episodes={pageState.details.number_of_episodes}
-                            number_of_seasons={pageState.details.number_of_seasons}
-                            original_language={pageState.details.original_language}
-                            original_name={pageState.details.original_name}
-                            production_companies={pageState.details.production_companies}
-                            production_countries={pageState.details.production_countries}
-                            vote_average={pageState.details.vote_average}
-                            vote_count={pageState.details.vote_count}
-                        />
+                        <div className={style.details}>
+                            <Poster
+                                path={pageState.details.poster_path}
+                                name={pageState.details.name}
+                                layout='vertical'
+                            />
+                            <SeriesDetails
+                                cast={pageState.details.cast}
+                                episode_run_time={pageState.details.episode_run_time}
+                                first_air_date={pageState.details.first_air_date}
+                                created_by={pageState.details.created_by}
+                                genres={pageState.details.genres}
+                                name={pageState.details.name}
+                                number_of_episodes={pageState.details.number_of_episodes}
+                                number_of_seasons={pageState.details.number_of_seasons}
+                                original_language={pageState.details.original_language}
+                                original_name={pageState.details.original_name}
+                                production_companies={pageState.details.production_companies}
+                                production_countries={pageState.details.production_countries}
+                                vote_average={pageState.details.vote_average}
+                                vote_count={pageState.details.vote_count}
+                            />
+                        </div>
                         <Overview overview={pageState.details.overview}/>
                         {pageState.seasons && (<Seasons seasons={pageState.seasons}/>)}
                         {pageState.images && (<SeriesPictures name={pageState.details.name} paths={pageState.images}/>)}
@@ -109,6 +111,6 @@ export const SeriePage: React.FC = () => {
                     </>
                 )
             }
-        </>
+        </div>
     );
 };

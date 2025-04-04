@@ -11,7 +11,8 @@
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "cy": "cypress open"
   },
   "repository": {
     "type": "git",

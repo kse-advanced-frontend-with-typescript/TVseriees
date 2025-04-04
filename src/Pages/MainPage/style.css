@@ -4,7 +4,10 @@
     align-items: center;
     gap: 4rem;
 }
+.loading{
+    font-size: 4rem;
 
+}
 @media only screen and (max-width: 768px) {
     .main-page{
         gap: 2rem;

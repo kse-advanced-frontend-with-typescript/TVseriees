@@ -4,9 +4,13 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     entry: './src/index.tsx',
+    devServer: {
+        historyApiFallback: true
+    },
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/'
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js']

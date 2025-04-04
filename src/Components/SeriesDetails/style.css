@@ -9,6 +9,7 @@
 }
 
 .detail-items  h2{
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,7 +17,9 @@
     color: #020f1b;
     font-size: 1.9rem;
     margin: 0.2rem auto 0.7rem auto;
+    word-wrap: break-word;
 }
+
 .series-details  h5{
     font-family: "Joti One", serif;
     color: #051c1e;

@@ -3,6 +3,8 @@
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+    width: 100%;
+
 }
 
 .season {
@@ -13,7 +15,7 @@
     background-color: rgba(156, 234, 255, 0.82);
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
     height: 3rem;
-    width: 85%;
+    width: 100%;
 }
 
 .season h2 {

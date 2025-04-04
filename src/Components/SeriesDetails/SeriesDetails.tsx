@@ -63,18 +63,20 @@ const DetailItem: React.FC<{label: string, value: string}> = ({label, value}) =>
 };
 
 const SeriesCast: React.FC<{cast: { id: number, name: string }[] | 'unknown'}> = ({cast}) => {
+
     return (
         <div className={styles.item}>
             <h5 className={styles.label}>Cast:</h5>
             <p>
                 {cast !== 'unknown' ?
                     cast.map((obj, index) => (
-                        <>
-                            {index > 0 && ', '}
-                            <Link to={`/actor/${obj.id}`} key={index} className={styles.link}>{obj.name}</Link>
-                        </>
+                        <span key={obj.id}>
+                            {index > 0 && ', ' && index <=25}
+                            <Link to={`/actor/${obj.id}`} className={styles.link}>{obj.name}</Link>
+                        </span>
                     )) : 'unknown'
                 }
+                <span>...</span>
             </p>
         </div>
     );

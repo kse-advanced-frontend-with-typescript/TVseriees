@@ -110,9 +110,9 @@ export const Main: React.FC = () => {
     }, [mainState.pageToFetch, requestType]);
 
 
-    return <div className={styles.mainPage}>
-        <div>{mainState.errorFetchingSeries}{mainState.errorLoadingOptions}</div>
-        {!mainState.loading && !mainState.errorFetchingSeries && (<>
+    return <><div className={styles.mainPage}>
+        {mainState.loading && (<div className={styles.loading}>Loading...</div>)}
+        {!mainState.errorFetchingSeries && !mainState.errorLoadingOptions && (<>
             <SearchField
                 genres={searchOptions.genres}
                 languages={searchOptions.languages}
@@ -121,9 +121,6 @@ export const Main: React.FC = () => {
                 onFilterChange={()=>alert('Changed filter!')}
                 onNameChange={()=>alert('Changed name!')}
             />
-            {mainState.loading && <div>Loading...</div>}
-
-
             {series.series.length > 0 && (
                 <div className={mainStyles.seriesContainer}>
                     {series.series.map((serie) =>
@@ -154,5 +151,5 @@ export const Main: React.FC = () => {
                 />
             )}</>
         )}
-    </div>;
+    </div></>;
 };

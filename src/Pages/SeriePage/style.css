@@ -1,0 +1,23 @@
+.serie-page{
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+}
+
+.details{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .serie-page{
+        gap: 1rem;
+    }
+
+    .details{
+        flex-direction: column;
+    }
+}
