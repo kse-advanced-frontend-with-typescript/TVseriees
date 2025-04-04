@@ -8,6 +8,8 @@ import styles from './style.css';
 import {SerieGetRequestType, seriesAPI} from '../../modules/clients/series';
 import {Search, searchAPI} from '../../modules/clients/searchData';
 import {useParams} from 'react-router';
+import {ErrorMessage} from "../../Components/Error/Error";
+import {Icon} from "../../Components/Icon/Icon";
 
 const getRequestType = (request?: string): SerieGetRequestType => {
     const validRequests = ['airing_today' , 'trending' , 'on_the_air' , 'popular' , 'top_rated'];
@@ -110,9 +112,11 @@ export const Main: React.FC = () => {
     }, [mainState.pageToFetch, requestType]);
 
 
-    return <><div className={styles.mainPage}>
-        {mainState.loading && (<div className={styles.loading}>Loading...</div>)}
-        {!mainState.errorFetchingSeries && !mainState.errorLoadingOptions && (<>
+    return <>
+        {mainState.loading && (<Icon topic='loading' size='big'/>)}
+        {mainState.errorFetchingSeries || mainState.errorLoadingOptions && (<ErrorMessage message={'Error!'}/>)}
+        {!mainState.errorFetchingSeries && !mainState.errorLoadingOptions && (
+        <div className={styles.mainPage}>
             <SearchField
                 genres={searchOptions.genres}
                 languages={searchOptions.languages}
@@ -149,7 +153,7 @@ export const Main: React.FC = () => {
                         setMainState(prev =>({...prev, pageToFetch: Math.min(prev.pageToFetch + 1, mainState.totalPages)}));} }
                     page={series.currentPage}
                 />
-            )}</>
-        )}
-    </div></>;
+            )}
+        </div>)}
+    </>;
 };

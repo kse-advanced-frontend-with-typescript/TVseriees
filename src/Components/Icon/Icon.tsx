@@ -15,10 +15,11 @@ import circle from './icons/circle.png';
 import emptyCircle from './icons/empty-circle.png';
 import heart from './icons/heart.png';
 import emptyHeart from './icons/empty-heart.png';
+import loading from './icons/loading.png';
 type IconProps ={
     topic: 'search' | 'arrow' | 'star' | 'vote' | 'cross' | 'envelope' | 'call' | 'empty-star' | 'black-cross' | 'left-caret' | 'right-caret'
-    | 'heart' | 'empty-heart' | 'empty-circle' | 'circle';
-    size: 'mini' | 'medium' ;
+    | 'heart' | 'empty-heart' | 'empty-circle' | 'circle' | 'loading';
+    size: 'mini' | 'medium' | 'big' ;
 }
 export const Icon: React.FC<IconProps> = ({topic, size})=>{
     const getSource = () => {
@@ -38,6 +39,7 @@ export const Icon: React.FC<IconProps> = ({topic, size})=>{
             case 'empty-heart': return emptyHeart;
             case 'empty-circle': return emptyCircle;
             case 'circle': return circle;
+            case 'loading': return loading;
         }
     };
     return (
@@ -45,7 +47,9 @@ export const Icon: React.FC<IconProps> = ({topic, size})=>{
             className={classNames({
                 [styles.mini]: size === 'mini',
                 [styles.medium]: size === 'medium',
-                [styles.mirror]: topic === 'right-caret'
+                [styles.mirror]: topic === 'right-caret',
+                [styles.loading]: topic === 'loading',
+                [styles.big]: size === 'big'
             })}
             src={getSource()}
             alt={`${topic} icon`}
