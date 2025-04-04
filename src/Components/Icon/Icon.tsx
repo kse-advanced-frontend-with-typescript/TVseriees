@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './style.css';
 import search from './icons/search.png';
-import arrow from './icons/down-arrow.png';
+import tick from './icons/down-arrow.png';
 import star from './icons/star.png';
 import vote from './icons/vote.png';
 import call from './icons/call.png';
@@ -16,16 +16,19 @@ import emptyCircle from './icons/empty-circle.png';
 import heart from './icons/heart.png';
 import emptyHeart from './icons/empty-heart.png';
 import loading from './icons/loading.png';
+import error from './icons/error.png';
+import direction from './icons/arrow.png';
+import {IconTopic} from "../../types";
 type IconProps ={
-    topic: 'search' | 'arrow' | 'star' | 'vote' | 'cross' | 'envelope' | 'call' | 'empty-star' | 'black-cross' | 'left-caret' | 'right-caret'
-    | 'heart' | 'empty-heart' | 'empty-circle' | 'circle' | 'loading';
-    size: 'mini' | 'medium' | 'big' ;
+    topic: IconTopic;
+    size: 'mini' | 'medium' | 'big'
+    mirror?: boolean;
 }
-export const Icon: React.FC<IconProps> = ({topic, size})=>{
+export const Icon: React.FC<IconProps> = ({topic, size, mirror})=>{
     const getSource = () => {
         switch(topic) {
             case 'search': return search;
-            case 'arrow': return arrow;
+            case 'tick': return tick;
             case 'star': return star;
             case 'vote': return vote;
             case 'envelope': return envelope;
@@ -33,13 +36,14 @@ export const Icon: React.FC<IconProps> = ({topic, size})=>{
             case 'cross': return cross;
             case 'empty-star': return emptyStar;
             case 'black-cross' : return blackCross;
-            case 'left-caret':
-            case 'right-caret': return caret;
+            case 'caret': return caret;
             case 'heart': return heart;
             case 'empty-heart': return emptyHeart;
             case 'empty-circle': return emptyCircle;
             case 'circle': return circle;
             case 'loading': return loading;
+            case 'error': return error;
+            case 'direction': return direction;
         }
     };
     return (
@@ -47,7 +51,7 @@ export const Icon: React.FC<IconProps> = ({topic, size})=>{
             className={classNames({
                 [styles.mini]: size === 'mini',
                 [styles.medium]: size === 'medium',
-                [styles.mirror]: topic === 'right-caret',
+                [styles.mirror]: mirror,
                 [styles.loading]: topic === 'loading',
                 [styles.big]: size === 'big'
             })}

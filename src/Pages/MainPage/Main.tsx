@@ -8,7 +8,6 @@ import styles from './style.css';
 import {SerieGetRequestType, seriesAPI} from '../../modules/clients/series';
 import {Search, searchAPI} from '../../modules/clients/searchData';
 import {useParams} from 'react-router';
-import {ErrorMessage} from "../../Components/Error/Error";
 import {Icon} from "../../Components/Icon/Icon";
 
 const getRequestType = (request?: string): SerieGetRequestType => {
@@ -114,7 +113,7 @@ export const Main: React.FC = () => {
 
     return <>
         {mainState.loading && (<Icon topic='loading' size='big'/>)}
-        {mainState.errorFetchingSeries || mainState.errorLoadingOptions && (<ErrorMessage message={'Error!'}/>)}
+        {mainState.errorFetchingSeries || mainState.errorLoadingOptions && (<Icon topic='error' size='big'/>)}
         {!mainState.errorFetchingSeries && !mainState.errorLoadingOptions && (
         <div className={styles.mainPage}>
             <SearchField

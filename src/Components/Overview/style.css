@@ -1,9 +1,10 @@
 .overview{
     background-color: #244650;
     color: white;
-    width: 85%;
+    width: 87%;
+    box-sizing: border-box;
     text-align: center;
-    padding: 1rem 0.5rem;
+    padding: 1.3rem;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
     margin: 0 auto;
 
@@ -11,12 +12,14 @@
 .overview h3{
     margin: 0 0 1rem 0;
     color: #00161C;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+    padding: 0.4rem;
 }
 
 .overview article{
     font-family: "Indie Flower", cursive;
     font-weight: bold;
+    font-size: 1.3rem;
 
 }
 @media only screen and (max-width: 768px) {

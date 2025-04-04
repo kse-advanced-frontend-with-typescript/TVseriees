@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './style.css';
 import {Rating} from '../Rating/Rating';
 import {Link} from 'react-router';
@@ -63,22 +63,30 @@ const DetailItem: React.FC<{label: string, value: string}> = ({label, value}) =>
 };
 
 const SeriesCast: React.FC<{cast: { id: number, name: string }[] | 'unknown'}> = ({cast}) => {
-
+    const [showAll, setShowAll] = useState(false);
     return (
         <div className={styles.item}>
             <h5 className={styles.label}>Cast:</h5>
             <p>
-                {cast !== 'unknown' ?
-                    cast.map((obj, index) => (
-                        <span key={obj.id}>
-                            {index > 0 && ', ' && index <=25}
-                            <Link to={`/actor/${obj.id}`} className={styles.link}>{obj.name}</Link>
-                        </span>
-                    )) : 'unknown'
+                {cast !== 'unknown' ? <>
+                        <Cast cast={cast} start={0} end={26}/>
+                        {!showAll && cast.length > 25 && <button className={styles.dots} onClick={() => setShowAll(true)}>...</button>}
+                        {showAll && cast.length > 25 && <Cast cast={cast} start={26}/>}
+                    </>
+                     : 'unknown'
                 }
-                <span>...</span>
             </p>
         </div>
     );
 };
 
+const Cast: React.FC<{cast: { id: number, name: string }[], start: number, end?: number}> = ({cast})=>{
+    return <>
+        {cast.slice(0, 26).map((obj, index) => (
+            <span key={obj.id}>
+                            {index > 0 && ', '}
+                <Link to={`/actor/${obj.id}`} className={styles.link}>{obj.name}</Link>
+        </span>
+        ))}
+    </>;
+};

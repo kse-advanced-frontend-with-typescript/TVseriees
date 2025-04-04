@@ -10,6 +10,7 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
+    font-size: 1.3rem;
 }
 
 .text {
@@ -35,6 +36,3 @@
     text-align: justify;
 }
 
-.small .text {
-    font-size: 1rem;
-}

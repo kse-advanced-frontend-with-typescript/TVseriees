@@ -8,6 +8,7 @@ import {seriesAPI, Review} from '../../modules/clients/series';
 import {Overview} from '../../Components/Overview/Overview';
 import {SeriesPictures} from '../../Components/SeriesPictures/SeriesPictures';
 import style from './style.css';
+import {Icon} from "../../Components/Icon/Icon";
 type PageState = {
     loading: boolean,
     error: string,
@@ -76,7 +77,7 @@ export const SeriePage: React.FC = () => {
 
     return (
         <div className={style.seriePage}>
-            {pageState.loading && <div>Loading...</div>}
+            {pageState.loading && <Icon topic='loading' size='big'/>}
             {pageState.error && <div>{pageState.error}</div>}
             {
                 !pageState.loading && !pageState.error && pageState.details && (
@@ -107,7 +108,7 @@ export const SeriePage: React.FC = () => {
                         <Overview overview={pageState.details.overview}/>
                         {pageState.seasons && (<Seasons seasons={pageState.seasons}/>)}
                         {pageState.images && (<SeriesPictures name={pageState.details.name} paths={pageState.images}/>)}
-                        {pageState.reviews && (<Reviews reviews={pageState.reviews.results}/>)}
+                        {pageState.reviews && pageState.reviews.results.length > 0 && (<Reviews reviews={pageState.reviews.results}/>)}
                     </>
                 )
             }

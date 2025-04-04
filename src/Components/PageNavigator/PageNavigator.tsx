@@ -69,7 +69,7 @@ export const PageParentComponent: React.FC<{page: number, pageCount: number, onP
 
 const PageNavigator: React.FC<PageNavigatorProps> = ({activePage, onPageChange, pages, onLeftArrowClick, onRightArrowClick, buttonStates}) => {
     return <div className={styles.pages}>
-        <MiniButton topic='left-caret' isDisabled={buttonStates.leftArrow} size='medium' onClick={onLeftArrowClick}/>
+        <MiniButton topic='caret' isDisabled={buttonStates.leftArrow} size='medium' onClick={onLeftArrowClick}/>
         {pages.map(page => (
             <PageItem
                 key={page}
@@ -78,7 +78,7 @@ const PageNavigator: React.FC<PageNavigatorProps> = ({activePage, onPageChange, 
                 index={page}
             />
         ))}
-        <MiniButton topic='right-caret' isDisabled={buttonStates.rightArrow} size='medium' onClick={onRightArrowClick}/>
+        <MiniButton topic='caret' mirror={true} isDisabled={buttonStates.rightArrow} size='medium' onClick={onRightArrowClick}/>
     </div>;
 };
 
