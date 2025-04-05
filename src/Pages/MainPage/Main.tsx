@@ -6,13 +6,14 @@ import {Pagination} from '../../Components/Pagination/Pagination';
 import mainStyles from '../../main.css';
 import styles from './style.css';
 import {SerieGetRequestType, seriesAPI} from '../../modules/clients/series';
-import {Search, searchAPI} from '../../modules/clients/searchData';
+import {searchAPI} from '../../modules/clients/searchData';
 import {useParams} from 'react-router';
 import {Icon} from '../../Components/Icon/Icon';
+import {FilterState} from "../../types";
 
 const getRequestType = (request?: string): SerieGetRequestType => {
-    const validRequests = ['airing_today' , 'trending' , 'on_the_air' , 'popular' , 'top_rated'];
-    if (validRequests.find(r => r===request))return request as SerieGetRequestType;
+    const validRequests = ['airing_today', 'trending', 'on_the_air', 'popular', 'top_rated'];
+    if (validRequests.find(r => r === request)) return request as SerieGetRequestType;
     return 'trending';
 };
 
@@ -22,7 +23,7 @@ type Series = {
     poster_path: string | null
 }
 
-type PageSate = {
+type PageState = {
     loading: boolean,
     errorFetchingSeries: string,
     errorLoadingOptions: string,
@@ -36,11 +37,25 @@ type SeriesToShow = {
     series: Series[],
     currentPage: number
 }
-
+type Search = {
+    genres: Map<string, string>,
+    languages:  Map<string, string>,
+    countries:  Map<string, string>,
+};
 export const Main: React.FC = () => {
     const {request_type} = useParams();
     const requestType: SerieGetRequestType = getRequestType(request_type);
-    const [pageState, setPageState] = useState<PageSate>({
+
+    const [filterState, setFilterState] = useState<FilterState>({
+        genre: '',
+        language: '',
+        country: '',
+        sortOption: '',
+        year: '',
+        name: ''
+    });
+
+    const [pageState, setPageState] = useState<PageState>({
         loading: true,
         errorFetchingSeries: '',
         errorLoadingOptions: '',
@@ -50,18 +65,17 @@ export const Main: React.FC = () => {
         pageToFetch: 1
     });
 
-
     const [searchOptions, setSearchOptions] = useState<Search>({
-        genres: [],
-        languages: [],
-        countries: []
+        genres: new Map(),
+        languages: new Map(),
+        countries: new Map()
     });
 
     useEffect(() => {
         const api = searchAPI(process.env.API_KEY ?? '', fetch);
         Promise.all([
-            api.get('countries'),
-            api.get('languages'),
+            api.getCountries(),
+            api.getLanguages(),
             api.getGenres()
         ]).then(([countries, languages, genres]) => {
             setSearchOptions({genres: genres, countries: countries, languages: languages});
@@ -71,26 +85,71 @@ export const Main: React.FC = () => {
                     ...prev,
                     errorLoadingOptions: err instanceof Error ? err.message : 'An error occurred, sorry:((('
                 }));
-
             })
             .finally(() => {
                 setPageState(prev => ({...prev, loading: false}));
             });
     }, []);
 
-    const [series, setSeries]  = useState<SeriesToShow>({
+    const [series, setSeries] = useState<SeriesToShow>({
         series: [],
         currentPage: 1
     });
-    useEffect(() => {
-        setPageState(prev => ({...prev, pageToFetch: 1}));
-        setSeries({series: [], currentPage: 1}
-        );
-    }, [requestType]);
 
+    const handleFilterChange = (key: keyof FilterState, value: string) => {
+        setFilterState(prev => ({
+            ...prev,
+            [key]: value
+        }));
+    };
 
     useEffect(() => {
-        setPageState(prev => ({...prev, loading: true}));
+        setPageState(prev => ({...prev, loading: true, pageToFetch: 1}));
+        setSeries({series: [], currentPage: 1});
+        const api = seriesAPI(process.env.API_KEY ?? '', fetch);
+        let apiPromise;
+        if (filterState.name)apiPromise = api.getByName(pageState.pageToFetch, filterState.name, filterState.year);
+        else {
+            const dataToPass: FilterState = {
+                language: searchOptions.languages.get(filterState.language) ?? '',
+                country: searchOptions.countries.get(filterState.country) ??  '',
+                genre: searchOptions.genres.get(filterState.genre) ??  '',
+                year: filterState.year,
+                name: filterState.name, sortOption: SortOptions.get(filterState.sortOption) ??  ''
+            };
+            apiPromise = api.getDynamic(pageState.pageToFetch, dataToPass);
+        }
+        apiPromise
+            .then(res => {
+                setPageState(prev => ({
+                    ...prev,
+                    series: res.results,
+                    totalPages: res.total_pages,
+                    totalResults: res.total_results,
+                    error: ''
+                }));
+
+                setSeries(prev => ({
+                    ...prev,
+                    series: pageState.pageToFetch === 1
+                        ? res.results
+                        : [...prev.series, ...res.results]
+                }));
+            })
+            .catch(err => {
+                setPageState(prev => ({
+                    ...prev,
+                    errorFetchingSeries: err instanceof Error ? err.message : 'An error occurred, sorry:((('
+                }));
+            })
+            .finally(() => {
+                setPageState(prev => ({...prev, loading: false}));
+            });
+    }, [pageState.pageToFetch, filterState, searchOptions]);
+
+    useEffect(() => {
+        setPageState(prev => ({...prev, loading: true, pageToFetch: 1}));
+        setSeries({series: [], currentPage: 1});
         seriesAPI(process.env.API_KEY ?? '', fetch).get(pageState.pageToFetch, requestType).then(res => {
             setPageState(prev => ({
                 ...prev,
@@ -107,51 +166,54 @@ export const Main: React.FC = () => {
             }));
         }).finally(() => {
             setPageState(prev => ({...prev, loading: false}));
+            setFilterState({name: '', genre: '', country: '', sortOption: '', language: '', year: ''});
+
         });
     }, [pageState.pageToFetch, requestType]);
+
 
 
     return <>
         {pageState.loading && (<Icon topic='loading' size='big'/>)}
         {pageState.errorFetchingSeries || pageState.errorLoadingOptions && (<Icon topic='error' size='big'/>)}
         {!pageState.errorFetchingSeries && !pageState.errorLoadingOptions && (
-        <div className={styles.mainPage}>
-            <SearchField
-                genres={searchOptions.genres}
-                languages={searchOptions.languages}
-                countries={searchOptions.countries}
-                sortOptions={Object.values(SortOptions)}
-                onFilterChange={()=>alert('Changed filter!')}
-                onNameChange={()=>alert('Changed name!')}
-            />
-            {series.series.length > 0 && (
-                <div className={mainStyles.seriesContainer}>
-                    {series.series.map((serie) =>
-                        <SeriesCard
-                            key={serie.id}
-                            id={serie.id}
-                            imagePath={serie.poster_path ? `https://image.tmdb.org/t/p/original${serie.poster_path}` : ''}                            name={serie.name}
-                            topicOfCard='usual'
-                            onStarClick={() => alert(`Star clicked for ${serie.name}`)}
-                            onHeartClick={() => alert(`Heart clicked for ${serie.name}`)}
-                            onCircleClick={() => alert(`Circle clicked for ${serie.name}`)}
-                        />
-                    )}
-                </div>
-            )}
-
-            {pageState.totalPages > 0 && (
-                <Pagination
-                    pageCount={pageState.totalPages}
-                    onPageSelect={(page: number) =>  {
-                        setPageState(prev => ({...prev, pageToFetch: page}));
-                        setSeries({currentPage: page, series: []});
-                    }}
-                    onClick={() => {
-                        setPageState(prev =>({...prev, pageToFetch: Math.min(prev.pageToFetch + 1, pageState.totalPages)}));} }
-                    page={series.currentPage}
+            <div className={styles.mainPage}>
+                <SearchField
+                    genres={Array.from(searchOptions.genres.keys())}
+                    languages={Array.from(searchOptions.languages.keys())}
+                    countries={Array.from(searchOptions.countries.keys())}
+                    sortOptions={Array.from(SortOptions.keys())}
+                    filter={filterState}
+                    onFilterChange={handleFilterChange}
                 />
-            )}
-        </div>)}
+                {series.series.length > 0 && (
+                    <div className={mainStyles.seriesContainer}>
+                        {series.series.map((serie, index) =>
+                            <SeriesCard
+                                key={`${serie.id}-${index}`}
+                                id={serie.id}
+                                imagePath={serie.poster_path ? `https://image.tmdb.org/t/p/w500${serie.poster_path}` : ''}
+                                name={serie.name}
+                                topicOfCard='usual'
+                                onStarClick={() => alert(`Star clicked for ${serie.name}`)}
+                                onHeartClick={() => alert(`Heart clicked for ${serie.name}`)}
+                                onCircleClick={() => alert(`Circle clicked for ${serie.name}`)}
+                            />
+                        )}
+                    </div>
+                )}
+
+                {pageState.totalPages > 1 && (
+                    <Pagination
+                        pageCount={pageState.totalPages}
+                        onPageSelect={(page: number) => {
+                            setPageState(prev => ({...prev, pageToFetch: page}));
+                            setSeries({currentPage: page, series: []});
+                        }}
+                        onClick={() => {setPageState(prev => ({...prev, pageToFetch: Math.min(prev.pageToFetch + 1, pageState.totalPages)}));}}
+                        page={series.currentPage}
+                    />
+                )}
+            </div>)}
     </>;
 };

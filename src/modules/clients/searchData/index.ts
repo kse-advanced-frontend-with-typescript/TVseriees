@@ -1,37 +1,43 @@
-import { Type } from '@sinclair/typebox';
+import {Static, Type } from '@sinclair/typebox';
 import { convertToType } from '../../convertToType';
 import { getData } from '../../getData';
 
-const ConfigurationSchema = Type.Array(
+const CountriesSchema = Type.Array(
     Type.Object({
-    english_name: Type.String()
+        iso_3166_1: Type.String(),
+        english_name: Type.String()
 }));
+const LanguagesSchema = Type.Array(
+    Type.Object({
+        iso_639_1: Type.String(),
+        english_name: Type.String()
+    }));
 const GenresSchema = Type.Object({
     genres: Type.Array(Type.Object({
+        id: Type.Number(),
         name: Type.String()
     }))
 });
 
-export type Search = {
-    genres: string[],
-    languages: string[],
-    countries: string[]
-};
-
 export const searchAPI = (api_key: string, fetchAPI: typeof fetch) => {
-    const get = async (what: 'countries' | 'languages'): Promise<string[]> => {
-        const fetchedData = await getData(api_key, fetchAPI, `https://api.themoviedb.org/3/configuration/${what}`);
-        const data = convertToType(fetchedData, ConfigurationSchema);
-        return data.map(d => d.english_name);
+    const getLanguages = async (): Promise<Map<string, string>> => {
+        const fetchedData = await getData(api_key, fetchAPI, 'https://api.themoviedb.org/3/configuration/languages');
+        const languagesData = convertToType(fetchedData, LanguagesSchema);
+        return new Map(languagesData.map(language=> [language.english_name, language.iso_639_1]));
+    };
+    const getCountries = async (): Promise<Map<string, string>> => {
+        const fetchedData = await getData(api_key, fetchAPI, 'https://api.themoviedb.org/3/configuration/countries');
+        const countriesData = convertToType(fetchedData, CountriesSchema);
+        return new Map(countriesData.map(country=> [country.english_name, country.iso_3166_1]));
     };
 
-    const getGenres = async (): Promise<string[]> => {
+    const getGenres = async (): Promise<Map<string, string>> => {
         const fetchedData = await getData(api_key, fetchAPI, 'https://api.themoviedb.org/3/genre/tv/list');
         const genresData = convertToType(fetchedData, GenresSchema);
-        return genresData.genres.map(g=>g.name);
+        return new Map(genresData.genres.map(genre=> [genre.name, genre.id.toString()]));
     };
 
     return {
-       get, getGenres
+       getCountries, getGenres, getLanguages
     };
 };

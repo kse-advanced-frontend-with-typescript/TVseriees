@@ -4,6 +4,7 @@ import {getData} from '../../getData';
 import {Season} from '../../../Components/Seasons/Seasons';
 import {getImagePath} from '../../getImagePath';
 import {SerieDetails} from '../../../Components/SeriesDetails/SeriesDetails';
+import {FilterState} from '../../../types';
 const getUrl = (urlPart: string)=>`https://api.themoviedb.org/3/tv/${urlPart}`;
 
 const ImageSchema = Type.Object({
@@ -150,24 +151,24 @@ export const seriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
        };
    };
 
-   const getDynamic = async (page: number=1, sortOptions: string, year: string, genre: string, language: string, country: string): Promise<unknown> => {
+   const getDynamic = async (page: number=1, filters: FilterState): Promise<SeriesResult> => {
        const params = new URLSearchParams();
        params.set('page', page.toString());
-       if(sortOptions != '') params.set('sort_by', sortOptions);
-       if(year != '') params.set('first_air_date_year', year);
-       if(genre != '') params.set('with_genres', genre);
-       if(language != '') params.set('with_original_language', language);
-       if(country != '') params.set('with_origin_country', country);
+       if(filters.sortOption != '') params.set('sort_by', filters.sortOption);
+       if(filters.year != '') params.set('first_air_date_year', filters.year);
+       if(filters.genre != '') params.set('with_genres', filters.genre);
+       if(filters.language != '') params.set('with_original_language', filters.language);
+       if(filters.country != '') params.set('with_origin_country', filters.country);
        const data = await getData(api_key, fetchAPI, `https://api.themoviedb.org/3/discover/tv?${params.toString()}`);
        if (!data.page)data.page = page;
        return convertToType(data, SerieCardItemResultSchema);
 
    };
 
-    const getByName = async (page: number=1, name: string, year?: string): Promise<unknown> => {
+    const getByName = async (page: number=1, name: string, year?: string): Promise<SeriesResult> => {
         const params = new URLSearchParams();
         params.set('page', page.toString());
-        if(name != '') params.set('sort_by', name);
+        if(name != '') params.set('query', name);
         if(year) params.set('first_air_date_year', year);
         const data = await getData(api_key, fetchAPI, `https://api.themoviedb.org/3/search/tv?${params.toString()}`);
         if (!data.page)data.page = page;

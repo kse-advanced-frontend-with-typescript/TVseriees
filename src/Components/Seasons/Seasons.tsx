@@ -52,17 +52,24 @@ export const SeasonTab: React.FC<Season> = ({index, episodes})=>{
 const Episode: React.FC<{episode: EpisodeType}> = ({episode}) => {
     return <div className={styles.episode}>
         <div className={styles.episodeNumber}><h3>Episode {episode.index}</h3></div>
-        <div className={styles.episodeImage}>
-            <Poster path={episode.imagePath? episode.imagePath : defaultImage } name={episode.name} layout='horizontal'/>
-        </div>
-        <div className={styles.episodeOverview}>
-            <h2>{episode.name}</h2>
-            <article>{episode.overview}</article>
-            <p>
-                <span style={{color: '#020f1b'}}>Duration: </span>
-                <span style={{fontFamily: '"Indie Flower", cursive', fontWeight: 'bold'}}>{episode.duration} minutes</span>
-            </p>
-            <Rating averageVote={episode.averageVote} voteCount={episode.voteCount} size='small'/>
-        </div>
+        {(episode.imagePath || episode.overview.length > 0) && (
+            <>
+                <div className={styles.episodeImage}>
+                    <Poster path={episode.imagePath || defaultImage} name={episode.name} layout='horizontal'/>
+                </div>
+                { episode.overview.length> 0 && <div className={styles.episodeOverview}>
+                    <h2>{episode.name}</h2>
+                    <article>{episode.overview}</article>
+                    <p>
+                        <span style={{color: '#020f1b'}}>Duration: </span>
+                        <span style={{
+                            fontFamily: '"Indie Flower", cursive',
+                            fontWeight: 'bold'
+                        }}>{episode.duration} minutes</span>
+                    </p>
+                    <Rating averageVote={episode.averageVote} voteCount={episode.voteCount} size='small'/>
+                </div>}
+            </>
+        )}
     </div>;
 };

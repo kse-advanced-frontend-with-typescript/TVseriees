@@ -9,7 +9,7 @@ import {Overview} from '../../Components/Overview/Overview';
 import {Pictures} from '../../Components/SeriesPictures/Pictures';
 import style from './style.css';
 import {Icon} from '../../Components/Icon/Icon';
-
+import defaultImage from '../../Images/DefaultSerie.png';
 type PageState = {
     loading: boolean,
     error: string,
@@ -85,7 +85,7 @@ export const SeriePage: React.FC = () => {
                     <>
                         <div className={style.details}>
                             <Poster
-                                path={pageState.details.poster_path}
+                                path={pageState.details.poster_path? pageState.details.poster_path: defaultImage}
                                 name={pageState.details.name}
                                 layout='vertical'
                             />

@@ -48,15 +48,15 @@ export const actorData = {name: 'Tom Hanks',
         {id: 1, name:'Toy Story'}
 ]};
 
-export const SortOptions: Record<string, string> = {
-    'first_air_date.asc': 'first air date (from oldest)',
-    'first_air_date.desc': 'first air date (from newest)',
-    'name.asc': 'name (A-Z)',
-    'name.desc': 'name (Z-A)',
-    'popularity.asc': 'popularity (low to high)',
-    'popularity.desc': 'popularity (high to low)',
-    'vote_average.asc': 'rating (low to high)',
-    'vote_average.desc': 'rating (high to low)',
-    'vote_count.asc': 'vote count (low to high)',
-    'vote_count.desc': 'vote count (high to low)'
-};
+export const SortOptions: Map<string, string> = new Map([
+    ['first air date (from oldest)', 'first_air_date.asc'],
+    ['first air date (from newest)', 'first_air_date.desc'],
+    ['name (A-Z)', 'name.asc'],
+    ['name (Z-A)', 'name.desc'],
+    ['popularity (low to high)', 'popularity.asc'],
+    ['popularity (high to low)', 'popularity.desc'],
+    ['rating (low to high)', 'vote_average.asc'],
+    ['rating (high to low)', 'vote_average.desc'],
+    ['vote count (low to high)', 'vote_count.asc'],
+    ['vote count (high to low)', 'vote_count.desc']
+]);

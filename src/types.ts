@@ -5,3 +5,12 @@ export type PicturesProps = {
     name: string,
     paths: string[]
 }
+
+export type FilterState = {
+    genre: string,
+    language: string,
+    country: string,
+    sortOption: string,
+    year: string,
+    name: string
+}
