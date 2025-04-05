@@ -103,13 +103,19 @@ export const Main: React.FC = () => {
         }));
     };
 
-    useEffect(() => {
-        setPageState(prev => ({...prev, loading: true, pageToFetch: 1}));
+    useEffect(()=>{
+        setPageState(prev => ({...prev, pageToFetch: 1}));
         setSeries({series: [], currentPage: 1});
+        setFilterState({name: '', sortOption: '', genre:'', language: '', country: '', year: ''});
+    }, [requestType]);
+
+    useEffect(() => {
+        setPageState(prev => ({...prev, loading: true}));
+
         const api = seriesAPI(process.env.API_KEY ?? '', fetch);
         let apiPromise;
         if (filterState.name)apiPromise = api.getByName(pageState.pageToFetch, filterState.name, filterState.year);
-        else {
+        else if(filterState.year || filterState.country || filterState.language || filterState.genre || filterState.sortOption){
             const dataToPass: FilterState = {
                 language: searchOptions.languages.get(filterState.language) ?? '',
                 country: searchOptions.countries.get(filterState.country) ??  '',
@@ -118,7 +124,8 @@ export const Main: React.FC = () => {
                 name: filterState.name, sortOption: SortOptions.get(filterState.sortOption) ??  ''
             };
             apiPromise = api.getDynamic(pageState.pageToFetch, dataToPass);
-        }
+        }else apiPromise = api.get(pageState.pageToFetch, requestType);
+
         apiPromise
             .then(res => {
                 setPageState(prev => ({
@@ -145,32 +152,7 @@ export const Main: React.FC = () => {
             .finally(() => {
                 setPageState(prev => ({...prev, loading: false}));
             });
-    }, [pageState.pageToFetch, filterState, searchOptions]);
-
-    useEffect(() => {
-        setPageState(prev => ({...prev, loading: true, pageToFetch: 1}));
-        setSeries({series: [], currentPage: 1});
-        seriesAPI(process.env.API_KEY ?? '', fetch).get(pageState.pageToFetch, requestType).then(res => {
-            setPageState(prev => ({
-                ...prev,
-                series: res.results,
-                totalPages: res.total_pages,
-                totalResults: res.total_results,
-                error: ''
-            }));
-            setSeries(prev => ({...prev, series: [...prev.series, ...res.results]}));
-        }).catch(err => {
-            setPageState(prev => ({
-                ...prev,
-                errorFetchingSeries: err instanceof Error ? err.message : 'An error occurred, sorry:((('
-            }));
-        }).finally(() => {
-            setPageState(prev => ({...prev, loading: false}));
-            setFilterState({name: '', genre: '', country: '', sortOption: '', language: '', year: ''});
-
-        });
-    }, [pageState.pageToFetch, requestType]);
-
+    }, [requestType, pageState.pageToFetch, filterState, searchOptions]);
 
 
     return <>
