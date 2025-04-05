@@ -36,19 +36,20 @@ export const SeriesDetails: React.FC<SeriesDetailsProps> = (props) => {
     );
 };
 
+const getStringFromArray = (array: string[]): string => array.length > 0? array.join(', '): 'unknown';
 const Details: React.FC<SeriesDetailsProps> = (props) => {
     return (
         <div>
             <DetailItem label='Original title:' value={props.original_name}/>
             <DetailItem label='Release date:' value={props.first_air_date}/>
-            <DetailItem label='Countries:' value={props.production_countries.join(', ')}/>
-            <DetailItem label='Genres:' value={props.genres.join(', ')}/>
-            <DetailItem label='Created by:' value={props.created_by.join(', ')}/>
+            <DetailItem label='Countries:' value={getStringFromArray(props.production_countries)}/>
+            <DetailItem label='Genres:' value={getStringFromArray(props.genres)}/>
+            <DetailItem label='Created by:' value={getStringFromArray(props.created_by)}/>
             <DetailItem label='Original language:' value={props.original_language}/>
             <DetailItem label='Number of seasons:' value={props.number_of_seasons.toString()}/>
             <DetailItem label='Number of episodes:' value={props.number_of_episodes.toString()}/>
             <DetailItem label='Episode runtime (minutes):' value={props.episode_run_time.toString()}/>
-            <DetailItem label='Production companies:' value={props.production_companies.join(', ')}/>
+            <DetailItem label='Production companies:' value={getStringFromArray(props.production_companies)}/>
             {props.cast!='unknown' && (<SeriesCast cast={props.cast}/>)}
         </div>
     );

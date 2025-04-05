@@ -6,6 +6,7 @@ import {useParams} from 'react-router';
 import {actorAPI, ActorResponse} from '../../modules/clients/actor';
 import {Icon} from '../../Components/Icon/Icon';
 import defaultImage from '../../Images/DefaultActor.png';
+import {Pictures} from "../../Components/SeriesPictures/Pictures";
 
 type PageState = {
     loading: boolean,
@@ -43,10 +44,14 @@ export const ActorPage: React.FC = ()=> {
         {pageState.error && <Icon topic='error' size='big'/>}
         {pageState.loading && <Icon topic='loading' size='big'/>}
         {!pageState.loading && !pageState.error && pageState.actor && (
-            <div className={styles.actorPage}>
+           <div className={styles.actorPage}>
+               <div className={styles.actorInfo}>
                 <Poster path={pageState.actor.image? pageState.actor.image: defaultImage} name={pageState.actor.name} layout='vertical'/>
                 <Actor name={pageState.actor.name} knownFor={pageState.actor.series}/>
             </div>
+               {pageState.actor.images.length > 1 && <Pictures name={pageState.actor.name} paths={pageState.actor.images}/>}
+           </div>
+
         )}
     </>;
 

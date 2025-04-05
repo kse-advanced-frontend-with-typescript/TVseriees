@@ -6,7 +6,7 @@ import {Reviews} from '../../Components/Reviews/Reviews';
 import {useParams} from 'react-router';
 import {seriesAPI, Review} from '../../modules/clients/series';
 import {Overview} from '../../Components/Overview/Overview';
-import {SeriesPictures} from '../../Components/SeriesPictures/SeriesPictures';
+import {Pictures} from '../../Components/SeriesPictures/Pictures';
 import style from './style.css';
 import {Icon} from '../../Components/Icon/Icon';
 
@@ -106,9 +106,9 @@ export const SeriePage: React.FC = () => {
                                 vote_count={pageState.details.vote_count}
                             />
                         </div>
-                        <Overview overview={pageState.details.overview}/>
+                        {pageState.details.overview.length > 0 && <Overview overview={pageState.details.overview}/>}
                         {pageState.seasons && (<Seasons seasons={pageState.seasons}/>)}
-                        {pageState.images && pageState.images.length>0 && (<SeriesPictures name={pageState.details.name} paths={pageState.images}/>)}
+                        {pageState.images && pageState.images.length>0 && (<Pictures name={pageState.details.name} paths={pageState.images}/>)}
                         {pageState.reviews && pageState.reviews.results.length > 0 && (<Reviews reviews={pageState.reviews.results}/>)}
                     </>
                 )

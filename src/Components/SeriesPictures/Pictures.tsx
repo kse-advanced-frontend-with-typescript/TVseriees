@@ -3,9 +3,10 @@ import styles from './style.css';
 import {Poster} from '../Poster/Poster';
 import {SliderArrows} from '../SliderArrows/SliderArrows';
 import {useArrows} from '../../Hooks/useArrows';
+import {PicturesProps} from "../../types";
 
 
-export const SeriesPictures: React.FC<{name: string, paths: string[]}> = ({name, paths})=>{
+export const Pictures: React.FC<PicturesProps> = ({name, paths})=>{
     const imagesPerInstance = 6;
     const {visibleItems: visibleImages, currentIndex, handleNext, handlePrevious, disableLeft, disableRight} = useArrows(paths, imagesPerInstance);
     return <div className={styles.picturesContainer}>
