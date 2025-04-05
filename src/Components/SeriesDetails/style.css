@@ -91,7 +91,12 @@
     padding-top: 1rem;
     border-top: 1px solid rgb(91, 119, 126);
 }
-
+.cast-title{
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    align-items: center;
+}
 @media only screen and (max-width: 768px) {
 
     .detail-items{

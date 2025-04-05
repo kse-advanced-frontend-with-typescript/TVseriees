@@ -46,7 +46,7 @@ const SeasonSchema = Type.Object({
         name: Type.String(),
         overview: Type.String(),
         episode_number: Type.Number(),
-        air_date: Type.String(),
+        air_date: Type.Union([Type.String(), Type.Null()]),
         runtime: Type.Union([Type.Number(), Type.Null()]),
         still_path: Type.Union([Type.String(), Type.Null()]),
         vote_average: Type.Number(),
@@ -104,7 +104,7 @@ export const seriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
         const cast = convertToType(fetchedCastData, CastSchema);
         return {
             episode_run_time: serieData.episode_run_time?.length ? Math.round(serieData.episode_run_time.reduce((sum, time) => sum + time, 0) / serieData.episode_run_time.length) : 'unknown',
-            first_air_date: serieData.first_air_date,
+            first_air_date: serieData.first_air_date ?? 'unknown',
             created_by: serieData.created_by.map(p=>p.name),
             genres: serieData.genres.map(g=>g.name),
             name: serieData.name,

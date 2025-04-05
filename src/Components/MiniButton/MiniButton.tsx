@@ -2,11 +2,11 @@ import React from 'react';
 import styles from './style.css';
 import {Icon} from '../Icon/Icon';
 import classNames from 'classnames';
-import {IconTopic} from "../../types";
+import {IconTopic} from '../../types';
 
 type MiniButtonProps = {
     topic: IconTopic;
-    size: 'mini' | 'medium';
+    size: 'mini' | 'medium' | 'premedium';
     onClick?: () => void;
     isDisabled?: boolean;
     mirror?: boolean;

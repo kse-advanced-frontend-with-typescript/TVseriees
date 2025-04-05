@@ -8,7 +8,7 @@ import styles from './style.css';
 import {SerieGetRequestType, seriesAPI} from '../../modules/clients/series';
 import {Search, searchAPI} from '../../modules/clients/searchData';
 import {useParams} from 'react-router';
-import {Icon} from "../../Components/Icon/Icon";
+import {Icon} from '../../Components/Icon/Icon';
 
 const getRequestType = (request?: string): SerieGetRequestType => {
     const validRequests = ['airing_today' , 'trending' , 'on_the_air' , 'popular' , 'top_rated'];
@@ -22,7 +22,7 @@ type Series = {
     poster_path: string | null
 }
 
-type MainState = {
+type PageSate = {
     loading: boolean,
     errorFetchingSeries: string,
     errorLoadingOptions: string,
@@ -40,7 +40,7 @@ type SeriesToShow = {
 export const Main: React.FC = () => {
     const {request_type} = useParams();
     const requestType: SerieGetRequestType = getRequestType(request_type);
-    const [mainState, setMainState] = useState<MainState>({
+    const [pageState, setPageState] = useState<PageSate>({
         loading: true,
         errorFetchingSeries: '',
         errorLoadingOptions: '',
@@ -67,14 +67,14 @@ export const Main: React.FC = () => {
             setSearchOptions({genres: genres, countries: countries, languages: languages});
         })
             .catch(err => {
-                setMainState(prev => ({
+                setPageState(prev => ({
                     ...prev,
                     errorLoadingOptions: err instanceof Error ? err.message : 'An error occurred, sorry:((('
                 }));
 
             })
             .finally(() => {
-                setMainState(prev => ({...prev, loading: false}));
+                setPageState(prev => ({...prev, loading: false}));
             });
     }, []);
 
@@ -83,16 +83,16 @@ export const Main: React.FC = () => {
         currentPage: 1
     });
     useEffect(() => {
-        setMainState(prev => ({...prev, pageToFetch: 1}));
+        setPageState(prev => ({...prev, pageToFetch: 1}));
         setSeries({series: [], currentPage: 1}
         );
     }, [requestType]);
 
 
     useEffect(() => {
-        setMainState(prev => ({...prev, loading: true}));
-        seriesAPI(process.env.API_KEY ?? '', fetch).get(mainState.pageToFetch, requestType).then(res => {
-            setMainState(prev => ({
+        setPageState(prev => ({...prev, loading: true}));
+        seriesAPI(process.env.API_KEY ?? '', fetch).get(pageState.pageToFetch, requestType).then(res => {
+            setPageState(prev => ({
                 ...prev,
                 series: res.results,
                 totalPages: res.total_pages,
@@ -101,20 +101,20 @@ export const Main: React.FC = () => {
             }));
             setSeries(prev => ({...prev, series: [...prev.series, ...res.results]}));
         }).catch(err => {
-            setMainState(prev => ({
+            setPageState(prev => ({
                 ...prev,
                 errorFetchingSeries: err instanceof Error ? err.message : 'An error occurred, sorry:((('
             }));
         }).finally(() => {
-            setMainState(prev => ({...prev, loading: false}));
+            setPageState(prev => ({...prev, loading: false}));
         });
-    }, [mainState.pageToFetch, requestType]);
+    }, [pageState.pageToFetch, requestType]);
 
 
     return <>
-        {mainState.loading && (<Icon topic='loading' size='big'/>)}
-        {mainState.errorFetchingSeries || mainState.errorLoadingOptions && (<Icon topic='error' size='big'/>)}
-        {!mainState.errorFetchingSeries && !mainState.errorLoadingOptions && (
+        {pageState.loading && (<Icon topic='loading' size='big'/>)}
+        {pageState.errorFetchingSeries || pageState.errorLoadingOptions && (<Icon topic='error' size='big'/>)}
+        {!pageState.errorFetchingSeries && !pageState.errorLoadingOptions && (
         <div className={styles.mainPage}>
             <SearchField
                 genres={searchOptions.genres}
@@ -130,8 +130,7 @@ export const Main: React.FC = () => {
                         <SeriesCard
                             key={serie.id}
                             id={serie.id}
-                            imagePath={`https://image.tmdb.org/t/p/original${serie.poster_path}`}
-                            name={serie.name}
+                            imagePath={serie.poster_path ? `https://image.tmdb.org/t/p/original${serie.poster_path}` : ''}                            name={serie.name}
                             topicOfCard='usual'
                             onStarClick={() => alert(`Star clicked for ${serie.name}`)}
                             onHeartClick={() => alert(`Heart clicked for ${serie.name}`)}
@@ -141,15 +140,15 @@ export const Main: React.FC = () => {
                 </div>
             )}
 
-            {mainState.totalPages > 0 && (
+            {pageState.totalPages > 0 && (
                 <Pagination
-                    pageCount={mainState.totalPages}
+                    pageCount={pageState.totalPages}
                     onPageSelect={(page: number) =>  {
-                        setMainState(prev => ({...prev, pageToFetch: page}));
+                        setPageState(prev => ({...prev, pageToFetch: page}));
                         setSeries({currentPage: page, series: []});
                     }}
                     onClick={() => {
-                        setMainState(prev =>({...prev, pageToFetch: Math.min(prev.pageToFetch + 1, mainState.totalPages)}));} }
+                        setPageState(prev =>({...prev, pageToFetch: Math.min(prev.pageToFetch + 1, pageState.totalPages)}));} }
                     page={series.currentPage}
                 />
             )}

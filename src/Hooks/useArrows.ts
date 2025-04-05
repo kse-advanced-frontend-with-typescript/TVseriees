@@ -27,4 +27,4 @@ export const useArrows = <T>(items: T[], itemsPerInstance: number) =>{
         disableLeft,
         disableRight
     };
-}
+};

@@ -1,4 +1,4 @@
-import { Static, Type } from '@sinclair/typebox';
+import { Type } from '@sinclair/typebox';
 import { convertToType } from '../../convertToType';
 import { getData } from '../../getData';
 

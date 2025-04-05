@@ -1,5 +1,4 @@
 import React from 'react';
-import {seriesData} from '../../ExampleData';
 import {SeriesCard} from '../../Components/SeriesCard/SeriesCard';
 
 

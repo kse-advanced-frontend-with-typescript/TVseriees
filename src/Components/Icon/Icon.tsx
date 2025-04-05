@@ -18,10 +18,12 @@ import emptyHeart from './icons/empty-heart.png';
 import loading from './icons/loading.png';
 import error from './icons/error.png';
 import direction from './icons/arrow.png';
-import {IconTopic} from "../../types";
+import hidden from './icons/hidden.png';
+import plus from './icons/plus.png';
+import {IconTopic} from '../../types';
 type IconProps ={
     topic: IconTopic;
-    size: 'mini' | 'medium' | 'big'
+    size: 'mini' | 'medium' | 'big' | 'premedium'
     mirror?: boolean;
 }
 export const Icon: React.FC<IconProps> = ({topic, size, mirror})=>{
@@ -44,6 +46,8 @@ export const Icon: React.FC<IconProps> = ({topic, size, mirror})=>{
             case 'loading': return loading;
             case 'error': return error;
             case 'direction': return direction;
+            case 'hidden': return hidden;
+            case 'plus': return plus;
         }
     };
     return (
@@ -53,7 +57,8 @@ export const Icon: React.FC<IconProps> = ({topic, size, mirror})=>{
                 [styles.medium]: size === 'medium',
                 [styles.mirror]: mirror,
                 [styles.loading]: topic === 'loading',
-                [styles.big]: size === 'big'
+                [styles.big]: size === 'big',
+                [styles.premedium]: size === 'premedium'
             })}
             src={getSource()}
             alt={`${topic} icon`}

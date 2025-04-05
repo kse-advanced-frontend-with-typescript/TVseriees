@@ -7,11 +7,15 @@
 
 }
 .actor h2{
-    margin: 0;
+    font-size: 2rem;
     padding-bottom: 0.4rem;
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
-
+    margin-bottom: 0.6rem;
 }
+.actor article h3{
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+ }
 
 .actor article p{
     font-family: "Indie Flower", cursive;
@@ -32,7 +36,7 @@
     text-decoration: none;
 
 }
-a:hover{
+.actor .link:hover{
     text-decoration: underline;
 }
 .actor h2, .actor h3{

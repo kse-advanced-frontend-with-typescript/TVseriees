@@ -15,9 +15,9 @@ export const Actor: React.FC<ActorProps> = ({name, knownFor})=>{
             <h3>Known for:</h3>
             <p>
                 {knownFor.length> 0? knownFor.map((item, index) => (
-                        <>{index > 0 && ', '}
-                        <Link className={styles.link} key={item.id} to={`/serie/${item.id}`}>{item.name}</Link>
-                        </>
+                        <span key={item.id+index}>{index > 0 && ', '}{/*?*/}
+                        <Link className={styles.link} to={`/serie/${item.id}`}>{item.name}</Link>
+                        </span>
                 ) ) : 'no TV series yet:((('};
             </p>
         </article>

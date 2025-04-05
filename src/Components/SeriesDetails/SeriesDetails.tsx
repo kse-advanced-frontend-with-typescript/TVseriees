@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import styles from './style.css';
 import {Rating} from '../Rating/Rating';
 import {Link} from 'react-router';
+import {MiniButton} from '../MiniButton/MiniButton';
 
 export type SerieDetails = {
     episode_run_time: number | 'unknown',
@@ -66,14 +67,17 @@ const SeriesCast: React.FC<{cast: { id: number, name: string }[] | 'unknown'}> =
     const [showAll, setShowAll] = useState(false);
     return (
         <div className={styles.item}>
-            <h5 className={styles.label}>Cast:</h5>
-            <p>
+            <div className={styles.castTitle}>
+                <h5 className={styles.label}>Cast:</h5>
+                {showAll && cast.length > 25 && <MiniButton topic='hidden' size='mini' onClick={() => setShowAll(false)}/>}
+                {!showAll && cast.length > 25 && <MiniButton topic='plus' size='mini' onClick={() => setShowAll(true)}/>}
+            </div>
+                <p className={styles.castContainer}>
                 {cast !== 'unknown' ? <>
                         <Cast cast={cast} start={0} end={26}/>
-                        {!showAll && cast.length > 25 && <button className={styles.dots} onClick={() => setShowAll(true)}>...</button>}
+                        {!showAll && cast.length > 25}
                         {showAll && cast.length > 25 && <Cast cast={cast} start={26}/>}
-                    </>
-                     : 'unknown'
+                        </> : 'unknown'
                 }
             </p>
         </div>

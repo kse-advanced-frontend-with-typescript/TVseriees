@@ -2,7 +2,7 @@ import {Link, Route, Routes} from 'react-router';
 import React from 'react';
 import {Footer} from './Components/Footer/Footer';
 import {Main} from './Pages/MainPage/Main';
-import {Header, HeaderRight} from './Components/Header/Header';
+import {Header} from './Components/Header/Header';
 import {MenuButton} from './Components/MenuButton/MenuButton';
 import {links, myContacts} from './ExampleData';
 import {AuthorizationButton} from './Components/AuthorizationButton/AuthorizationButton';
@@ -15,14 +15,14 @@ import {ActorPage} from './Pages/ActorPage/ActorPage';
 export const App: React.FC = ()=>{
     return (
 
-        <div className={styles.wrapper}><Header>
-            <MenuButton authorized={false} links={links}/>
+        <div className={styles.wrapper}><Header part='main'>
+            <Header part='left'> <MenuButton authorized={false} links={links}/></Header>
             <h1>TVSerieees</h1>
-            <HeaderRight>
-                <Link to={'/'}><MiniButton topic='search' size='medium'/></Link>
+            <Header part='right'>
+                <Link to={'/'}><MiniButton topic='search' size='premedium'/></Link>
                 <Link to={'/login'}><AuthorizationButton type={'log-in'} /></Link>
-            <Link to={'/sign'}><AuthorizationButton type={'sign'} /></Link>
-            </HeaderRight>
+                <Link to={'/sign'}><AuthorizationButton type={'sign'} /></Link>
+            </Header>
         </Header>
             <div className={styles.contentArea}>
                 <Routes>

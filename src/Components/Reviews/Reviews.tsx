@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './style.css';
-import {useArrows} from "../../Hooks/useArrows";
-import {SliderArrows} from "../SliderArrows/SliderArrows";
+import {useArrows} from '../../Hooks/useArrows';
+import {SliderArrows} from '../SliderArrows/SliderArrows';
 export type ReviewType = {
     content: string,
     author: string
@@ -16,7 +16,7 @@ export const Reviews: React.FC<{reviews: ReviewType[]}> = ({reviews})=>{
             }
 
         </div>
-        {reviews.length >= reviewsPerInstance && <SliderArrows onPrevious={handlePrevious} onNext={handleNext} disablePrevious={disableLeft} disableNext={disableRight}/>}
+        {reviews.length > reviewsPerInstance && <SliderArrows onPrevious={handlePrevious} onNext={handleNext} disablePrevious={disableLeft} disableNext={disableRight}/>}
     </div>;
 };
 

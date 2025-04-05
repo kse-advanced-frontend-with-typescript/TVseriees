@@ -1,10 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './style.css';
 import {Poster} from '../Poster/Poster';
-import {Icon} from "../Icon/Icon";
-import {MiniButton} from "../MiniButton/MiniButton";
-import {SliderArrows} from "../SliderArrows/SliderArrows";
-import {useArrows} from "../../Hooks/useArrows";
+import {SliderArrows} from '../SliderArrows/SliderArrows';
+import {useArrows} from '../../Hooks/useArrows';
 
 
 export const SeriesPictures: React.FC<{name: string, paths: string[]}> = ({name, paths})=>{
@@ -17,6 +15,6 @@ export const SeriesPictures: React.FC<{name: string, paths: string[]}> = ({name,
                 <Poster key={index+path} path={path} name={`${name} picture ${currentIndex+index}`} layout='small-horizontal'/>
             ))}
         </div>
-        {visibleImages.length >= imagesPerInstance && <SliderArrows onPrevious={handlePrevious} onNext={handleNext}  disablePrevious={disableLeft} disableNext={disableRight}/>}
+        {paths.length >= imagesPerInstance && <SliderArrows onPrevious={handlePrevious} onNext={handleNext}  disablePrevious={disableLeft} disableNext={disableRight}/>}
     </div>;
 };

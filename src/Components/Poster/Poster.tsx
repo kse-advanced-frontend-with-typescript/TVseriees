@@ -5,7 +5,7 @@ import classNames from 'classnames';
 type PosterProps = {
     path: string,
     name: string,
-    layout: 'horizontal' | 'vertical' |'small-horizontal';
+    layout: 'horizontal' | 'vertical' |'small-horizontal',
 }
 
 export const Poster: React.FC<PosterProps> = ({path, name, layout}) => {

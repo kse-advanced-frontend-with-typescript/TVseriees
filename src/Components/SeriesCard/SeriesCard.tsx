@@ -3,7 +3,8 @@ import styles from './style.css';
 import { MiniButton } from '../MiniButton/MiniButton';
 import { Rating } from '../Rating/Rating';
 import {Link} from 'react-router';
-
+import classNames from 'classnames';
+import defaultImage from '../../Images/DefaultSerie.png';
 
 type ButtonStates = {
     star: boolean;
@@ -39,7 +40,11 @@ export const SeriesCard: React.FC<SeriesCardProps> = (props) => {
 
     return (
         <div className={styles.seriesCard}>
-            <img className={styles.image} src={imagePath} alt={`${name} image`}/>
+            <img
+                className={classNames(styles.image, {
+                    [styles.defaultImage]: !imagePath
+                })} src={imagePath ? imagePath : defaultImage} alt={`${name} image`}
+            />
             <Link to={`/serie/${props.id}`}><div className={styles.h3}>{name}</div></Link>
             {topicOfCard === 'usual' && (<UsualButtons onCircleClick={props.onCircleClick} onHeartClick={props.onHeartClick} onStarClick={props.onStarClick}/>)}
             {topicOfCard === 'favourites' && (

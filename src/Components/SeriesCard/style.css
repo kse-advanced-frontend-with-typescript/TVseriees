@@ -8,7 +8,10 @@
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
     cursor: pointer;
 }
+.defaultImage{
+    padding-bottom: 8.3rem;
 
+}
 .series-card .image {
     object-fit: contain;
     margin: 0.1rem 0 0 0;

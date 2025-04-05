@@ -3,6 +3,7 @@ import styles from './style.css';
 import {MiniButton} from '../MiniButton/MiniButton';
 import {Poster} from '../Poster/Poster';
 import {Rating} from '../Rating/Rating';
+import defaultImage from '../../Images/DefaultEpisode.png';
 
 export type Season = {
     index: number,
@@ -52,7 +53,7 @@ const Episode: React.FC<{episode: EpisodeType}> = ({episode}) => {
     return <div className={styles.episode}>
         <div className={styles.episodeNumber}><h3>Episode {episode.index}</h3></div>
         <div className={styles.episodeImage}>
-            <Poster path={episode.imagePath} name={episode.name} layout='horizontal'/>
+            <Poster path={episode.imagePath? episode.imagePath : defaultImage } name={episode.name} layout='horizontal'/>
         </div>
         <div className={styles.episodeOverview}>
             <h2>{episode.name}</h2>
