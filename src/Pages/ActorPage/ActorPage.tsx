@@ -6,7 +6,7 @@ import {useParams} from 'react-router';
 import {actorAPI, ActorResponse} from '../../modules/clients/actor';
 import {Icon} from '../../Components/Icon/Icon';
 import defaultImage from '../../Images/DefaultActor.png';
-import {Pictures} from "../../Components/SeriesPictures/Pictures";
+import {Pictures} from '../../Components/SeriesPictures/Pictures';
 
 type PageState = {
     loading: boolean,

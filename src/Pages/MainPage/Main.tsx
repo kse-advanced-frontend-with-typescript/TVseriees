@@ -9,7 +9,7 @@ import {SerieGetRequestType, seriesAPI} from '../../modules/clients/series';
 import {searchAPI} from '../../modules/clients/searchData';
 import {useParams} from 'react-router';
 import {Icon} from '../../Components/Icon/Icon';
-import {FilterState} from "../../types";
+import {FilterState} from '../../types';
 
 const getRequestType = (request?: string): SerieGetRequestType => {
     const validRequests = ['airing_today', 'trending', 'on_the_air', 'popular', 'top_rated'];

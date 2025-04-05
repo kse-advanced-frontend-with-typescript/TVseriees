@@ -1,7 +1,7 @@
 import {Review, seriesAPI} from './index';
+import {createAPI} from '../../CreateTestAPI';
 
 describe('Series API: getReviews', () => {
-    const API_KEY = 'API_KEY';
     describe('when response is valid', () => {
         const body: Review = {
             results: [
@@ -16,13 +16,7 @@ describe('Series API: getReviews', () => {
             ]
         };
 
-        const fetchMocked = jest.fn().mockImplementation(() => {
-            return new Response(JSON.stringify(body), {
-                status: 200,
-            });
-        });
-
-        const api = seriesAPI(API_KEY, fetchMocked);
+        const api = createAPI(body, seriesAPI);
 
         it('should return the result', async () => {
             const res = await api.getReviews(2);
@@ -46,14 +40,7 @@ describe('Series API: getReviews', () => {
 
         };
 
-
-        const fetchMocked = jest.fn().mockImplementation(() => {
-            return new Response(JSON.stringify(body), {
-                status: 200,
-            });
-        });
-
-        const api = seriesAPI(API_KEY, fetchMocked);
+        const api = createAPI(body, seriesAPI);
 
         it('should throw an error', async () => {
             await expect(api.getReviews(2)).rejects.toThrow('Data is not valid: /results/0/author (Expected string)');

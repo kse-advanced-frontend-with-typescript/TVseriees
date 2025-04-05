@@ -1,5 +1,6 @@
 import {seriesAPI} from './index';
 import {SeriesResult} from './index';
+import {createAPI} from '../../CreateTestAPI';
 
 describe('Series API: get', () => {
     const API_KEY = 'API_KEY';
@@ -66,13 +67,7 @@ describe('Series API: get', () => {
         };
 
 
-        const fetchMocked = jest.fn().mockImplementation(() => {
-            return new Response(JSON.stringify(body), {
-                status: 200,
-            });
-        });
-
-        const api = seriesAPI(API_KEY, fetchMocked);
+        const api = createAPI(body, seriesAPI);
 
         it('should throw an error', async () => {
             await expect(api.get()).rejects.toThrow('Data is not valid: /results/0/poster_path (Expected union value)');

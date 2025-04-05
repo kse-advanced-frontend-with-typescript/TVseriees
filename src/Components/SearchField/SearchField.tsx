@@ -4,7 +4,7 @@ import { SearchBar } from './SearchBar';
 import { FieldFilter } from './FieldFilter';
 import { Year } from './Year';
 import { Filter } from './Filter';
-import {FilterState} from "../../types";
+import {FilterState} from '../../types';
 
 
 type SearchFieldProps = {

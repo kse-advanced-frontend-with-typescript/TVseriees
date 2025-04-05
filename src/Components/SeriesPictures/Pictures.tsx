@@ -3,7 +3,7 @@ import styles from './style.css';
 import {Poster} from '../Poster/Poster';
 import {SliderArrows} from '../SliderArrows/SliderArrows';
 import {useArrows} from '../../Hooks/useArrows';
-import {PicturesProps} from "../../types";
+import {PicturesProps} from '../../types';
 
 
 export const Pictures: React.FC<PicturesProps> = ({name, paths})=>{

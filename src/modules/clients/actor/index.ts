@@ -1,8 +1,8 @@
-import { Type } from '@sinclair/typebox';
+import {Static, Type} from '@sinclair/typebox';
 import { convertToType } from '../../convertToType';
 import { getData } from '../../getData';
 import { getImagePath } from '../../getImagePath';
-import {PicturesProps} from "../../../types";
+import {PicturesProps} from '../../../types';
 
 export const getUrl = (urlPart: string) => `https://api.themoviedb.org/3/person/${urlPart}`;
 
@@ -31,6 +31,9 @@ export type ActorResponse = {
     series: Array<{ id: number; name: string }>;
     images: string[]
 };
+export type ActorImages = Static<typeof ImagesSchema>;
+export type ActorTV = Static<typeof ActorTvSchema>;
+export type Actor = Static<typeof ActorSchema>;
 
 export const actorAPI = (api_key: string, fetchAPI: typeof fetch) => {
     const get = async (id: string): Promise<ActorResponse> => {
