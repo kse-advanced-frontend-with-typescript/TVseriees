@@ -1,9 +1,10 @@
-import {seriesAPI} from './index';
-import {SeriesResult} from './index';
-import {createAPI} from '../../CreateTestAPI';
-import {FilterState} from '../../../types';
+import {seriesAPI} from '../index';
+import {SeriesResult} from '../index';
+import {createFetchMocked} from '../../../createTestAPI';
+import {FilterState} from '../../../../types';
 
 describe('Series API: get', () => {
+    const API_KEY = 'API_KEY';
     const filters: FilterState = {
         name: 'Harry Potter',
         year: '2013',
@@ -42,7 +43,8 @@ describe('Series API: get', () => {
             });
         });
 
-        const { api, fetchMocked } = createAPI(body, seriesAPI);
+        const fetchMocked = createFetchMocked(body);
+        const api = seriesAPI(API_KEY, fetchMocked);
 
         describe('should construct correct url', ()=>{
             it('when get with dynamic query parameters is called', async () => {
@@ -92,7 +94,7 @@ describe('Series API: get', () => {
 
         };
 
-        const { api } = createAPI(body, seriesAPI);
+        const api = seriesAPI(API_KEY,  createFetchMocked(body));
         test.each([
             ['plain get', () => api.get()],
             ['get by name', () => api.getByName(1, 'uhyuyu')],

@@ -1,16 +1,17 @@
-import {Actor, actorAPI, ActorTV} from './index';
-import {createAPI} from '../../CreateTestAPI';
+import {ActorData, actorAPI} from '../index';
+import {createFetchMocked} from '../../../createTestAPI';
 
 describe('Actor API: get', () => {
-
+    const API_KEY = 'API_KEY';
     describe('when response is valid', () => {
 
-        const mockActorData: Actor = {
+        const mockActorData: ActorData = {
             name: 'Actor Name',
             profile_path: '/path/to/profile.jpg'
         };
 
-        const {api, fetchMocked} = createAPI(mockActorData, actorAPI);
+        const fetchMocked = createFetchMocked(mockActorData);
+        const api = actorAPI(API_KEY, fetchMocked);
 
         it('should return the correct actor data', async () => {
             const res = await api.getActor('1');
@@ -26,14 +27,13 @@ describe('Actor API: get', () => {
 
     describe('when response is invalid', () => {
 
-        const mockActorData: Actor = {
+        const mockActorData: ActorData = {
             // @ts-expect-error We want to check invalid data
             name: null,
             // @ts-expect-error We want to check invalid data
             profile_path: 5555
         };
-        const {api} = createAPI(mockActorData, actorAPI);
-
+        const api = actorAPI(API_KEY, createFetchMocked(mockActorData));
         it('should throw an error', async () => {
             await expect(api.getActor('1')).rejects.toThrow('Data is not valid: /name (Expected string)');
         });

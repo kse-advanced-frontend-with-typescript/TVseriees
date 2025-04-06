@@ -1,9 +1,10 @@
-import {SeasonFromShema, seriesAPI} from './index';
-import {createAPI} from '../../CreateTestAPI';
-import {Season} from '../../../Components/Seasons/Seasons';
-import {getImagePath} from '../../getImagePath';
+import {SeasonFromShema, seriesAPI} from '../index';
+import {createFetchMocked} from '../../../createTestAPI';
+import {Season} from '../../../../Components/Seasons/Seasons';
+import {getImagePath} from '../../../getImagePath';
 
 describe('Series API: getSeason', () => {
+    const API_KEY = 'API_KEY';
     describe('when response is valid', () => {
         const body: SeasonFromShema = {
             season_number: 1,
@@ -54,7 +55,8 @@ describe('Series API: getSeason', () => {
             ]
         };
 
-        const {api, fetchMocked} = createAPI(body, seriesAPI);
+        const fetchMocked = createFetchMocked(body);
+        const api = seriesAPI(API_KEY, fetchMocked);
 
         it('should return the result', async () => {
             const res = await api.getSeason(1, 2);
@@ -93,7 +95,7 @@ describe('Series API: getSeason', () => {
                 }
             ]
         };
-        const {api} = createAPI(body, seriesAPI);
+        const api = seriesAPI(API_KEY, createFetchMocked(body));
 
         it('should throw an error', async () => {
             await expect(api.getSeason(1, 6)).rejects.toThrow('Data is not valid: /episodes/0/name (Expected required property)');
