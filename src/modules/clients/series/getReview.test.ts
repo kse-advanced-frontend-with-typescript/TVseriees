@@ -16,12 +16,16 @@ describe('Series API: getReviews', () => {
             ]
         };
 
-        const api = createAPI(body, seriesAPI);
+        const {api, fetchMocked} = createAPI(body, seriesAPI);
 
         it('should return the result', async () => {
             const res = await api.getReviews(2);
             expect(res).toEqual(body);
 
+        });
+        it('should construct correct url', async()=>{
+            await api.getReviews('10');
+            expect(fetchMocked).toBeCalledWith(expect.stringContaining('10'), expect.any(Object));
         });
     });
     describe('when response is not valid', () => {
@@ -40,7 +44,7 @@ describe('Series API: getReviews', () => {
 
         };
 
-        const api = createAPI(body, seriesAPI);
+        const {api} = createAPI(body, seriesAPI);
 
         it('should throw an error', async () => {
             await expect(api.getReviews(2)).rejects.toThrow('Data is not valid: /results/0/author (Expected string)');

@@ -5,5 +5,8 @@ export const createAPI = <T>(mockedData: T, apiMethod:(apiKey: string, fetchAPI:
             status: 200,
         }));
     });
-    return apiMethod(API_KEY, fetchMocked);
+    return {
+        api: apiMethod(API_KEY, fetchMocked),
+        fetchMocked
+    };
 };

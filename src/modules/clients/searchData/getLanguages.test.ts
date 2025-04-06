@@ -16,7 +16,7 @@ describe('Search API: getLanguages', () => {
         ];
         const expectedResult = new Map(mockedLanguagesData.map(lan=> [lan.english_name, lan.iso_639_1]));
 
-        const api = createAPI(mockedLanguagesData, searchAPI);
+        const {api} = createAPI(mockedLanguagesData, searchAPI);
 
         it('should return the correct actor data with TV shows and images', async () => {
             const res = await api.getLanguages();
@@ -38,7 +38,7 @@ describe('Search API: getLanguages', () => {
             {iso_639_1: 'pt', english_name: 'Portuguese'},
 
         ];
-        const api = createAPI(mockedLanguagesData, searchAPI);
+        const {api} = createAPI(mockedLanguagesData, searchAPI);
 
         it('should throw an error', async () => {
             await expect(api.getLanguages()).rejects.toThrow('Data is not valid: /1/iso_639_1 (Expected string)');

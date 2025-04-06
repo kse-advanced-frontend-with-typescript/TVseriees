@@ -24,13 +24,8 @@ describe('Series API: get', () => {
 
         };
 
-        const fetchMocked = jest.fn().mockImplementation(() => {
-            return new Response(JSON.stringify(body), {
-                status: 200,
-            });
-        });
 
-        const api = seriesAPI(API_KEY, fetchMocked);
+        const { api, fetchMocked } = createAPI(body, seriesAPI);
 
         it('should return the result', async () => {
             const res = await api.get();
@@ -38,7 +33,7 @@ describe('Series API: get', () => {
 
         });
 
-        it('it should construct correct url', async () => {
+        it('should construct correct url', async () => {
             await api.get(10, 'popular');
             expect(fetchMocked).toBeCalledWith(expect.stringContaining('popular'), expect.any(Object));
             expect(fetchMocked).toBeCalledWith(expect.stringContaining('page=10'), expect.any(Object));
@@ -67,7 +62,7 @@ describe('Series API: get', () => {
         };
 
 
-        const api = createAPI(body, seriesAPI);
+        const { api } = createAPI(body, seriesAPI);
 
         it('should throw an error', async () => {
             await expect(api.get()).rejects.toThrow('Data is not valid: /results/0/poster_path (Expected union value)');

@@ -15,7 +15,7 @@ describe('Search API: getCountries', () => {
         ];
         const expectedResult = new Map(mockedCountriesData.map(c=> [c.english_name, c.iso_3166_1]));
 
-        const api = createAPI(mockedCountriesData, searchAPI);
+        const {api} = createAPI(mockedCountriesData, searchAPI);
 
         it('should return the correct actor data with TV shows and images', async () => {
             const res = await api.getCountries();
@@ -35,7 +35,7 @@ describe('Search API: getCountries', () => {
 
 
         ];
-        const api = createAPI(mockedLanguagesData, searchAPI);
+        const {api} = createAPI(mockedLanguagesData, searchAPI);
 
         it('should throw an error', async () => {
             await expect(api.getCountries()).rejects.toThrow('Data is not valid: /0/iso_3166_1 (Expected required property)');

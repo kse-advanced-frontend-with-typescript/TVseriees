@@ -20,7 +20,10 @@ describe('Actor API: get', () => {
                 }));
             }
         });
-        return actorAPI(API_KEY, fetchMocked);
+        return {
+            api: actorAPI(API_KEY, fetchMocked),
+            fetchMocked
+        };
     };
 
     describe('when response is valid', () => {
@@ -56,12 +59,18 @@ describe('Actor API: get', () => {
                 .map(profile => getImagePath(profile.file_path!))
         };
 
-        const api = createAPI(mockActorData, mockTvData, mockImagesData);
+        const {api, fetchMocked} = createAPI(mockActorData, mockTvData, mockImagesData);
 
         it('should return the correct actor data with TV shows and images', async () => {
             const res = await api.get('1');
             expect(res).toEqual(expectedResult);
         });
+
+        it('should construct correct url', async()=>{
+            await api.get('10');
+            expect(fetchMocked).toBeCalledWith(expect.stringContaining('10'), expect.any(Object));
+        });
+
     });
 
     describe('when response is invalid', () => {
@@ -89,7 +98,7 @@ describe('Actor API: get', () => {
         };
 
         // @ts-expect-error We want to check invalid data
-        const api = createAPI(mockActorData, mockTvData, mockImagesData);
+        const {api} = createAPI(mockActorData, mockTvData, mockImagesData);
 
         it('should throw an error', async () => {
             await expect(api.get('1')).rejects.toThrow('Data is not valid: /name (Expected string)');
