@@ -1,8 +1,8 @@
 import {Images, seriesAPI} from './index';
 import {createAPI} from '../../CreateTestAPI';
-import {getImagePath} from "../../getImagePath";
+import {getImagePath} from '../../getImagePath';
 
-describe('Series API: getImages', () => {
+describe('Series API: getSeason', () => {
     describe('when response is valid', () => {
 
         const body: Images = {

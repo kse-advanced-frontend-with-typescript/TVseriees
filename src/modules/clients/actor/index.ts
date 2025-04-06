@@ -37,12 +37,9 @@ export type Actor = Static<typeof ActorSchema>;
 
 export const actorAPI = (api_key: string, fetchAPI: typeof fetch) => {
     const get = async (id: string): Promise<ActorResponse> => {
-        const fetchedActorData = await getData(api_key, fetchAPI, getUrl(id));
-        const actorData = convertToType(fetchedActorData, ActorSchema);
-        const fetchedTVData = await getData(api_key, fetchAPI, getUrl(`${id}/tv_credits`));
-        const tvData = convertToType(fetchedTVData, ActorTvSchema);
-        const fetchedImages = await getData(api_key, fetchAPI, getUrl(`${id}/images`));
-        const imagesData = convertToType(fetchedImages, ImagesSchema);
+        const actorData = await getActor(id);
+        const tvData = await getActorTVs(id);
+        const imagesData = await  getActorImages(id);
         return {
             name: actorData.name,
             image: actorData.profile_path? getImagePath(actorData.profile_path): '',
@@ -52,9 +49,24 @@ export const actorAPI = (api_key: string, fetchAPI: typeof fetch) => {
                 .map(profile => getImagePath(profile.file_path!))
         };
     };
+    const getActor = async (id: string): Promise<Actor> => {
+        const fetchedActorData = await getData(api_key, fetchAPI, getUrl(id));
+        return  convertToType(fetchedActorData, ActorSchema);
+    };
 
+    const getActorTVs = async (id: string): Promise<ActorTV> => {
+        const fetchedTVData = await getData(api_key, fetchAPI, getUrl(`${id}/tv_credits`));
+       return  convertToType(fetchedTVData, ActorTvSchema);
+    };
 
+    const getActorImages = async (id: string): Promise<ActorImages> => {
+        const fetchedImages = await getData(api_key, fetchAPI, getUrl(`${id}/images`));
+        return  convertToType(fetchedImages, ImagesSchema);
+    };
     return {
-        get
+        get,
+        getActor,
+        getActorTVs,
+        getActorImages
     };
 };

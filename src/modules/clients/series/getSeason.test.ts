@@ -1,7 +1,7 @@
 import {SeasonFromShema, seriesAPI} from './index';
 import {createAPI} from '../../CreateTestAPI';
-import {Season} from "../../../Components/Seasons/Seasons";
-import {getImagePath} from "../../getImagePath";
+import {Season} from '../../../Components/Seasons/Seasons';
+import {getImagePath} from '../../getImagePath';
 
 describe('Series API: getSeason', () => {
     describe('when response is valid', () => {

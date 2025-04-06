@@ -43,11 +43,9 @@ const SeriesDetailsSchema = Type.Object({
 const SeasonSchema = Type.Object({
     season_number: Type.Number(),
     episodes: Type.Array(Type.Object({
-        id: Type.Number(),
         name: Type.String(),
         overview: Type.String(),
         episode_number: Type.Number(),
-        air_date: Type.Union([Type.String(), Type.Null()]),
         runtime: Type.Union([Type.Number(), Type.Null()]),
         still_path: Type.Union([Type.String(), Type.Null()]),
         vote_average: Type.Number(),
@@ -86,7 +84,9 @@ export type SeriesResult = Static<typeof SerieCardItemResultSchema>
 export type SerieGetRequestType = 'airing_today' | 'trending' | 'on_the_air' | 'popular' | 'top_rated';
 export type Review = Static<typeof ReviewSchema>;
 export type Cast = Static<typeof CastSchema>;
-
+export type SeasonFromShema = Static<typeof SeasonSchema>;
+export type Images = Static<typeof ImageSchema>;
+export type Details = Static<typeof SeriesDetailsSchema>;
 export const seriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
 
     const get = async (page: number=1, requestType: SerieGetRequestType='trending'): Promise<SeriesResult> => {
@@ -101,7 +101,7 @@ export const seriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
     const getDetails = async (id: number): Promise<SerieDetails> => {
         const fetchedSerieData = await getData(api_key, fetchAPI, getUrl(id.toString()));
         const serieData = convertToType(fetchedSerieData, SeriesDetailsSchema);
-        const fetchedCastData = await getData(api_key, fetchAPI, getUrl(`${id}/aggregate_credits?language=en-US`));
+        const fetchedCastData = await getData(api_key, fetchAPI, getUrl(`${id}/aggregate_credits`));
         const cast = convertToType(fetchedCastData, CastSchema);
         return {
             episode_run_time: serieData.episode_run_time?.length ? Math.round(serieData.episode_run_time.reduce((sum, time) => sum + time, 0) / serieData.episode_run_time.length) : 'unknown',
@@ -130,12 +130,12 @@ export const seriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
     };
 
    const getReviews = async (id: number): Promise<Review> =>{
-       const fetchedData = await getData(api_key, fetchAPI, getUrl(`${id}/reviews?language=en-US&page=1`));
+       const fetchedData = await getData(api_key, fetchAPI, getUrl(`${id}/reviews`));
        return convertToType(fetchedData, ReviewSchema);
    };
 
    const getSeason = async (serieId: number, seasonId: number): Promise<Season> => {
-       const fetchedData = await getData(api_key, fetchAPI, getUrl(`${serieId}/season/${seasonId}?language=en-US`));
+       const fetchedData = await getData(api_key, fetchAPI, getUrl(`${serieId}/season/${seasonId}`));
        const seasonData = convertToType(fetchedData, SeasonSchema);
        return {
            index: seasonData.season_number,
