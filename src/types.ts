@@ -14,3 +14,9 @@ export type FilterState = {
     year: string,
     name: string
 }
+export type UsualCardProps = {
+    onStarClick: ()=>void
+    onHeartClick: ()=>void
+    onCircleClick: ()=>void
+};
+

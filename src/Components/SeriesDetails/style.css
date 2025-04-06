@@ -10,17 +10,14 @@
     flex-direction: column;
     gap: 0.7rem;
 }
-.dots{
-    background: none;
-    border: none;
-    font: inherit;
-    color: inherit;
-    cursor: pointer;
-    outline: inherit;
+
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
 }
-.dots:hover{
-    color: #00161C;
-}
+
 .detail-items  h2{
     text-align: center;
     display: flex;
@@ -119,14 +116,21 @@
     .item:last-child{
         margin-bottom: 0.3rem;
     }
-    .item h5,
-    .item p{
+    .item h5, .item p{
         padding: 0.2rem;
     }
 
     .rating {
         margin-top: 0.8rem;
         padding-top: 0.8rem;
+    }
+
+    .buttons{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 0.5rem;
     }
 
 }

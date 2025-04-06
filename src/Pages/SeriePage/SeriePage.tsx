@@ -104,6 +104,10 @@ export const SeriePage: React.FC = () => {
                                 production_countries={pageState.details.production_countries}
                                 vote_average={pageState.details.vote_average}
                                 vote_count={pageState.details.vote_count}
+                                onStarClick={() => alert(`Star clicked for ${pageState.details?.name}`)}
+                                onHeartClick={() => alert(`Heart clicked for ${pageState.details?.name}`)}
+                                onCircleClick={() => alert(`Circle clicked for ${pageState.details?.name}`)}
+
                             />
                         </div>
                         {pageState.details.overview.length > 0 && <Overview overview={pageState.details.overview}/>}

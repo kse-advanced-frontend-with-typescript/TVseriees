@@ -3,6 +3,8 @@ import styles from './style.css';
 import {Rating} from '../Rating/Rating';
 import {Link} from 'react-router';
 import {MiniButton} from '../MiniButton/MiniButton';
+import {UserButtons} from "../UserButtons/UserButtons";
+import {UsualCardProps} from "../../types";
 
 export type SerieDetails = {
     episode_run_time: number | 'unknown',
@@ -26,12 +28,15 @@ export type SerieDetails = {
     poster_path: string
 };
 type SeriesDetailsProps = Omit<SerieDetails, 'overview' | 'poster_path'>;
-export const SeriesDetails: React.FC<SeriesDetailsProps> = (props) => {
+export const SeriesDetails: React.FC<SeriesDetailsProps & UsualCardProps> = (props) => {
     return (
         <div className={styles.detailItems}>
             <h2>{props.name}</h2>
             <Details {...props}/>
-            <Rating averageVote={props.vote_average} voteCount={props.vote_count} size='usual'/>
+            <div className={styles.buttons}>
+                <Rating averageVote={props.vote_average} voteCount={props.vote_count} size='premedium'/>
+                <UserButtons onCircleClick={props.onCircleClick} onHeartClick={props.onHeartClick} onStarClick={props.onStarClick} bigger={true}/>
+            </div>
         </div>
     );
 };

@@ -50,7 +50,6 @@ describe('getActorData', () => {
         const error = new Error('Failed to fetch images');
         const actorPromise = Promise.resolve(mockActorData);
         const tvPromise = Promise.resolve(mockTvData);
-        const imagePromise = Promise.reject(error);
         await expect(getActorData(actorPromise, tvPromise)).rejects.toThrow(error.message.toString());
     });
 });

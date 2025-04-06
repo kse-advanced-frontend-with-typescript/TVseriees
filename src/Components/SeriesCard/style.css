@@ -4,13 +4,18 @@
     align-items: center;
     background-color: #022731;
     width: 100%;
-    height: auto;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
     cursor: pointer;
+    position: relative;
 }
 .defaultImage{
     padding-bottom: 8.3rem;
 
+}
+.card-buttons{
+    width: 100%;
+    margin-top: auto;
+    padding-bottom: 0.5rem;
 }
 .series-card .image {
     object-fit: contain;
@@ -69,14 +74,7 @@
     transform: scale(1.1);
 }
 
-.buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-}
+
 .buttons-rating{
     display: flex;
     justify-content: center;
