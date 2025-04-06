@@ -12,7 +12,15 @@
     gap: 6rem;
     width: 87%;
 }
-
+@media only screen and (max-width: 1200px) {
+    .details{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+        width: 87%;
+    }
+}
 @media only screen and (max-width: 768px) {
     .serie-page{
         gap: 1rem;
@@ -20,5 +28,6 @@
 
     .details{
         flex-direction: column;
+        gap:1.5rem;
     }
 }

@@ -34,9 +34,8 @@ h2 {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1200px) {
     .header{
-        flex-direction: column;
        justify-content: center;
         margin-bottom: 0.5rem;
         gap: 0.7rem;

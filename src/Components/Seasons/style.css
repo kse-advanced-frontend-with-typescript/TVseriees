@@ -106,15 +106,16 @@
 
 @media only screen and (max-width: 768px) {
     .seasons {
-        margin: 3rem 0;
+        margin: 1rem 0;
         gap: 1rem;
+        width: 100%;
     }
 
     .season {
         padding: 0 1rem;
         margin: 0 auto;
         height: 2.5rem;
-        width: 90%;
+        width: 100%;
         max-width: 20rem;
     }
 
@@ -129,7 +130,7 @@
     }
 
     .episode {
-        width: 100%;
+        width: 90%;
         padding: 1rem;
         margin: 0 auto;
     }
@@ -170,4 +171,29 @@
         line-height: 1.4;
         margin-bottom: 3rem;
     }
+    .episode {
+        grid-template-rows: auto auto auto auto;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+
+    .episode-number {
+        grid-row: 1;
+        grid-column: 1;
+    }
+
+    .episode-image {
+        grid-row: 2;
+        grid-column: 1;
+        margin-bottom: 1rem;
+    }
+
+    .episode-overview {
+        grid-row: 3;
+        grid-column: 1;
+        min-height: 20rem;
+    }
 }
+
+
+

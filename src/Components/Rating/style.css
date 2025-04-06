@@ -36,3 +36,12 @@
     text-align: justify;
 }
 
+@media only screen and (max-width: 768px) {
+    .group {
+        font-size: 1.1rem;
+    }
+
+    .small .group {
+        font-size: 0.8rem;
+    }
+}
