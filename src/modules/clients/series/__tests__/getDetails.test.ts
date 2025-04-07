@@ -1,7 +1,7 @@
+import 'whatwg-fetch';
 import {Cast, Details,seriesAPI} from '../index';
 import {getImagePath} from '../../../getImagePath';
 import {SerieDetails} from '../../../../Components/SeriesDetails/SeriesDetails';
-
 describe('Series API: getImages', () => {
     const API_KEY = 'API_KEY';
 
@@ -127,7 +127,7 @@ describe('Series API: getImages', () => {
         const {api} = createAPI(serieData, castData);
 
         it('should throw an error for invalid image data', async () => {
-            await expect(api.getDetails(4)).rejects.toThrow('"Data is not valid: /id (Expected number)');
+            await expect(api.getDetails(4)).rejects.toThrow('Data is not valid: /id (Expected number)');
         });
     });
 });

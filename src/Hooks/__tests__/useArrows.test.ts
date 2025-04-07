@@ -1,6 +1,8 @@
 import { renderHook, act } from '@testing-library/react';
 import { useArrows } from '../useArrows';
-
+/**
+ * @jest-environment jsdom
+ */
 describe('useArrows', () => {
     const mockItems = ['item1', 'item2', 'item3', 'item4', 'item5', 'item6'];
     const itemsPerInstance = 2;
