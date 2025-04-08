@@ -18,26 +18,6 @@ describe('getData:', () => {
         });
     });
 
-
-
-    // it('should fetch set headers for TMDB', async () => {
-    //         const url = 'https://api.themoviedb.org/some-endpoint';
-    //         await getData(API_KEY, fetchMock, url);
-    //         const headers = fetchMock.mock.calls[0][1].headers;
-    //         expect(headers.get('Content-Type')).toBe('application/json');
-    //         expect(headers.get('cache-control')).toBe('no-cache');
-    //         expect(headers.get('Authorization')).toBe(`Bearer ${API_KEY}`);
-    //     });
-    //
-    //     it('should set headers RestDB.io', async () => {
-    //         const url = 'https://somerestdbsite.restdb.io/some-endpoint';
-    //         await getData(API_KEY, fetchMock, url);
-    //         const headers = fetchMock.mock.calls[0][1].headers;
-    //         expect(headers.get('Content-Type')).toBe('application/json');
-    //         expect(headers.get('cache-control')).toBe('no-cache');
-    //         expect(headers.get('x-apikey')).toBe(API_KEY);
-    //     });
-
     it('should throw an error when response is not ok', async () => {
         const fetchMock = jest.fn().mockResolvedValue({
             ok: false,

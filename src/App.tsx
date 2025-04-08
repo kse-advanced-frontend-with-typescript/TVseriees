@@ -17,10 +17,10 @@ import {AppContext} from './context';
 import {initSearchAPI} from './modules/clients/searchData';
 import {ConfigurationData} from './types';
 import {Warning} from './Components/Warning/Warning';
+import {initSeriesAPI} from './modules/clients/series';
+import {createReverseMap} from './modules/createReverseMap';
+import {initActorAPI} from './modules/clients/actor';
 
-const createReverseMap= <K, V>(map: Map<K, V>): Map<V, K> =>{
-    return new Map(Array.from(map, ([key, value]) => [value, key]));
-};
 export const App: React.FC = ()=>{
     const [state, setState] = useState<{user?: User, loading: boolean, error: boolean}>(
         {
@@ -32,6 +32,9 @@ export const App: React.FC = ()=>{
     const [warning, setWarning] = useState<boolean>(false);
 
     const userAPI = initUserAPI(process.env.REST_API_KEY!, fetch);
+    const seriesAPI = initSeriesAPI(process.env.API_KEY!, fetch);
+    const actorAPI = initActorAPI(process.env.API_KEY!, fetch);
+
     const [configuration, setConfiguration] = useState<ConfigurationData>({
         countries: new Map(),
         languages: new Map(),
@@ -89,7 +92,9 @@ export const App: React.FC = ()=>{
             setUser,
             cleanUser,
             userAPI,
-            configuration
+            configuration,
+            seriesAPI,
+            actorAPI
         }}>
         <div className={styles.wrapper}><Header part='main'>
             <Header part='left'> <MenuButton authorized={!!state.user} links={links}/></Header>
@@ -121,7 +126,7 @@ export const App: React.FC = ()=>{
                     <Route path='actor/:id' element={<ActorPage/>}/>
                 </Routes>
             </div>
-            <Footer links={links} contacts={myContacts}/>
+            <Footer links={links} authorized={!!state.user} contacts={myContacts}/>
 
         </div>
         </AppContext.Provider>

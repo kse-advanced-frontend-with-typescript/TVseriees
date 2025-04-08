@@ -5,7 +5,6 @@ body{
     background-color: #00161C;
     height: 100vh;
     color: #94bae3;
-
 }
 
 .wrapper{
@@ -18,34 +17,14 @@ body{
 .content-area {
     flex: 1;
 }
-.series-container{
-    width: 90%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    margin: 0 auto;
-    justify-items: center;
-}
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .wrapper{
         gap: 1rem;
     }
-    .series-container{
-
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-    }
 }
 @media only screen and (max-width: 768px) {
     .wrapper{
         gap: 1rem;
-    }
-    .series-container{
-
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 2rem;
     }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {Links} from '../Footer/Footer';
+import { Link } from 'react-router';
+import { Links } from '../Footer/Footer';
 import styles from './style.css';
 import classNames from 'classnames';
 
-export const LinksSection: React.FC<{links: Links, style: 'menu' | 'footer'}> = ({links, style}) => {
+export const LinksSection: React.FC<{ links: Links, style: 'menu' | 'footer', authorized: boolean }> = ({ links, style, authorized }) => {
     return (
         <div>
             <ul className={classNames(styles.links, {
@@ -16,7 +16,7 @@ export const LinksSection: React.FC<{links: Links, style: 'menu' | 'footer'}> = 
                         <Link to={`/${link.request_type}`}>{link.name}</Link>
                     </li>
                 ))}
-                {links.userLinks.map((link, index) => (
+                {authorized && links.userLinks.map((link, index) => (
                     <li key={`userlink-${index}`} className={styles.link}>
                         <Link to={`/${link}`}>{link}</Link>
                     </li>

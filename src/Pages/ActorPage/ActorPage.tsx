@@ -1,40 +1,41 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Poster} from '../../Components/Poster/Poster';
 import {Actor} from '../../Components/Actor/Actor';
 import styles from './style.css';
 import {useParams} from 'react-router';
-import {initActorAPI} from '../../modules/clients/actor';
 import {Icon} from '../../Components/Icon/Icon';
 import defaultImage from '../../Images/DefaultActor.png';
 import {ActorResponse, getActorData} from '../../modules/clients/actor/getActorData';
+import {AppContext} from '../../context';
 
 type PageState = {
     loading: boolean,
-    error: string,
+    error: boolean,
     actor?: ActorResponse,
 }
 
 export const ActorPage: React.FC = ()=> {
+    const context = useContext(AppContext);
     const {id} = useParams<string>();
     const [pageState, setPageState] = useState<PageState>({
         loading: true,
-        error: '',
+        error: false,
     });
 
     useEffect(() => {
         if (!id) return;
         setPageState(prev => ({...prev, loading: true}));
-        const api = initActorAPI(process.env.API_KEY ?? '', fetch);
-        getActorData(api.getActor(id), api.getActorTVs(id)).then(res => {
+        getActorData(context.actorAPI.getActor(id), context.actorAPI.getActorTVs(id)).then(res => {
             setPageState(prev => ({
                 ...prev,
                 actor: res,
-                error: ''
+                error: false
             }));
         }).catch(err => {
+            console.log(err);
             setPageState(prev => ({
                 ...prev,
-                error: err instanceof Error ? err.message : 'An error occurred, sorry:((('
+                error: true
             }));
         }).finally(() => {
             setPageState(prev => ({...prev, loading: false}));

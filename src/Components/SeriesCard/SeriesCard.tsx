@@ -25,7 +25,7 @@ export type SeriesCardProps =
         onIconClick: () => void;
     });
 
-export const SeriesCard: React.FC<SeriesCardProps> = (props) => {
+export const SeriesCard: React.FC<SeriesCardProps & {authorized: boolean}> = (props) => {
     const { imagePath, name, topicOfCard } = props;
 
     const renderButtons = () => {
@@ -80,9 +80,9 @@ export const SeriesCard: React.FC<SeriesCardProps> = (props) => {
                 <Link to={`/serie/${props.id}`}>
                     <div className={styles.h3}>{name}</div>
                 </Link>
-            <div className={styles.cardButtons}>
+            {props.authorized && <div className={styles.cardButtons}>
                 {renderButtons()}
-            </div>
+            </div>}
         </div>
     );
 };

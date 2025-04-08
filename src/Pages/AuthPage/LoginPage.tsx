@@ -3,7 +3,6 @@ import {LogInForm} from '../../Components/AuthForm/LogInForm';
 import {AppContext} from '../../context';
 import {useNavigate} from 'react-router';
 
-
 export const LoginPage: React.FC = ()=>{
     const navigate = useNavigate();
     const context = useContext(AppContext);

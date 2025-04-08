@@ -28,14 +28,14 @@ export type SerieDetails = {
     poster_path: string
 };
 type SeriesDetailsProps = Omit<SerieDetails, 'overview' | 'poster_path'>;
-export const SeriesDetails: React.FC<SeriesDetailsProps & UsualCardProps> = (props) => {
+export const SeriesDetails: React.FC<SeriesDetailsProps & UsualCardProps & {authorized: boolean}> = (props) => {
     return (
         <div className={styles.detailItems}>
             <h2>{props.name}</h2>
             <Details {...props}/>
             <div className={styles.buttons}>
                 <Rating averageVote={props.vote_average} voteCount={props.vote_count} size='premedium'/>
-                <UserButtons onCircleClick={props.onCircleClick} onHeartClick={props.onHeartClick} onStarClick={props.onStarClick} bigger={true}/>
+                {props.authorized && <UserButtons onCircleClick={props.onCircleClick} onHeartClick={props.onHeartClick} onStarClick={props.onStarClick} bigger={true}/>}
             </div>
         </div>
     );

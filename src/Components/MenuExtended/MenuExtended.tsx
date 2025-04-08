@@ -22,7 +22,7 @@ export const MenuExtended: React.FC<MenuExtendedProps>=({links,  onClose, author
             <MiniButton topic='cross' size='medium' onClick={onClose}/>
         </div>
 
-        <LinksSection links={links} style={'menu'}/>
+        <LinksSection links={links} style={'menu'} authorized={authorized}/>
         <div className={styles.auth}>
             {authorized && <AuthorizationButton type={'log-out'} onClick={()=>alert('clicked')}/>}
             {!authorized && <div className={styles.auth}>

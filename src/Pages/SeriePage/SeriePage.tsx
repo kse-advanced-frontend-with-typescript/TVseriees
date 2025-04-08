@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Poster} from '../../Components/Poster/Poster';
 import {SerieDetails, SeriesDetails} from '../../Components/SeriesDetails/SeriesDetails';
 import {Season, Seasons} from '../../Components/Seasons/Seasons';
 import {Reviews} from '../../Components/Reviews/Reviews';
 import {useParams} from 'react-router';
-import {initSeriesAPI, Review} from '../../modules/clients/series';
 import {Overview} from '../../Components/Overview/Overview';
 import {Pictures} from '../../Components/SeriesPictures/Pictures';
 import style from './style.css';
 import {Icon} from '../../Components/Icon/Icon';
 import defaultImage from '../../Images/DefaultSerie.png';
+import {AppContext} from '../../context';
+import {Review} from '../../modules/clients/series';
 type PageState = {
     loading: boolean,
     error: string,
@@ -20,21 +21,20 @@ type PageState = {
 }
 
 export const SeriePage: React.FC = () => {
+    const context = useContext(AppContext);
     const [pageState, setPageState] = useState<PageState>({
         loading: true,
         error: ''
     });
     const {id} = useParams<string>();
-    const api = initSeriesAPI(process.env.API_KEY ?? '', fetch);
-
     useEffect(() => {
         if(!id)return ;
         const seriesId = parseInt(id);
         setPageState(prev => ({...prev, loading: true}));
         Promise.all([
-            api.getDetails(seriesId),
-            api.getReviews(seriesId),
-            api.getImages(seriesId)
+            context.seriesAPI.getDetails(seriesId),
+            context.seriesAPI.getReviews(seriesId),
+            context.seriesAPI.getImages(seriesId)
         ]).then(([detailsData, reviewsData, imagesData]) => {
             setPageState(prev => ({
                 ...prev,
@@ -47,7 +47,7 @@ export const SeriePage: React.FC = () => {
             if (detailsData && detailsData.number_of_seasons) {
                 const seasonPromises = Array.from(
                     { length: detailsData.number_of_seasons },
-                    (_, index) => api.getSeason(seriesId, index + 1)
+                    (_, index) =>  context.seriesAPI.getSeason(seriesId, index + 1)
                 );
 
                 Promise.all(seasonPromises)
@@ -90,6 +90,7 @@ export const SeriePage: React.FC = () => {
                                 layout='vertical'
                             />
                             <SeriesDetails
+                                authorized={!!context.user}
                                 cast={pageState.details.cast}
                                 episode_run_time={pageState.details.episode_run_time}
                                 first_air_date={pageState.details.first_air_date}
@@ -98,7 +99,7 @@ export const SeriePage: React.FC = () => {
                                 name={pageState.details.name}
                                 number_of_episodes={pageState.details.number_of_episodes}
                                 number_of_seasons={pageState.details.number_of_seasons}
-                                original_language={pageState.details.original_language}
+                                original_language={context.configuration.code_languages.get(pageState.details.original_language) ?? 'unknown'}
                                 original_name={pageState.details.original_name}
                                 production_companies={pageState.details.production_companies}
                                 production_countries={pageState.details.production_countries}

@@ -21,10 +21,11 @@ export type Links = {
 
 type FooterProps = {
     links: Links,
-    contacts: ContactProp[]
+    contacts: ContactProp[],
+    authorized: boolean
 }
 
-export const Footer: React.FC<FooterProps> = ({links, contacts}) => {
+export const Footer: React.FC<FooterProps> = ({links, contacts, authorized}) => {
     const currentYear = new Date().getFullYear();
     return <footer className={styles.footer}>
         <div className={styles.footerItems}>
@@ -34,7 +35,7 @@ export const Footer: React.FC<FooterProps> = ({links, contacts}) => {
             </div>
             <div>
                 <h4>Links</h4>
-                <LinksSection links={links} style={'footer'}/>
+                <LinksSection links={links} style={'footer'} authorized={authorized}/>
             </div>
             <Contacts contacts={contacts}/>
         </div>

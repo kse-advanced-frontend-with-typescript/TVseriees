@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {SeriesCard} from '../../Components/SeriesCard/SeriesCard';
 import {SearchField} from '../../Components/SearchField/SearchField';
 import {SortOptions} from '../../ExampleData';
 import {Pagination} from '../../Components/Pagination/Pagination';
 import mainStyles from '../../main.css';
 import styles from './style.css';
-import {SerieGetRequestType, initSeriesAPI} from '../../modules/clients/series';
-import {initSearchAPI} from '../../modules/clients/searchData';
+import {SerieGetRequestType} from '../../modules/clients/series';
 import {useParams} from 'react-router';
 import {Icon} from '../../Components/Icon/Icon';
 import {FilterState} from '../../types';
+import {AppContext} from '../../context';
+import {SerieCards} from '../../Components/SerieCards/SerieCards';
 
 const getRequestType = (request?: string): SerieGetRequestType => {
     const validRequests = ['airing_today', 'trending', 'on_the_air', 'popular', 'top_rated'];
@@ -37,15 +38,11 @@ type SeriesToShow = {
     series: Series[],
     currentPage: number
 }
-type Search = {
-    genres: Map<string, string>,
-    languages:  Map<string, string>,
-    countries:  Map<string, string>,
-};
+
 export const Main: React.FC = () => {
     const {request_type} = useParams();
     const requestType: SerieGetRequestType = getRequestType(request_type);
-
+    const context = useContext(AppContext);
     const [filterState, setFilterState] = useState<FilterState>({
         genre: '',
         language: '',
@@ -65,31 +62,6 @@ export const Main: React.FC = () => {
         pageToFetch: 1
     });
 
-    const [searchOptions, setSearchOptions] = useState<Search>({
-        genres: new Map(),
-        languages: new Map(),
-        countries: new Map()
-    });
-
-    useEffect(() => {
-        const api = initSearchAPI(process.env.API_KEY ?? '', fetch);
-        Promise.all([
-            api.getCountries(),
-            api.getLanguages(),
-            api.getGenres()
-        ]).then(([countries, languages, genres]) => {
-            setSearchOptions({genres: genres, countries: countries, languages: languages});
-        })
-            .catch(err => {
-                setPageState(prev => ({
-                    ...prev,
-                    errorLoadingOptions: err instanceof Error ? err.message : 'An error occurred, sorry:((('
-                }));
-            })
-            .finally(() => {
-                setPageState(prev => ({...prev, loading: false}));
-            });
-    }, []);
 
     const [series, setSeries] = useState<SeriesToShow>({
         series: [],
@@ -112,19 +84,18 @@ export const Main: React.FC = () => {
     useEffect(() => {
         setPageState(prev => ({...prev, loading: true}));
 
-        const api = initSeriesAPI(process.env.API_KEY ?? '', fetch);
         let apiPromise;
-        if (filterState.name)apiPromise = api.getByName(pageState.pageToFetch, filterState.name, filterState.year);
+        if (filterState.name)apiPromise = context.seriesAPI.getByName(pageState.pageToFetch, filterState.name, filterState.year);
         else if(filterState.year || filterState.country || filterState.language || filterState.genre || filterState.sortOption){
             const dataToPass: FilterState = {
-                language: searchOptions.languages.get(filterState.language) ?? '',
-                country: searchOptions.countries.get(filterState.country) ??  '',
-                genre: searchOptions.genres.get(filterState.genre) ??  '',
+                language: context.configuration.languages.get(filterState.language) ?? '',
+                country: context.configuration.countries.get(filterState.country) ?? '',
+                genre: context.configuration.genres.get(filterState.genre) ?? '',
                 year: filterState.year,
                 name: filterState.name, sortOption: SortOptions.get(filterState.sortOption) ??  ''
             };
-            apiPromise = api.getDynamic(pageState.pageToFetch, dataToPass);
-        }else apiPromise = api.get(pageState.pageToFetch, requestType);
+            apiPromise = context.seriesAPI.getDynamic(pageState.pageToFetch, dataToPass);
+        }else apiPromise = context.seriesAPI.get(pageState.pageToFetch, requestType);
 
         apiPromise
             .then(res => {
@@ -152,7 +123,7 @@ export const Main: React.FC = () => {
             .finally(() => {
                 setPageState(prev => ({...prev, loading: false}));
             });
-    }, [requestType, pageState.pageToFetch, filterState, searchOptions]);
+    }, [requestType, pageState.pageToFetch, filterState, context.configuration]);
 
 
     return <>
@@ -161,17 +132,18 @@ export const Main: React.FC = () => {
         {!pageState.errorFetchingSeries && !pageState.errorLoadingOptions && (
             <div className={styles.mainPage}>
                 <SearchField
-                    genres={Array.from(searchOptions.genres.keys())}
-                    languages={Array.from(searchOptions.languages.keys())}
-                    countries={Array.from(searchOptions.countries.keys())}
+                    genres={Array.from(context.configuration.genres.keys())}
+                    languages={Array.from(context.configuration.languages.keys())}
+                    countries={Array.from(context.configuration.countries.keys())}
                     sortOptions={Array.from(SortOptions.keys())}
                     filter={filterState}
                     onFilterChange={handleFilterChange}
                 />
                 {series.series.length > 0 && (
-                    <div className={mainStyles.seriesContainer}>
+                    <SerieCards>
                         {series.series.map((serie, index) =>
                             <SeriesCard
+                                authorized={!!context.user}
                                 key={`${serie.id}-${index}`}
                                 id={serie.id}
                                 imagePath={serie.poster_path ? `https://image.tmdb.org/t/p/w500${serie.poster_path}` : ''}
@@ -182,7 +154,7 @@ export const Main: React.FC = () => {
                                 onCircleClick={() => alert(`Circle clicked for ${serie.name}`)}
                             />
                         )}
-                    </div>
+                    </SerieCards>
                 )}
 
                 {pageState.totalPages > 1 && (
