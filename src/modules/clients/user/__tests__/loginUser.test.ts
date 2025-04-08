@@ -1,6 +1,6 @@
 import {userAPI, User, UserModel} from '../index';
-import {createFetchMockedWithBody} from "../../../fetchMocked";
-import bcrypt from "bcrypt";
+import {createFetchMockedWithBody} from '../../../fetchMocked';
+import bcrypt from 'bcrypt';
 
 describe('User API: loginUser', () => {
     const API_KEY = 'API_KEY';

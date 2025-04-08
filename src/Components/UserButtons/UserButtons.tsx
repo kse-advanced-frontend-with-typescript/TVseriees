@@ -1,7 +1,7 @@
-import React from "react";
-import styles from "../UserButtons/style.css";
-import {MiniButton} from "../MiniButton/MiniButton";
-import {UsualCardProps} from "../../types";
+import React from 'react';
+import styles from '../UserButtons/style.css';
+import {MiniButton} from '../MiniButton/MiniButton';
+import {UsualCardProps} from '../../types';
 
 type ButtonStates = {
     star: boolean;

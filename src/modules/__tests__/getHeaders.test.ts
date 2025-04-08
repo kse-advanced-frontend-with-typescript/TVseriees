@@ -1,4 +1,4 @@
-import {getHeaders} from "../getHeaders";
+import {getHeaders} from '../getHeaders';
 
 describe('getHeaders:', () => {
     const API_KEY = 'API_KEY';

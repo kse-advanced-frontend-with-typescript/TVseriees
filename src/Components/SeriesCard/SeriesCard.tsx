@@ -5,8 +5,8 @@ import { Rating } from '../Rating/Rating';
 import { Link } from 'react-router';
 import classNames from 'classnames';
 import defaultImage from '../../Images/DefaultSerie.png';
-import { UsualCardProps } from "../../types";
-import { UserButtons } from "../UserButtons/UserButtons";
+import { UsualCardProps } from '../../types';
+import { UserButtons } from '../UserButtons/UserButtons';
 
 type SeriesCardBaseProps = {
     imagePath: string;

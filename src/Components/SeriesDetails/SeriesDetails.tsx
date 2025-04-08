@@ -3,8 +3,8 @@ import styles from './style.css';
 import {Rating} from '../Rating/Rating';
 import {Link} from 'react-router';
 import {MiniButton} from '../MiniButton/MiniButton';
-import {UserButtons} from "../UserButtons/UserButtons";
-import {UsualCardProps} from "../../types";
+import {UserButtons} from '../UserButtons/UserButtons';
+import {UsualCardProps} from '../../types';
 
 export type SerieDetails = {
     episode_run_time: number | 'unknown',

@@ -1,7 +1,7 @@
 import {Static, Type } from '@sinclair/typebox';
 import { convertToType } from '../../convertToType';
 import { getData } from '../../getData';
-import {getHeaders} from "../../getHeaders";
+import {getHeaders} from '../../getHeaders';
 
 const CountriesSchema = Type.Array(
     Type.Object({

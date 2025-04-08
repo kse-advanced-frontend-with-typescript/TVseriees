@@ -3,10 +3,9 @@ import {Poster} from '../../Components/Poster/Poster';
 import {Actor} from '../../Components/Actor/Actor';
 import styles from './style.css';
 import {useParams} from 'react-router';
-import {actorAPI, ActorData} from '../../modules/clients/actor';
+import {actorAPI} from '../../modules/clients/actor';
 import {Icon} from '../../Components/Icon/Icon';
 import defaultImage from '../../Images/DefaultActor.png';
-import {Pictures} from '../../Components/SeriesPictures/Pictures';
 import {ActorResponse, getActorData} from '../../modules/clients/actor/getActorData';
 
 type PageState = {

@@ -1,5 +1,5 @@
-import {SeriesResult, userAPI} from "../index";
-import {createFetchMockedWithBody} from "../../../fetchMocked";
+import {SeriesResult, userAPI} from '../index';
+import {createFetchMockedWithBody} from '../../../fetchMocked';
 
 describe('User API: getSeries', () => {
     const API_KEY = 'API_KEY';

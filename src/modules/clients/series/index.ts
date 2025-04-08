@@ -5,7 +5,7 @@ import {Season} from '../../../Components/Seasons/Seasons';
 import {getImagePath} from '../../getImagePath';
 import {SerieDetails} from '../../../Components/SeriesDetails/SeriesDetails';
 import {FilterState} from '../../../types';
-import {getHeaders} from "../../getHeaders";
+import {getHeaders} from '../../getHeaders';
 const getUrl = (urlPart: string)=>`https://api.themoviedb.org/3/tv/${urlPart}`;
 
 const ImageSchema = Type.Object({

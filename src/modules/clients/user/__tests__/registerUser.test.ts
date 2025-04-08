@@ -1,7 +1,7 @@
 import {userAPI} from '../index';
-import {createFetchMocked, createFetchMockedWithBody} from "../../../fetchMocked";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import {createFetchMocked, createFetchMockedWithBody} from '../../../fetchMocked';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 jest.mock('bcrypt');
 jest.mock('jsonwebtoken');

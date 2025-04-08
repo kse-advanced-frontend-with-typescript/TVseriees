@@ -2,7 +2,6 @@ import { createFetchMockedWithBody } from '../fetchMocked';
 import { getData } from '../getData';
 
 describe('getData:', () => {
-    const API_KEY = 'API_KEY';
     const mockResponseData = { success: true, data: ['item1', 'item2'] };
     let fetchMock: jest.Mock;
 

@@ -1,5 +1,5 @@
 import {userAPI} from '../index';
-import {createFetchMocked} from "../../../fetchMocked";
+import {createFetchMocked} from '../../../fetchMocked';
 
 describe('User API: user serie collections manipulation', () => {
     const API_KEY = 'API_KEY';
