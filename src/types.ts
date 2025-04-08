@@ -14,14 +14,24 @@ export type FilterState = {
     year: string,
     name: string
 }
-export type UsualCardProps = {
-    onStarClick: ()=>void
-    onHeartClick: ()=>void
-    onCircleClick: ()=>void
-};
+
 export type ConfigurationData = {
     countries: Map<string, string>,
     languages: Map<string, string>,
     genres: Map<string, string>,
     code_languages: Map<string, string>
 }
+export type Collection = 'favorites' | 'to-watch' | 'watched';
+
+
+export const userMap: Map<string, Collection> = new Map ([
+    ['star', 'to-watch'],
+    ['heart', 'favorites'],
+    ['circle', 'watched']
+]);
+export type Serie = {
+    id: number,
+    name: string,
+    poster_path: string | null
+}
+

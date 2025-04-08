@@ -4,9 +4,10 @@ import {Rating} from '../Rating/Rating';
 import {Link} from 'react-router';
 import {MiniButton} from '../MiniButton/MiniButton';
 import {UserButtons} from '../UserButtons/UserButtons';
-import {UsualCardProps} from '../../types';
+import {Collection} from '../../types';
 
 export type SerieDetails = {
+    id: number,
     episode_run_time: number | 'unknown',
     first_air_date: string,
     created_by: string[],
@@ -28,14 +29,14 @@ export type SerieDetails = {
     poster_path: string
 };
 type SeriesDetailsProps = Omit<SerieDetails, 'overview' | 'poster_path'>;
-export const SeriesDetails: React.FC<SeriesDetailsProps & UsualCardProps & {authorized: boolean}> = (props) => {
+export const SeriesDetails: React.FC<SeriesDetailsProps & {authorized: boolean,  onIconClick: (serie_id: number, collection: Collection, add: boolean) => void}> = (props) => {
     return (
         <div className={styles.detailItems}>
             <h2>{props.name}</h2>
             <Details {...props}/>
             <div className={styles.buttons}>
                 <Rating averageVote={props.vote_average} voteCount={props.vote_count} size='premedium'/>
-                {props.authorized && <UserButtons onCircleClick={props.onCircleClick} onHeartClick={props.onHeartClick} onStarClick={props.onStarClick} bigger={true}/>}
+                {props.authorized && <UserButtons id={props.id} onIconClick={props.onIconClick} bigger={true}/>}
             </div>
         </div>
     );

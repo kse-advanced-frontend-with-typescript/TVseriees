@@ -11,6 +11,7 @@ import {Icon} from '../../Components/Icon/Icon';
 import defaultImage from '../../Images/DefaultSerie.png';
 import {AppContext} from '../../context';
 import {Review} from '../../modules/clients/series';
+import {Collection} from '../../types';
 type PageState = {
     loading: boolean,
     error: string,
@@ -75,7 +76,10 @@ export const SeriePage: React.FC = () => {
                 setPageState(prev => ({...prev, loading: false}));
             });
     }, [id]);
-
+    const onUserButtonClick = async ( serie_id: number, collection: Collection, add: boolean)=>{
+        if(add) await context.userAPI.addSerie(context.user!._id, serie_id, collection);
+        else await context.userAPI.removeSerie(context.user!._id, serie_id, collection);
+    };
     return (
         <div className={style.seriePage}>
             {pageState.loading && <Icon topic='loading' size='big'/>}
@@ -90,6 +94,7 @@ export const SeriePage: React.FC = () => {
                                 layout='vertical'
                             />
                             <SeriesDetails
+                                id={pageState.details.id}
                                 authorized={!!context.user}
                                 cast={pageState.details.cast}
                                 episode_run_time={pageState.details.episode_run_time}
@@ -105,9 +110,7 @@ export const SeriePage: React.FC = () => {
                                 production_countries={pageState.details.production_countries}
                                 vote_average={pageState.details.vote_average}
                                 vote_count={pageState.details.vote_count}
-                                onStarClick={() => alert(`Star clicked for ${pageState.details?.name}`)}
-                                onHeartClick={() => alert(`Heart clicked for ${pageState.details?.name}`)}
-                                onCircleClick={() => alert(`Circle clicked for ${pageState.details?.name}`)}
+                                onIconClick={onUserButtonClick}
 
                             />
                         </div>

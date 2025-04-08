@@ -10,7 +10,7 @@ describe('User API: getUserByToken', () => {
             username: 'username',
             email: 'email',
             token: 'token',
-            hashPassword: 'hash'
+            password: 'hash'
         }];
         const expectedResponse: User = {
             _id: '1234455',

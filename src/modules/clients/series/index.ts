@@ -105,6 +105,7 @@ export const initSeriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
         const fetchedCastData = await getData(fetchAPI, getUrl(`${id}/aggregate_credits`), getHeaders(api_key, 'tmdb'));
         const cast = convertToType(fetchedCastData, CastSchema);
         return {
+            id: serieData.id,
             episode_run_time: serieData.episode_run_time?.length ? Math.round(serieData.episode_run_time.reduce((sum, time) => sum + time, 0) / serieData.episode_run_time.length) : 'unknown',
             first_air_date: serieData.first_air_date ?? 'unknown',
             created_by: serieData.created_by.map(p=>p.name),

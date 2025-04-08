@@ -8,14 +8,15 @@ type RegisterFormProps = {
     error: string
 }
 export const RegisterForm: React.FC<RegisterFormProps> = ({onSubmit, processing, error}) => {
-    const form = useRef<HTMLFormElement>(null);
+    const formRef = useRef<HTMLFormElement>(null);
     const [passwordError, setPasswordError] = useState(error || '');
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(!form.current)return;
-        const formData: FormData = new FormData(form.current);
-        const username = formData.get('username')!.toString();
+        if(!formRef.current) return;
+
+        const formData: FormData = new FormData(formRef.current);
+        const username = formData!.get('username')!.toString();
         const email = formData.get('email')!.toString();
         const password = formData.get('password')!.toString();
         const confirmPassword = formData.get('confirmPassword')!.toString();
@@ -24,42 +25,51 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({onSubmit, processing,
             setPasswordError('Passwords do not match!');
             return;
         }
+
         setPasswordError('');
+        console.log('Form data collected', { username, email, password });
         onSubmit(username, email, password);
-        console.log('Form submitted', formData);
-        alert('Signed up');
     };
 
     return (
-            <form className={styles.form} onSubmit={submit}>
-                {passwordError && (<p className={styles.errorMessage}>{passwordError}</p>)}
-                <input
-                    type='text'
-                    id='username'
-                    placeholder='username...'
-                    required
-                />
-                <input
-                    type='email'
-                    id='email'
-                    placeholder='email...'
-                    required
-                />
-                <input
-                    type='password'
-                    id='password'
-                    placeholder='password...'
-                    minLength={8}
-                    required
-                />
-                <input
-                    type='password'
-                    id='confirmPassword'
-                    placeholder='confirm password...'
-                    minLength={8}
-                    required
-                />
-                <AuthorizationButton warning={false} type='sign' form={true} onClick={()=>submit} disabled={processing}/>
-            </form>
+        <form className={styles.form} onSubmit={submit} ref={formRef}>
+            {passwordError && (<p className={styles.errorMessage}>{passwordError}</p>)}
+            <input
+                type='text'
+                id='username'
+                name='username'
+                placeholder='username...'
+                required
+            />
+            <input
+                type='email'
+                id='email'
+                name='email'
+                placeholder='email...'
+                required
+            />
+            <input
+                type='password'
+                id='password'
+                name='password'
+                placeholder='password...'
+                minLength={8}
+                required
+            />
+            <input
+                type='password'
+                id='confirmPassword'
+                name='confirmPassword'
+                placeholder='confirm password...'
+                minLength={8}
+                required
+            />
+            <AuthorizationButton
+                warning={false}
+                type='sign'
+                form={true}
+                disabled={processing}
+            />
+        </form>
     );
 };

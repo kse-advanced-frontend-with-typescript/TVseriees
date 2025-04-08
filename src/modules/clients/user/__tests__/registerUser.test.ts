@@ -1,10 +1,5 @@
 import {initUserAPI} from '../index';
 import {createFetchMocked, createFetchMockedWithBody} from '../../../fetchMocked';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-
-jest.mock('bcrypt');
-jest.mock('jsonwebtoken');
 
 describe('User API: registerUser', () => {
     const API_KEY = 'API_KEY';
@@ -14,29 +9,23 @@ describe('User API: registerUser', () => {
         password: 'password123'
     };
 
+    const originalBtoa = global.btoa;
+    beforeAll(() => {
+        global.btoa = jest.fn(() => 'mocked-token');
+    });
+
+    afterAll(() => {
+        global.btoa = originalBtoa;
+    });
+
     describe('when registration was successful', () => {
         const fetchMocked = createFetchMockedWithBody(body);
         const api = initUserAPI(API_KEY, fetchMocked);
 
-        beforeEach(async () => {
-            (bcrypt.hash as jest.Mock).mockResolvedValue('hashed-password');
-            (jwt.sign as jest.Mock).mockReturnValue('token');
+        it('post request was sent', async () => {
             await api.registerUser(body.username, body.email, body.password);
-        });
-
-        it('password was encrypted', () => {
-            expect(bcrypt.hash).toHaveBeenCalledWith(body.password, 10);
-        });
-
-        it('token was generated', () => {
-            expect(jwt.sign).toHaveBeenCalled();
-            const [payload] = (jwt.sign as jest.Mock).mock.calls[0];
-            expect(payload.username).toBe(body.username);
-            expect(payload.email).toBe(body.email);
-            expect(typeof payload.iat).toBe('number');
-        });
-
-        it('post request was sent', () => {
+            expect(global.btoa).toHaveBeenCalledWith(expect.stringContaining(body.username));
+            expect(global.btoa).toHaveBeenCalledWith(expect.stringContaining(body.email));
             expect(fetchMocked).toHaveBeenCalledWith(
                 expect.stringContaining('/my-site-users'),
                 expect.objectContaining({
@@ -44,8 +33,8 @@ describe('User API: registerUser', () => {
                     body: JSON.stringify({
                         username: body.username,
                         email: body.email,
-                        hashedPassword: 'hashed-password',
-                        token: 'token'
+                        password: 'password123',
+                        token: 'mocked-token'
                     })
                 })
             );
@@ -58,4 +47,5 @@ describe('User API: registerUser', () => {
             await expect(api.registerUser('existinguser', 'existing@example.com', 'password')).rejects.toThrow('The user is already registered!');
         });
     });
+
 });

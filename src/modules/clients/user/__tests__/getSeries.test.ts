@@ -5,7 +5,6 @@ describe('User API: getSeries', () => {
     const API_KEY = 'API_KEY';
 
     describe('when response is valid', () => {
-        const result: number[] = [86866, 444, 7777];
         const body: SeriesResult = {
             data:
                 [ {serie_id: 86866},
@@ -23,7 +22,7 @@ describe('User API: getSeries', () => {
 
         it('should return the result', async () => {
             const res = await api.getSeries(0, 50, 'user_id', 'favorites');
-            expect(res).toEqual(result);;
+            expect(res).toEqual(body);;
             expect(fetchMock).toBeCalledWith(expect.stringContaining('totals=true'), expect.any(Object));
             expect(fetchMock).toBeCalledWith(expect.stringContaining('skip=0'), expect.any(Object));
             expect(fetchMock).toBeCalledWith(expect.stringContaining('max=50'), expect.any(Object));

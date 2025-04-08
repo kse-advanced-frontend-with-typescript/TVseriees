@@ -66,6 +66,7 @@ describe('Series API: getImages', () => {
 
 
         const expectedResult: SerieDetails = {
+            id: 123,
             episode_run_time: Math.round((50+55)/2),
             first_air_date: serieData.first_air_date,
             created_by: [serieData.created_by[0].name, serieData.created_by[1].name],

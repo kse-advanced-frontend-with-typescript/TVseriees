@@ -3,12 +3,11 @@ import {SeriesCard} from '../../Components/SeriesCard/SeriesCard';
 import {SearchField} from '../../Components/SearchField/SearchField';
 import {SortOptions} from '../../ExampleData';
 import {Pagination} from '../../Components/Pagination/Pagination';
-import mainStyles from '../../main.css';
 import styles from './style.css';
 import {SerieGetRequestType} from '../../modules/clients/series';
 import {useParams} from 'react-router';
 import {Icon} from '../../Components/Icon/Icon';
-import {FilterState} from '../../types';
+import {Collection, FilterState, Serie} from '../../types';
 import {AppContext} from '../../context';
 import {SerieCards} from '../../Components/SerieCards/SerieCards';
 
@@ -18,24 +17,19 @@ const getRequestType = (request?: string): SerieGetRequestType => {
     return 'trending';
 };
 
-type Series = {
-    id: number,
-    name: string,
-    poster_path: string | null
-}
+
 
 type PageState = {
     loading: boolean,
     errorFetchingSeries: string,
-    errorLoadingOptions: string,
-    series: Series[],
+    series: Serie[],
     totalPages: number,
     totalResults: number,
     pageToFetch: number
 }
 
 type SeriesToShow = {
-    series: Series[],
+    series: Serie[],
     currentPage: number
 }
 
@@ -55,7 +49,6 @@ export const Main: React.FC = () => {
     const [pageState, setPageState] = useState<PageState>({
         loading: true,
         errorFetchingSeries: '',
-        errorLoadingOptions: '',
         series: [],
         totalPages: 0,
         totalResults: 0,
@@ -125,11 +118,15 @@ export const Main: React.FC = () => {
             });
     }, [requestType, pageState.pageToFetch, filterState, context.configuration]);
 
+    const onUserButtonClick = async (serie_id: number, collection: Collection, add?: boolean)=>{
+        if(add) await context.userAPI.addSerie(context.user!._id, serie_id, collection);
+        else await context.userAPI.removeSerie(context.user!._id, serie_id, collection);
+    };
 
     return <>
         {pageState.loading && (<Icon topic='loading' size='big'/>)}
-        {pageState.errorFetchingSeries || pageState.errorLoadingOptions && (<Icon topic='error' size='big'/>)}
-        {!pageState.errorFetchingSeries && !pageState.errorLoadingOptions && (
+        {pageState.errorFetchingSeries  && (<Icon topic='error' size='big'/>)}
+        {!pageState.errorFetchingSeries  && (
             <div className={styles.mainPage}>
                 <SearchField
                     genres={Array.from(context.configuration.genres.keys())}
@@ -149,9 +146,7 @@ export const Main: React.FC = () => {
                                 imagePath={serie.poster_path ? `https://image.tmdb.org/t/p/w500${serie.poster_path}` : ''}
                                 name={serie.name}
                                 topicOfCard='usual'
-                                onStarClick={() => alert(`Star clicked for ${serie.name}`)}
-                                onHeartClick={() => alert(`Heart clicked for ${serie.name}`)}
-                                onCircleClick={() => alert(`Circle clicked for ${serie.name}`)}
+                                onIconClick={onUserButtonClick}
                             />
                         )}
                     </SerieCards>

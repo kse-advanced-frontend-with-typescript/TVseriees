@@ -61,6 +61,6 @@ const Contacts: React.FC<{contacts: ContactProp[]}> = ({contacts}) => {
 const Contact: React.FC<ContactProp> = ({typeOfContact, contact}) => {
     return <li className={styles.contact}>
         <Icon topic={typeOfContact === 'call' ? 'call' : 'envelope'} size='mini'/>
-        <p>{contact}</p>
+        <a href={typeOfContact==='email'? `mailto:${contact}`: `tel:${contact}`}>{contact}</a>
     </li>;
 };

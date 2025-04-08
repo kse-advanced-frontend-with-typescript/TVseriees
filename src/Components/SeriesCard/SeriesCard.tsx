@@ -5,24 +5,24 @@ import { Rating } from '../Rating/Rating';
 import { Link } from 'react-router';
 import classNames from 'classnames';
 import defaultImage from '../../Images/DefaultSerie.png';
-import { UsualCardProps } from '../../types';
+import {Collection, userMap} from '../../types';
 import { UserButtons } from '../UserButtons/UserButtons';
 
 type SeriesCardBaseProps = {
     imagePath: string;
     name: string,
     id: number
+    onIconClick: (serie_id: number, collection: Collection, add?: boolean) => void;
 };
 
 export type SeriesCardProps =
-    (SeriesCardBaseProps & UsualCardProps & {
+    (SeriesCardBaseProps & {
         topicOfCard: 'usual'
     }) |
     (SeriesCardBaseProps & {
-        topicOfCard: 'favourites' | 'to-watch' | 'watched'
+        topicOfCard: Collection
         voteCount: number
         averageVote: number
-        onIconClick: () => void;
     });
 
 export const SeriesCard: React.FC<SeriesCardProps & {authorized: boolean}> = (props) => {
@@ -33,36 +33,38 @@ export const SeriesCard: React.FC<SeriesCardProps & {authorized: boolean}> = (pr
             case 'usual':
                 return (
                     <UserButtons
-                        onCircleClick={props.onCircleClick}
-                        onHeartClick={props.onHeartClick}
-                        onStarClick={props.onStarClick}
+                        id={props.id}
+                        onIconClick={props.onIconClick}
                     />
                 );
-            case 'favourites':
+            case 'favorites':
                 return (
                     <OtherButtons
+                        id={props.id}
                         displayType="heart"
                         voteCount={props.voteCount}
                         averageVote={props.averageVote}
-                        onButtonClick={props.onIconClick}
+                        onIconClick={props.onIconClick}
                     />
                 );
             case 'to-watch':
                 return (
                     <OtherButtons
+                        id={props.id}
                         displayType="star"
                         voteCount={props.voteCount}
                         averageVote={props.averageVote}
-                        onButtonClick={props.onIconClick}
+                        onIconClick={props.onIconClick}
                     />
                 );
             case 'watched':
                 return (
                     <OtherButtons
+                        id={props.id}
                         displayType="circle"
                         voteCount={props.voteCount}
                         averageVote={props.averageVote}
-                        onButtonClick={props.onIconClick}
+                        onIconClick={props.onIconClick}
                     />
                 );
         }
@@ -88,13 +90,14 @@ export const SeriesCard: React.FC<SeriesCardProps & {authorized: boolean}> = (pr
 };
 
 type OtherButtonsProps = {
+    id: number,
     voteCount: number;
     averageVote: number;
     displayType: 'star' | 'heart' | 'circle';
-    onButtonClick: () => void;
+    onIconClick: (serie_id: number, collection: Collection) => void;
 };
 
-const OtherButtons: React.FC<OtherButtonsProps> = ({voteCount, averageVote, displayType, onButtonClick
+const OtherButtons: React.FC<OtherButtonsProps> = ({voteCount, averageVote, displayType, onIconClick, id
 }) => {
     return (
         <div className={styles.buttonsRating}>
@@ -106,7 +109,7 @@ const OtherButtons: React.FC<OtherButtonsProps> = ({voteCount, averageVote, disp
             <MiniButton
                 topic={displayType}
                 size='mini'
-                onClick={onButtonClick}
+                onClick={()=> onIconClick(id, userMap.get(String(displayType)) as Collection)}
             />
         </div>
     );

@@ -20,6 +20,7 @@ import {Warning} from './Components/Warning/Warning';
 import {initSeriesAPI} from './modules/clients/series';
 import {createReverseMap} from './modules/createReverseMap';
 import {initActorAPI} from './modules/clients/actor';
+import {UserSpecificPage} from './Pages/UserSpecificPage/UserSpecificPage';
 
 export const App: React.FC = ()=>{
     const [state, setState] = useState<{user?: User, loading: boolean, error: boolean}>(
@@ -124,6 +125,7 @@ export const App: React.FC = ()=>{
                     <Route path='sign' element={<RegistrationPage/>}/>
                     <Route path='serie/:id' element={<SeriePage/>}/>
                     <Route path='actor/:id' element={<ActorPage/>}/>
+                    <Route path='user/:request_type' element={<UserSpecificPage/>}/>
                 </Routes>
             </div>
             <Footer links={links} authorized={!!state.user} contacts={myContacts}/>

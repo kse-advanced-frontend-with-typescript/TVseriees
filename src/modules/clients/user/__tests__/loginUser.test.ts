@@ -1,6 +1,5 @@
 import {initUserAPI, User, UserModel} from '../index';
 import {createFetchMockedWithBody} from '../../../fetchMocked';
-import bcrypt from 'bcrypt';
 
 describe('User API: loginUser', () => {
     const API_KEY = 'API_KEY';
@@ -12,7 +11,7 @@ describe('User API: loginUser', () => {
             username: 'username',
             email: 'email',
             token: 'token',
-            hashPassword: bcrypt.hashSync(password, 10)
+            password: password
         }];
         const expectedResponse: User = {
             _id: '1234455',
