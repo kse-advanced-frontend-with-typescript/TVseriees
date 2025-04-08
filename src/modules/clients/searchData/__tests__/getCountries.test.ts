@@ -1,5 +1,5 @@
 import {Countries, searchAPI} from '../index';
-import {createFetchMocked} from '../../../createTestAPI';
+import {createFetchMockedWithBody} from '../../../fetchMocked';
 
 describe('Search API: getCountries', () => {
     const API_KEY = 'API_KEY';
@@ -16,7 +16,7 @@ describe('Search API: getCountries', () => {
         ];
         const expectedResult = new Map(mockedCountriesData.map(c=> [c.english_name, c.iso_3166_1]));
 
-        const api = searchAPI(API_KEY, createFetchMocked(mockedCountriesData));
+        const api = searchAPI(API_KEY, createFetchMockedWithBody(mockedCountriesData));
 
         it('should return the correct actor data with TV shows and images', async () => {
             const res = await api.getCountries();
@@ -36,7 +36,7 @@ describe('Search API: getCountries', () => {
 
 
         ];
-        const api = searchAPI(API_KEY, createFetchMocked(mockedCountriesData));
+        const api = searchAPI(API_KEY, createFetchMockedWithBody(mockedCountriesData));
         it('should throw an error', async () => {
             await expect(api.getCountries()).rejects.toThrow('Data is not valid: /0/iso_3166_1 (Expected required property)');
         });

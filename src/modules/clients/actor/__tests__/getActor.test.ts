@@ -1,5 +1,5 @@
 import {ActorData, actorAPI} from '../index';
-import {createFetchMocked} from '../../../createTestAPI';
+import {createFetchMockedWithBody} from '../../../fetchMocked';
 
 describe('Actor API: get', () => {
     const API_KEY = 'API_KEY';
@@ -10,7 +10,7 @@ describe('Actor API: get', () => {
             profile_path: '/path/to/profile.jpg'
         };
 
-        const fetchMocked = createFetchMocked(mockActorData);
+        const fetchMocked = createFetchMockedWithBody(mockActorData);
         const api = actorAPI(API_KEY, fetchMocked);
 
         it('should return the correct actor data', async () => {
@@ -33,7 +33,7 @@ describe('Actor API: get', () => {
             // @ts-expect-error We want to check invalid data
             profile_path: 5555
         };
-        const api = actorAPI(API_KEY, createFetchMocked(mockActorData));
+        const api = actorAPI(API_KEY, createFetchMockedWithBody(mockActorData));
         it('should throw an error', async () => {
             await expect(api.getActor('1')).rejects.toThrow('Data is not valid: /name (Expected string)');
         });

@@ -1,5 +1,5 @@
 import {Review, seriesAPI} from '../index';
-import {createFetchMocked} from '../../../createTestAPI';
+import {createFetchMockedWithBody} from '../../../fetchMocked';
 
 describe('Series API: getReviews', () => {
     const API_KEY = 'API_KEY';
@@ -18,7 +18,7 @@ describe('Series API: getReviews', () => {
             ]
         };
 
-        const fetchMocked= createFetchMocked(body);
+        const fetchMocked= createFetchMockedWithBody(body);
         const api = seriesAPI(API_KEY, fetchMocked);
 
         it('should return the result', async () => {
@@ -47,7 +47,7 @@ describe('Series API: getReviews', () => {
 
         };
 
-        const api =seriesAPI(API_KEY, createFetchMocked(body));
+        const api =seriesAPI(API_KEY, createFetchMockedWithBody(body));
 
         it('should throw an error', async () => {
             await expect(api.getReviews(2)).rejects.toThrow('Data is not valid: /results/0/author (Expected string)');

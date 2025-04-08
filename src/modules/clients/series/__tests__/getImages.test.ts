@@ -1,5 +1,5 @@
 import {Images, seriesAPI} from '../index';
-import {createFetchMocked} from '../../../createTestAPI';
+import {createFetchMockedWithBody} from '../../../fetchMocked';
 import {getImagePath} from '../../../getImagePath';
 
 describe('Series API: getSeason', () => {
@@ -22,7 +22,7 @@ describe('Series API: getSeason', () => {
 
         const result: string[] = [getImagePath('url1'), getImagePath('url2'), getImagePath('url3')];
 
-        const fetchMocked = createFetchMocked(body);
+        const fetchMocked = createFetchMockedWithBody(body);
         const api = seriesAPI(API_KEY, fetchMocked);
 
         it('should return the result', async () => {
@@ -51,7 +51,7 @@ describe('Series API: getSeason', () => {
             ]
         };
 
-        const api = seriesAPI(API_KEY, createFetchMocked(body));
+        const api = seriesAPI(API_KEY, createFetchMockedWithBody(body));
 
         it('should throw an error', async () => {
             await expect(api.getImages(4)).rejects.toThrow('Data is not valid: /backdrops/0/file_path (Expected union value)');

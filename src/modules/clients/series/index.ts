@@ -5,6 +5,7 @@ import {Season} from '../../../Components/Seasons/Seasons';
 import {getImagePath} from '../../getImagePath';
 import {SerieDetails} from '../../../Components/SeriesDetails/SeriesDetails';
 import {FilterState} from '../../../types';
+import {getHeaders} from "../../getHeaders";
 const getUrl = (urlPart: string)=>`https://api.themoviedb.org/3/tv/${urlPart}`;
 
 const ImageSchema = Type.Object({
@@ -93,15 +94,15 @@ export const seriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
         let url: string;
         if(requestType == 'trending')url = `https://api.themoviedb.org/3/trending/tv/day?page=${page.toString()}`;
         else url = getUrl(`${requestType}?page=${page}`);
-        const data = await getData(api_key, fetchAPI, url);
+        const data = await getData(fetchAPI, url, getHeaders(api_key, 'tmdb'));
         if (!data.page)data.page = page;
         return convertToType(data, SerieCardItemResultSchema);
     };
 
     const getDetails = async (id: number): Promise<SerieDetails> => {
-        const fetchedSerieData = await getData(api_key, fetchAPI, getUrl(id.toString()));
+        const fetchedSerieData = await getData(fetchAPI, getUrl(id.toString()), getHeaders(api_key, 'tmdb'));
         const serieData = convertToType(fetchedSerieData, SeriesDetailsSchema);
-        const fetchedCastData = await getData(api_key, fetchAPI, getUrl(`${id}/aggregate_credits`));
+        const fetchedCastData = await getData(fetchAPI, getUrl(`${id}/aggregate_credits`), getHeaders(api_key, 'tmdb'));
         const cast = convertToType(fetchedCastData, CastSchema);
         return {
             episode_run_time: serieData.episode_run_time?.length ? Math.round(serieData.episode_run_time.reduce((sum, time) => sum + time, 0) / serieData.episode_run_time.length) : 'unknown',
@@ -124,18 +125,18 @@ export const seriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
     };
 
     const getImages = async (id: number): Promise<string[]> => {
-        const fetchedData = await getData(api_key, fetchAPI, getUrl(`${id}/images`));
+        const fetchedData = await getData(fetchAPI, getUrl(`${id}/images`), getHeaders(api_key, 'tmdb'));
         const imageData = convertToType(fetchedData, ImageSchema);
         return imageData.backdrops.filter(poster => poster.file_path !== null).map(poster => getImagePath(poster.file_path!));
     };
 
    const getReviews = async (id: number): Promise<Review> =>{
-       const fetchedData = await getData(api_key, fetchAPI, getUrl(`${id}/reviews`));
+       const fetchedData = await getData(fetchAPI, getUrl(`${id}/reviews`), getHeaders(api_key, 'tmdb'));
        return convertToType(fetchedData, ReviewSchema);
    };
 
    const getSeason = async (serieId: number, seasonId: number): Promise<Season> => {
-       const fetchedData = await getData(api_key, fetchAPI, getUrl(`${serieId}/season/${seasonId}`));
+       const fetchedData = await getData(fetchAPI, getUrl(`${serieId}/season/${seasonId}`), getHeaders(api_key, 'tmdb'));
        const seasonData = convertToType(fetchedData, SeasonSchema);
        return {
            index: seasonData.season_number,
@@ -159,7 +160,7 @@ export const seriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
        if(filters.genre != '') params.set('with_genres', filters.genre);
        if(filters.language != '') params.set('with_original_language', filters.language);
        if(filters.country != '') params.set('with_origin_country', filters.country);
-       const data = await getData(api_key, fetchAPI, `https://api.themoviedb.org/3/discover/tv?${params.toString()}`);
+       const data = await getData(fetchAPI, `https://api.themoviedb.org/3/discover/tv?${params.toString()}`, getHeaders(api_key, 'tmdb'));
        if (!data.page)data.page = page;
        return convertToType(data, SerieCardItemResultSchema);
 
@@ -170,7 +171,7 @@ export const seriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
         params.set('page', page.toString());
         if(name != '') params.set('query', name);
         if(year) params.set('first_air_date_year', year);
-        const data = await getData(api_key, fetchAPI, `https://api.themoviedb.org/3/search/tv?${params.toString()}`);
+        const data = await getData(fetchAPI, `https://api.themoviedb.org/3/search/tv?${params.toString()}`, getHeaders(api_key, 'tmdb'));
         if (!data.page)data.page = page;
         return convertToType(data, SerieCardItemResultSchema);
     };

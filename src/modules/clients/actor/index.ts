@@ -1,6 +1,7 @@
 import {Static, Type} from '@sinclair/typebox';
 import { convertToType } from '../../convertToType';
 import { getData } from '../../getData';
+import {getHeaders} from "../../getHeaders";
 
 export const getUrl = (urlPart: string) => `https://api.themoviedb.org/3/person/${urlPart}`;
 
@@ -22,12 +23,12 @@ export type ActorData = Static<typeof ActorSchema>;
 
 export const actorAPI = (api_key: string, fetchAPI: typeof fetch) => {
     const getActor = async (id: string): Promise<ActorData> => {
-        const fetchedActorData = await getData(api_key, fetchAPI, getUrl(id));
+        const fetchedActorData = await getData(fetchAPI, getUrl(id), getHeaders(api_key, 'tmdb'));
         return  convertToType(fetchedActorData, ActorSchema);
     };
 
     const getActorTVs = async (id: string): Promise<ActorTV> => {
-        const fetchedTVData = await getData(api_key, fetchAPI, getUrl(`${id}/tv_credits`));
+        const fetchedTVData = await getData(fetchAPI, getUrl(`${id}/tv_credits`), getHeaders(api_key, 'tmdb'));
        return  convertToType(fetchedTVData, ActorTvSchema);
     };
 
