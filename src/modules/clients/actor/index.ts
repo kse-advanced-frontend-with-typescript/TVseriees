@@ -21,7 +21,7 @@ const ActorTvSchema = Type.Object({
 export type ActorTV = Static<typeof ActorTvSchema>;
 export type ActorData = Static<typeof ActorSchema>;
 
-export const actorAPI = (api_key: string, fetchAPI: typeof fetch) => {
+export const initActorAPI = (api_key: string, fetchAPI: typeof fetch) => {
     const getActor = async (id: string): Promise<ActorData> => {
         const fetchedActorData = await getData(fetchAPI, getUrl(id), getHeaders(api_key, 'tmdb'));
         return  convertToType(fetchedActorData, ActorSchema);

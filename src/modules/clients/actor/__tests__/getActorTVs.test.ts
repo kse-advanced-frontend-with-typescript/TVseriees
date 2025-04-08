@@ -1,4 +1,4 @@
-import {actorAPI, ActorTV} from '../index';
+import {initActorAPI, ActorTV} from '../index';
 import {createFetchMockedWithBody} from '../../../fetchMocked';
 
 describe('Actor API: get', () => {
@@ -16,7 +16,7 @@ describe('Actor API: get', () => {
 
 
         const fetchMocked= createFetchMockedWithBody(mockTvData);
-        const api = actorAPI(API_KEY, fetchMocked);
+        const api = initActorAPI(API_KEY, fetchMocked);
         it('should return the correct actor TV shows', async () => {
             const res = await api.getActorTVs('1');
             expect(res).toEqual(mockTvData);
@@ -39,7 +39,7 @@ describe('Actor API: get', () => {
                 { id: 3, name: 'Show 3' }
             ]
         };
-        const api = actorAPI(API_KEY, createFetchMockedWithBody(mockTvData));
+        const api = initActorAPI(API_KEY, createFetchMockedWithBody(mockTvData));
 
         it('should throw an error', async () => {
             await expect(api.getActorTVs('1')).rejects.toThrow('Data is not valid: /cast/0/id (Expected number)');

@@ -7,9 +7,10 @@ type AuthorizationButtonProps = {
     warning?: boolean
     form?: boolean,
     onClick?: ()=>void;
+    disabled?: boolean;
 }
 
-export const AuthorizationButton: React.FC<AuthorizationButtonProps> = ({warning, type, form, onClick}) => {
+export const AuthorizationButton: React.FC<AuthorizationButtonProps> = ({warning, type, form, onClick, disabled}) => {
 
     let buttonText;
     switch (type) {
@@ -30,7 +31,7 @@ export const AuthorizationButton: React.FC<AuthorizationButtonProps> = ({warning
             break;
     }
 
-    return <button
+    return <button disabled={disabled}
         className={classNames(styles.button, {
             [styles.logIn]: type === 'log-in',
             [styles.signIn]: type === 'sign',

@@ -17,23 +17,9 @@ const meta : Meta<typeof  Header>={
 
 export default meta;
 type Story = StoryObj<typeof meta>
+
+
 export const Primary: Story ={
-
-    render: () => {
-        return (
-            <Header part='main'>
-                <Header part='left'><MenuButton authorized={false} links={links}/> </Header>
-                <h1>TV Serieees</h1>
-                <Header part='right'>
-                    <AuthorizationButton type={'log-in'} onClick={fn}/>
-                    <AuthorizationButton type={'sign'} onClick={fn}/>
-                </Header>
-            </Header>
-        );
-    }
-};
-
-export const Secondary: Story ={
 
     render: () => {
         return (
@@ -50,7 +36,7 @@ export const Secondary: Story ={
     }
 };
 
-export const Third: Story ={
+export const Secondary: Story ={
 
     render: () => {
         return (
@@ -61,21 +47,6 @@ export const Third: Story ={
                     <MiniButton topic='search' size='medium'onClick={fn}/>
                     <h2>Username</h2>
                     <AuthorizationButton  type={'log-out'} onClick={fn}/>
-                </Header>
-            </Header>
-        );
-    }
-};
-export const Forth: Story ={
-
-    render: () => {
-        return (
-            <Header part='main'>
-                <Header part='left'><MenuButton authorized={false} links={links}/> </Header>
-                <h1>TV Serieees</h1>
-                <Header part='right'>
-                    <h2>Username</h2>
-                    <AuthorizationButton type={'log-out'} onClick={fn}/>
                 </Header>
             </Header>
         );

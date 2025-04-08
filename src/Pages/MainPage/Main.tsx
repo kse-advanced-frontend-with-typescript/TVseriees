@@ -5,8 +5,8 @@ import {SortOptions} from '../../ExampleData';
 import {Pagination} from '../../Components/Pagination/Pagination';
 import mainStyles from '../../main.css';
 import styles from './style.css';
-import {SerieGetRequestType, seriesAPI} from '../../modules/clients/series';
-import {searchAPI} from '../../modules/clients/searchData';
+import {SerieGetRequestType, initSeriesAPI} from '../../modules/clients/series';
+import {initSearchAPI} from '../../modules/clients/searchData';
 import {useParams} from 'react-router';
 import {Icon} from '../../Components/Icon/Icon';
 import {FilterState} from '../../types';
@@ -72,7 +72,7 @@ export const Main: React.FC = () => {
     });
 
     useEffect(() => {
-        const api = searchAPI(process.env.API_KEY ?? '', fetch);
+        const api = initSearchAPI(process.env.API_KEY ?? '', fetch);
         Promise.all([
             api.getCountries(),
             api.getLanguages(),
@@ -112,7 +112,7 @@ export const Main: React.FC = () => {
     useEffect(() => {
         setPageState(prev => ({...prev, loading: true}));
 
-        const api = seriesAPI(process.env.API_KEY ?? '', fetch);
+        const api = initSeriesAPI(process.env.API_KEY ?? '', fetch);
         let apiPromise;
         if (filterState.name)apiPromise = api.getByName(pageState.pageToFetch, filterState.name, filterState.year);
         else if(filterState.year || filterState.country || filterState.language || filterState.genre || filterState.sortOption){

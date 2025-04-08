@@ -2,16 +2,10 @@ import React, {FormEvent, useEffect, useRef, useState} from 'react';
 import styles from './style.css';
 import {AuthorizationButton} from '../AuthorizationButton/AuthorizationButton';
 
-export const LogInForm: React.FC<{onSubmit: (email: string, password: string)=>void, passError?: string}> = ({onSubmit, passError}) => {
+export const LogInForm: React.FC<{onSubmit: (email: string, password: string)=>void, passError: string, processing: boolean}> = ({onSubmit, passError, processing}) => {
     const email = useRef<HTMLInputElement>(null);
     const password = useRef<HTMLInputElement>(null);
-
-    const [passwordError, setPasswordError] = useState(passError || '');
-
-    useEffect(() => {
-        if(passError) setPasswordError(passError);
-    }, [passError]);
-
+    const passwordError = useRef<string>(passError);
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         alert('Signed in');
@@ -24,10 +18,10 @@ export const LogInForm: React.FC<{onSubmit: (email: string, password: string)=>v
 
     return (
         <>
-            <form className={styles.form} onSubmit={submit}>
+            <form className={styles.form} onSubmit={submit} >
                 {passwordError && (
                     <p className={styles.errorMessage}>
-                        {passwordError}
+                        {passwordError.current}
                     </p>
                 )}
                 <input
@@ -51,6 +45,7 @@ export const LogInForm: React.FC<{onSubmit: (email: string, password: string)=>v
                     warning={false}
                     type='log-in'
                     form={true}
+                    disabled={processing}
                 />
             </form>
         </>

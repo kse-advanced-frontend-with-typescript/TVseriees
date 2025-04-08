@@ -24,7 +24,7 @@ export type Countries = Static<typeof CountriesSchema>;
 export type Languages = Static<typeof LanguagesSchema>;
 export type Genres = Static<typeof GenresSchema>;
 
-export const searchAPI = (api_key: string, fetchAPI: typeof fetch) => {
+export const initSearchAPI = (api_key: string, fetchAPI: typeof fetch) => {
     const getLanguages = async (): Promise<Map<string, string>> => {
         const fetchedData = await getData(fetchAPI, 'https://api.themoviedb.org/3/configuration/languages', getHeaders(api_key, 'tmdb'));
         const languagesData = convertToType(fetchedData, LanguagesSchema);

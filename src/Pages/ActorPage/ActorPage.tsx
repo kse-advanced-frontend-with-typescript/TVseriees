@@ -3,7 +3,7 @@ import {Poster} from '../../Components/Poster/Poster';
 import {Actor} from '../../Components/Actor/Actor';
 import styles from './style.css';
 import {useParams} from 'react-router';
-import {actorAPI} from '../../modules/clients/actor';
+import {initActorAPI} from '../../modules/clients/actor';
 import {Icon} from '../../Components/Icon/Icon';
 import defaultImage from '../../Images/DefaultActor.png';
 import {ActorResponse, getActorData} from '../../modules/clients/actor/getActorData';
@@ -24,7 +24,7 @@ export const ActorPage: React.FC = ()=> {
     useEffect(() => {
         if (!id) return;
         setPageState(prev => ({...prev, loading: true}));
-        const api = actorAPI(process.env.API_KEY ?? '', fetch);
+        const api = initActorAPI(process.env.API_KEY ?? '', fetch);
         getActorData(api.getActor(id), api.getActorTVs(id)).then(res => {
             setPageState(prev => ({
                 ...prev,

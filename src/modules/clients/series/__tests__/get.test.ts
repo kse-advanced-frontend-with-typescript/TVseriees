@@ -1,4 +1,4 @@
-import {seriesAPI} from '../index';
+import {initSeriesAPI} from '../index';
 import {SeriesResult} from '../index';
 import {createFetchMockedWithBody} from '../../../fetchMocked';
 import {FilterState} from '../../../../types';
@@ -44,7 +44,7 @@ describe('Series API: get', () => {
         });
 
         const fetchMocked = createFetchMockedWithBody(body);
-        const api = seriesAPI(API_KEY, fetchMocked);
+        const api = initSeriesAPI(API_KEY, fetchMocked);
 
         describe('should construct correct url', ()=>{
             it('when get with dynamic query parameters is called', async () => {
@@ -94,7 +94,7 @@ describe('Series API: get', () => {
 
         };
 
-        const api = seriesAPI(API_KEY,  createFetchMockedWithBody(body));
+        const api = initSeriesAPI(API_KEY,  createFetchMockedWithBody(body));
         test.each([
             ['plain get', () => api.get()],
             ['get by name', () => api.getByName(1, 'uhyuyu')],

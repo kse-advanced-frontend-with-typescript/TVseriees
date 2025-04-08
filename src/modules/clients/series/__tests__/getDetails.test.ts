@@ -1,5 +1,5 @@
 import 'whatwg-fetch';
-import {Cast, Details,seriesAPI} from '../index';
+import {Cast, Details,initSeriesAPI} from '../index';
 import {getImagePath} from '../../../getImagePath';
 import {SerieDetails} from '../../../../Components/SeriesDetails/SeriesDetails';
 describe('Series API: getImages', () => {
@@ -19,7 +19,7 @@ describe('Series API: getImages', () => {
         });
 
         return {
-            api: seriesAPI(API_KEY, fetchMocked),
+            api: initSeriesAPI(API_KEY, fetchMocked),
             fetchMocked
         };
     };

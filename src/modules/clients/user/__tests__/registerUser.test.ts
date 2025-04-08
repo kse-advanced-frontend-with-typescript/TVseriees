@@ -1,4 +1,4 @@
-import {userAPI} from '../index';
+import {initUserAPI} from '../index';
 import {createFetchMocked, createFetchMockedWithBody} from '../../../fetchMocked';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -16,7 +16,7 @@ describe('User API: registerUser', () => {
 
     describe('when registration was successful', () => {
         const fetchMocked = createFetchMockedWithBody(body);
-        const api = userAPI(API_KEY, fetchMocked);
+        const api = initUserAPI(API_KEY, fetchMocked);
 
         beforeEach(async () => {
             (bcrypt.hash as jest.Mock).mockResolvedValue('hashed-password');
@@ -54,7 +54,7 @@ describe('User API: registerUser', () => {
 
     describe('when user existed before', () => {
         it('should throw an error', async () => {
-            const api = userAPI(API_KEY, createFetchMocked(false));
+            const api = initUserAPI(API_KEY, createFetchMocked(false));
             await expect(api.registerUser('existinguser', 'existing@example.com', 'password')).rejects.toThrow('The user is already registered!');
         });
     });

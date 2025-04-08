@@ -4,7 +4,7 @@ import {SerieDetails, SeriesDetails} from '../../Components/SeriesDetails/Series
 import {Season, Seasons} from '../../Components/Seasons/Seasons';
 import {Reviews} from '../../Components/Reviews/Reviews';
 import {useParams} from 'react-router';
-import {seriesAPI, Review} from '../../modules/clients/series';
+import {initSeriesAPI, Review} from '../../modules/clients/series';
 import {Overview} from '../../Components/Overview/Overview';
 import {Pictures} from '../../Components/SeriesPictures/Pictures';
 import style from './style.css';
@@ -25,7 +25,7 @@ export const SeriePage: React.FC = () => {
         error: ''
     });
     const {id} = useParams<string>();
-    const api = seriesAPI(process.env.API_KEY ?? '', fetch);
+    const api = initSeriesAPI(process.env.API_KEY ?? '', fetch);
 
     useEffect(() => {
         if(!id)return ;

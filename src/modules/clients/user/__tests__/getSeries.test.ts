@@ -1,4 +1,4 @@
-import {SeriesResult, userAPI} from '../index';
+import {SeriesResult, initUserAPI} from '../index';
 import {createFetchMockedWithBody} from '../../../fetchMocked';
 
 describe('User API: getSeries', () => {
@@ -19,7 +19,7 @@ describe('User API: getSeries', () => {
             }
         };
         const fetchMock = createFetchMockedWithBody(body);
-        const api = userAPI(API_KEY, fetchMock);
+        const api = initUserAPI(API_KEY, fetchMock);
 
         it('should return the result', async () => {
             const res = await api.getSeries(0, 50, 'user_id', 'favorites');
@@ -42,7 +42,7 @@ describe('User API: getSeries', () => {
                 max: 50,
             }
         };
-        const api = userAPI(API_KEY, createFetchMockedWithBody(body));
+        const api = initUserAPI(API_KEY, createFetchMockedWithBody(body));
         it('should throw an error', async () => {
             await expect(api.getSeries(0, 50, 'user_id', 'favorites')).rejects.toThrow('Data is not valid: /data (Expected array)');
         });

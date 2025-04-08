@@ -1,4 +1,4 @@
-import {userAPI} from '../index';
+import {initUserAPI} from '../index';
 import {createFetchMocked} from '../../../fetchMocked';
 
 describe('User API: user serie collections manipulation', () => {
@@ -7,12 +7,12 @@ describe('User API: user serie collections manipulation', () => {
     const user_id: string = '343535354';
     const serie_id: number = 12222;
 
-    let api: ReturnType<typeof userAPI>;
+    let api: ReturnType<typeof initUserAPI>;
     let fetchMock: jest.Mock;
     describe('successful scenario: ', () => {
         beforeEach(() => {
             fetchMock = createFetchMocked(true);
-            api = userAPI(API_KEY, fetchMock);
+            api = initUserAPI(API_KEY, fetchMock);
         });
 
         it('should remove a serie from a specified collection', async () => {
@@ -56,7 +56,7 @@ describe('User API: user serie collections manipulation', () => {
 
     describe('failed scenarios: ', () => {
         beforeEach(() => {
-            api = userAPI(API_KEY, createFetchMocked(false));
+            api = initUserAPI(API_KEY, createFetchMocked(false));
         });
 
         it('should throw an error if removal fails', async () => {

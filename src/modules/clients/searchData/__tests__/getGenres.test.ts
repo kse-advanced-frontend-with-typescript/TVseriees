@@ -1,4 +1,4 @@
-import {Genres, searchAPI} from '../index';
+import {Genres, initSearchAPI} from '../index';
 import {createFetchMockedWithBody} from '../../../fetchMocked';
 
 describe('Search API: getGenres', () => {
@@ -16,7 +16,7 @@ describe('Search API: getGenres', () => {
 
         const expectedResult = new Map(mockedGenresData.genres.map(g=> [g.name, g.id.toString()]));
 
-        const api = searchAPI(API_KEY, createFetchMockedWithBody(mockedGenresData));
+        const api = initSearchAPI(API_KEY, createFetchMockedWithBody(mockedGenresData));
 
         it('should return the correct actor data with TV shows and images', async () => {
             const res = await api.getGenres();
@@ -33,7 +33,7 @@ describe('Search API: getGenres', () => {
                 {id: '1', name: 4444},
             ]
         };
-        const api = searchAPI(API_KEY, createFetchMockedWithBody(mockedGenresData));
+        const api = initSearchAPI(API_KEY, createFetchMockedWithBody(mockedGenresData));
 
         it('should throw an error', async () => {
             await expect(api.getGenres()).rejects.toThrow('Data is not valid: /genres/0/id (Expected number)');

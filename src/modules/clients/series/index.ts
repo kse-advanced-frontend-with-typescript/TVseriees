@@ -88,7 +88,7 @@ export type Cast = Static<typeof CastSchema>;
 export type SeasonFromShema = Static<typeof SeasonSchema>;
 export type Images = Static<typeof ImageSchema>;
 export type Details = Static<typeof SeriesDetailsSchema>;
-export const seriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
+export const initSeriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
 
     const get = async (page: number=1, requestType: SerieGetRequestType='trending'): Promise<SeriesResult> => {
         let url: string;

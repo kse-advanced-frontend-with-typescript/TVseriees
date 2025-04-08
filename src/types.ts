@@ -19,4 +19,9 @@ export type UsualCardProps = {
     onHeartClick: ()=>void
     onCircleClick: ()=>void
 };
-
+export type ConfigurationData = {
+    countries: Map<string, string>,
+    languages: Map<string, string>,
+    genres: Map<string, string>,
+    code_languages: Map<string, string>
+}
