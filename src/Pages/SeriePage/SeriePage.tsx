@@ -4,14 +4,15 @@ import {SerieDetails, SeriesDetails} from '../../Components/SeriesDetails/Series
 import {Season, Seasons} from '../../Components/Seasons/Seasons';
 import {Reviews} from '../../Components/Reviews/Reviews';
 import {useParams} from 'react-router';
-import {Overview} from '../../Components/Overview/Overview';
+import {Overview} from '../../Components/Box/Overview';
 import {Pictures} from '../../Components/SeriesPictures/Pictures';
 import style from './style.css';
 import {Icon} from '../../Components/Icon/Icon';
 import defaultImage from '../../Images/DefaultSerie.png';
 import {AppContext} from '../../context';
-import {Review} from '../../modules/clients/series';
+import {Recommended, Review} from '../../modules/clients/series';
 import {Collection} from '../../types';
+import {RecommendedTVs} from '../../Components/Box/Recommended';
 type PageState = {
     loading: boolean,
     error: string,
@@ -19,6 +20,7 @@ type PageState = {
     reviews?: Review,
     images?: string[],
     seasons?: Season[],
+    recommended?: Recommended
 }
 
 export const SeriePage: React.FC = () => {
@@ -35,13 +37,15 @@ export const SeriePage: React.FC = () => {
         Promise.all([
             context.seriesAPI.getDetails(seriesId),
             context.seriesAPI.getReviews(seriesId),
-            context.seriesAPI.getImages(seriesId)
-        ]).then(([detailsData, reviewsData, imagesData]) => {
+            context.seriesAPI.getImages(seriesId),
+            context.seriesAPI.getRecommended(seriesId)
+        ]).then(([detailsData, reviewsData, imagesData, recommendedData]) => {
             setPageState(prev => ({
                 ...prev,
                 details: detailsData,
                 reviews: reviewsData,
                 images: imagesData,
+                recommended: recommendedData,
                 error: ''
             }));
 
@@ -118,6 +122,7 @@ export const SeriePage: React.FC = () => {
                         {pageState.seasons && (<Seasons seasons={pageState.seasons}/>)}
                         {pageState.images && pageState.images.length>0 && (<Pictures name={pageState.details.name} paths={pageState.images}/>)}
                         {pageState.reviews && pageState.reviews.results.length > 0 && (<Reviews reviews={pageState.reviews.results}/>)}
+                        {pageState.recommended && pageState.recommended.results.length > 0 && <RecommendedTVs series={pageState.recommended.results}/>}
                     </>
                 )
             }

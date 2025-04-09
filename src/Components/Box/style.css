@@ -22,6 +22,10 @@
     font-size: 1.3rem;
 
 }
+
+.link:hover{
+    text-decoration: underline;
+}
 @media only screen and (max-width: 768px) {
 
     .overview{

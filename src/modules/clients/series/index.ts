@@ -40,7 +40,12 @@ const SeriesDetailsSchema = Type.Object({
         name: Type.String()
     }))
 });
-
+const RecommendedSchema = Type.Object({
+    results: Type.Array(Type.Object({
+        id: Type.Number(),
+        name: Type.String()
+    }))
+});
 const SeasonSchema = Type.Object({
     season_number: Type.Number(),
     episodes: Type.Array(Type.Object({
@@ -88,6 +93,8 @@ export type Cast = Static<typeof CastSchema>;
 export type SeasonFromShema = Static<typeof SeasonSchema>;
 export type Images = Static<typeof ImageSchema>;
 export type Details = Static<typeof SeriesDetailsSchema>;
+export type Recommended = Static<typeof RecommendedSchema>;
+
 export const initSeriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
 
     const get = async (page: number=1, requestType: SerieGetRequestType='trending'): Promise<SeriesResult> => {
@@ -135,6 +142,11 @@ export const initSeriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
        const fetchedData = await getData(fetchAPI, getUrl(`${id}/reviews`), getHeaders(api_key, 'tmdb'));
        return convertToType(fetchedData, ReviewSchema);
    };
+
+    const getRecommended = async (id: number): Promise<Recommended> =>{
+        const fetchedData = await getData(fetchAPI, getUrl(`${id}/recommendations`), getHeaders(api_key, 'tmdb'));
+        return convertToType(fetchedData, RecommendedSchema);
+    };
 
    const getSeason = async (serieId: number, seasonId: number): Promise<Season> => {
        const fetchedData = await getData(fetchAPI, getUrl(`${serieId}/season/${seasonId}`), getHeaders(api_key, 'tmdb'));
@@ -184,6 +196,7 @@ export const initSeriesAPI = (api_key: string, fetchAPI: typeof fetch) => {
         getReviews,
         getSeason,
         getDynamic,
-        getByName
+        getByName,
+        getRecommended
     };
 };

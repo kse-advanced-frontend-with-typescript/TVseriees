@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {Overview} from '../Components/Overview/Overview';
+import {Overview} from '../Components/Box/Overview';
 
 const meta : Meta<typeof  Overview>={
     component: Overview,
