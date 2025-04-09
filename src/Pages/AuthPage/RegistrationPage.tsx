@@ -18,7 +18,7 @@ export const RegistrationPage: React.FC = ()=>{
             navigate('/login');
         }catch(e){
             console.log(e);
-            setRegisterError(String(e));
+            setRegisterError(e instanceof Error ? e.message : String(e));
         }finally {
             setProcessing(false);
         }

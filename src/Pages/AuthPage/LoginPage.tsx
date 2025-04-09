@@ -10,10 +10,7 @@ export const LoginPage: React.FC = () => {
     const [processing, setProcessing] = useState<boolean>(false);
 
     useEffect(() => {
-        if (context.user?._id) {
-            console.log('User is now available in context:', context.user);
-            navigate('/');
-        }
+        if (context.user?._id)navigate('/');
     }, [context.user, navigate]);
 
     const login = async (email: string, password: string) => {
@@ -21,12 +18,11 @@ export const LoginPage: React.FC = () => {
         setProcessing(true);
         try {
             const user = await context.userAPI.loginUser(email, password);
-            console.log('User from API:', user);
-            // Just call setUser and let the useEffect handle navigation
             context.setUser(user);
+            alert('Registered successfully!');
         } catch (e) {
             console.error(e);
-            setLoginError(String(e));
+            setLoginError(e instanceof Error ? e.message : String(e));
         } finally {
             setProcessing(false);
         }

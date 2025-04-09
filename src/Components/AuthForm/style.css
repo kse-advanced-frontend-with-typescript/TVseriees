@@ -12,6 +12,7 @@
 }
 .errorMessage{
     color: #1a0221;
+    font-size: 1.4rem;
 }
 .form input{
     background-color: #ACDFEE;

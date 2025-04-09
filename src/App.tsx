@@ -52,7 +52,6 @@ export const App: React.FC = ()=>{
     };
 
     const cleanUser = () => {
-        setWarning(false);
         setState({
             ...state,
             user: undefined
@@ -98,9 +97,16 @@ export const App: React.FC = ()=>{
             seriesAPI,
             actorAPI
         }}>
-            {warning && <Warning onClick={cleanUser} onCancel={()=>setWarning(false)} purpose='log-out' message={'Are you sure about logging out?'} />}
+            {warning && <Warning
+                onClick={()=>{
+                        setWarning(false);
+                        cleanUser();
+                }}
+                onCancel={()=>setWarning(false)}
+                purpose='log-out'
+                message={'Are you sure about logging out?'}
+            />}
             <div className={styles.wrapper}><Header part='main'>
-
             <Header part='left'> <MenuButton authorized={!!state.user} links={links}/></Header>
             <h1>TVSerieees</h1>
             <Header part='right'>
@@ -131,7 +137,6 @@ export const App: React.FC = ()=>{
                 </Routes>
             </div>
             <Footer links={links} authorized={!!state.user} contacts={myContacts}/>
-
         </div>
         </AppContext.Provider>
     );

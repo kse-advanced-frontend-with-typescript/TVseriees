@@ -72,7 +72,7 @@ describe('Series API: getImages', () => {
             created_by: [serieData.created_by[0].name, serieData.created_by[1].name],
             genres: [serieData.genres[0].name, serieData.genres[1].name, serieData.genres[2].name],
             name: serieData.name,
-            number_of_episodes: serieData.number_of_episodes,
+            number_of_episodes: serieData.number_of_episodes!,
             number_of_seasons: serieData.number_of_seasons,
             original_language: serieData.original_language,
             original_name: serieData.original_name,

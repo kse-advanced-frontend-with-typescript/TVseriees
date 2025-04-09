@@ -13,7 +13,7 @@ export type SerieDetails = {
     created_by: string[],
     genres: string[],
     name: string,
-    number_of_episodes: number,
+    number_of_episodes: number | 'unknown',
     number_of_seasons: number,
     original_language: string,
     original_name: string,

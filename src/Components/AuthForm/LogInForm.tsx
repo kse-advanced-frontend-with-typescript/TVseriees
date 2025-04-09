@@ -1,4 +1,4 @@
-import React, {FormEvent, useRef, useEffect} from 'react';
+import React, {FormEvent, useRef} from 'react';
 import styles from './style.css';
 import {AuthorizationButton} from '../AuthorizationButton/AuthorizationButton';
 
@@ -12,13 +12,10 @@ export const LogInForm: React.FC<{
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if(!formRef.current) return;
-
         const formData: FormData = new FormData(formRef.current);
         const email = formData.get('email')?.toString() || '';
         const password = formData.get('password')?.toString() || '';
-
         onSubmit(email, password);
-        console.log('Login form submitted with:', email, password);
     };
 
     return (
