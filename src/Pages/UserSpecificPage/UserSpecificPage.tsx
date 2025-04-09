@@ -5,9 +5,9 @@ import { AppContext } from '../../context';
 import { SerieCards } from '../../Components/SerieCards/SerieCards';
 import { Collection, Serie } from '../../types';
 import { Pagination } from '../../Components/Pagination/Pagination';
-import { Icon } from "../../Components/Icon/Icon";
-import { Button } from "../../Components/Button/Button";
-import { Warning } from "../../Components/Warning/Warning";
+import { Icon } from '../../Components/Icon/Icon';
+import { Button } from '../../Components/Button/Button';
+import { Warning } from '../../Components/Warning/Warning';
 import styles from './style.css';
 type Card = Serie & {
     voteCount: number

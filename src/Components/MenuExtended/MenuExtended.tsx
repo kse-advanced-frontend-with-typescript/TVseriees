@@ -5,8 +5,8 @@ import {AuthorizationButton} from '../AuthorizationButton/AuthorizationButton';
 import {Link} from 'react-router';
 import {Links} from '../Footer/Footer';
 import {LinksSection} from '../LinkSection/LinkSection';
-import {Warning} from "../Warning/Warning";
-import {AppContext} from "../../context";
+import {Warning} from '../Warning/Warning';
+import {AppContext} from '../../context';
 
 
 
