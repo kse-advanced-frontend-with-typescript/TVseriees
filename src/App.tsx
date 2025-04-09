@@ -23,13 +23,11 @@ import {initActorAPI} from './modules/clients/actor';
 import {UserSpecificPage} from './Pages/UserSpecificPage/UserSpecificPage';
 
 export const App: React.FC = ()=>{
-    const [state, setState] = useState<{user?: User, loading: boolean, error: boolean}>(
-        {
+    const [state, setState] = useState<{user?: User, loading: boolean, error: boolean}>({
             user: undefined,
             loading: true,
             error: false
-        }
-    );
+    });
     const [warning, setWarning] = useState<boolean>(false);
 
     const userAPI = initUserAPI(process.env.REST_API_KEY!, fetch);
@@ -44,6 +42,8 @@ export const App: React.FC = ()=>{
     });
     const setUser = (user: User) =>{
         const token = user.token;
+        console.log('Token in set user', token);
+        console.log('User in set user', user);
         userAPI.saveToken(token);
         setState({
             ...state,
@@ -52,6 +52,7 @@ export const App: React.FC = ()=>{
     };
 
     const cleanUser = () => {
+        setWarning(false);
         setState({
             ...state,
             user: undefined
@@ -89,7 +90,7 @@ export const App: React.FC = ()=>{
 
     return (
         <AppContext.Provider value={{
-            ...state.user,
+            user: state.user,
             setUser,
             cleanUser,
             userAPI,
@@ -97,7 +98,9 @@ export const App: React.FC = ()=>{
             seriesAPI,
             actorAPI
         }}>
-        <div className={styles.wrapper}><Header part='main'>
+            {warning && <Warning onClick={cleanUser} onCancel={()=>setWarning(false)} purpose='log-out' message={'Are you sure about logging out?'} />}
+            <div className={styles.wrapper}><Header part='main'>
+
             <Header part='left'> <MenuButton authorized={!!state.user} links={links}/></Header>
             <h1>TVSerieees</h1>
             <Header part='right'>
@@ -106,7 +109,6 @@ export const App: React.FC = ()=>{
                     <>
                         <h2>{state.user.username}</h2>
                         <AuthorizationButton type={'log-out'} onClick={()=> setWarning(true)}/>
-                        {warning && <Warning onClick={cleanUser} onCancel={()=>setWarning(false)} purpose='log-out' message={'Are you sure about logging out?'} />}
                     </>
                 ) : (
                     <>

@@ -18,7 +18,7 @@ export const LinksSection: React.FC<{ links: Links, style: 'menu' | 'footer', au
                 ))}
                 {authorized && links.userLinks.map((link, index) => (
                     <li key={`userlink-${index}`} className={styles.link}>
-                        <Link to={`/${link}`}>{link}</Link>
+                        <Link to={`/user/${link}`}>{link}</Link>
                     </li>
                 ))}
             </ul>

@@ -11,6 +11,7 @@
     flex-wrap: wrap;
     padding: 1rem 2rem;
     position: sticky;
+    z-index: 10000000;
 }
 
 

@@ -21,7 +21,7 @@ const getRequestType = (request?: string): SerieGetRequestType => {
 
 type PageState = {
     loading: boolean,
-    errorFetchingSeries: string,
+    error: boolean,
     series: Serie[],
     totalPages: number,
     totalResults: number,
@@ -48,7 +48,7 @@ export const Main: React.FC = () => {
 
     const [pageState, setPageState] = useState<PageState>({
         loading: true,
-        errorFetchingSeries: '',
+        error: false,
         series: [],
         totalPages: 0,
         totalResults: 0,
@@ -97,7 +97,7 @@ export const Main: React.FC = () => {
                     series: res.results,
                     totalPages: res.total_pages,
                     totalResults: res.total_results,
-                    error: ''
+                    error: false
                 }));
 
                 setSeries(prev => ({
@@ -108,9 +108,10 @@ export const Main: React.FC = () => {
                 }));
             })
             .catch(err => {
+                console.log(err);
                 setPageState(prev => ({
                     ...prev,
-                    errorFetchingSeries: err instanceof Error ? err.message : 'An error occurred, sorry:((('
+                    error:true
                 }));
             })
             .finally(() => {
@@ -119,14 +120,19 @@ export const Main: React.FC = () => {
     }, [requestType, pageState.pageToFetch, filterState, context.configuration]);
 
     const onUserButtonClick = async (serie_id: number, collection: Collection, add?: boolean)=>{
-        if(add) await context.userAPI.addSerie(context.user!._id, serie_id, collection);
-        else await context.userAPI.removeSerie(context.user!._id, serie_id, collection);
+        try{if(add) await context.userAPI.addSerie(context.user!._id, serie_id, collection);
+        else await context.userAPI.removeSerie(context.user!._id, serie_id, collection);}
+        catch(e){
+            console.log(e);
+            setPageState(prev => ({...prev, error: true}));
+
+        }
     };
 
     return <>
         {pageState.loading && (<Icon topic='loading' size='big'/>)}
-        {pageState.errorFetchingSeries  && (<Icon topic='error' size='big'/>)}
-        {!pageState.errorFetchingSeries  && (
+        {pageState.error  && (<Icon topic='error' size='big'/>)}
+        {!pageState.error  && (
             <div className={styles.mainPage}>
                 <SearchField
                     genres={Array.from(context.configuration.genres.keys())}
