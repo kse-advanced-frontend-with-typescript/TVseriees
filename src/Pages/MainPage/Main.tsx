@@ -10,6 +10,9 @@ import {Icon} from '../../Components/Icon/Icon';
 import {Collection, FilterState, Serie} from '../../types';
 import {AppContext} from '../../context';
 import {SerieCards} from '../../Components/SerieCards/SerieCards';
+import {setNewPageInQueryParams, setNewQueryParams} from "../../modules/NewQueryParams";
+import {getSeriesData} from "../../modules/clients/series/getSeriesData";
+import {getFilterState} from "../../modules/getFilterState";
 
 type PageState = {
     loading: boolean,
@@ -27,15 +30,6 @@ export const Main: React.FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const location = useLocation();
 
-    const getFilterState = (): FilterState =>({
-        genre: searchParams.get('genre') ?? '',
-        language: searchParams.get('language') ?? '',
-        country: searchParams.get('country') ?? '',
-        sortOption: searchParams.get('sortOption') ?? '',
-        year: searchParams.get('year') ?? '',
-        name: searchParams.get('name') ?? ''
-    });
-
     const [state, setState] = useState<PageState>({
         loading: true,
         error: false,
@@ -47,72 +41,29 @@ export const Main: React.FC = () => {
     });
 
 
-    const handleFilterChange = (key: keyof FilterState, value: string) => {
-        const newParams = new URLSearchParams(searchParams);
-        if (value) newParams.set(key, value);
-        else newParams.delete(key);
-        newParams.set('page', '1');
-        setSearchParams(newParams);
-    };
     const fetchData = async () => {
-        setState(prev => ({...prev, loading: true, pageToFetch: Number(searchParams.get('page') ?? 1)}));
-
+        const pageToFetch = Number(searchParams.get('page') ?? 1);
+        setState(prev => ({...prev, loading: true, pageToFetch, currentPage: pageToFetch}));
         try {
-            const filters = getFilterState();
-            let response;
-            if (filters.name) response = await context.seriesAPI.getByName(state.pageToFetch, filters.name, filters.year);
-            else if (filters.year || filters.country || filters.language || filters.genre || filters.sortOption) {
-                const dataToPass: FilterState = {
-                    language: context.configuration.languages.get(filters.language) ?? '',
-                    country: context.configuration.countries.get(filters.country) ?? '',
-                    genre: context.configuration.genres.get(filters.genre) ?? '',
-                    year: filters.year,
-                    name: filters.name,
-                    sortOption: SortOptions.get(filters.sortOption) ?? ''
-                };
-                response = await context.seriesAPI.getDynamic(state.pageToFetch, dataToPass);
-            } else response = await context.seriesAPI.get(state.pageToFetch, requestType);
-
+            const filters = getFilterState(searchParams);
+            const response = await getSeriesData(pageToFetch, filters, requestType, context.seriesAPI, context.configuration);
             setState(prev => ({
                 ...prev,
                 totalPages: response.total_pages,
                 totalResults: response.total_results,
                 error: false,
-                loading:false,
-                series: state.pageToFetch === 1 ? response.results : [...prev.series, ...response.results]
+                loading: false,
+                series: pageToFetch === 1 ? response.results : [...prev.series, ...response.results]
             }));
-
         } catch (err) {
-            console.log(err);
-            setState(prev => ({
-                ...prev,
-                error:true,
-                loading: false
-            }));
+            console.error(err);
+            setState(prev => ({...prev, error: true, loading: false}));
         }
     };
 
-    const handlePageChange = (page: number) => {
-        const newParams = new URLSearchParams(searchParams);
-        newParams.set('page', page.toString());
-        setSearchParams(newParams);
-        setState(prev => ({
-            ...prev,
-            series: [],
-            currentPage: page
-        }));
-    };
-
-    const handleNextPage = () => {
-        const nextPage = Math.min(state.pageToFetch + 1, state.totalPages);
-        const newParams = new URLSearchParams(searchParams);
-        newParams.set('page', nextPage.toString());
-        setSearchParams(newParams);
-    };
 
     useEffect(()=>{
-        setState(prev => ({...prev, pageToFetch: 1}));
-        setState(prev=> ({...prev, series: [], currentPage: 1}));
+        setState(prev=> ({...prev, series: [], currentPage: 1, pageToFetch: 1}));
     }, [requestType]);
 
     useEffect(() => {
@@ -142,8 +93,8 @@ export const Main: React.FC = () => {
                     languages={Array.from(context.configuration.languages.keys())}
                     countries={Array.from(context.configuration.countries.keys())}
                     sortOptions={Array.from(SortOptions.keys())}
-                    filter={getFilterState()}
-                    onFilterChange={handleFilterChange}
+                    filter={getFilterState(searchParams)}
+                    onFilterChange={(key, value) => setSearchParams(setNewQueryParams(key, value, searchParams))}
                 />
                 {state.series.length > 0 && (
                     <SerieCards>
@@ -164,8 +115,11 @@ export const Main: React.FC = () => {
                 {state.totalPages > 1 && (
                     <Pagination
                         pageCount={state.totalPages}
-                        onPageSelect={handlePageChange}
-                        onClick={handleNextPage}
+                        onPageSelect={(page: number)=>{
+                            setSearchParams(setNewPageInQueryParams(page, searchParams));
+                            setState(prev => ({...prev, series: [], currentPage: page}));
+                        }}
+                        onClick={() => setSearchParams(setNewPageInQueryParams(Math.min(state.pageToFetch + 1, state.totalPages), searchParams))}
                         page={state.currentPage}
                     />
                 )}
