@@ -15,7 +15,7 @@ import {ActorPage} from './Pages/ActorPage/ActorPage';
 import {User, initUserAPI} from './modules/clients/user';
 import {AppContext} from './context';
 import {initSearchAPI} from './modules/clients/searchData';
-import {ConfigurationData} from './types';
+import {ConfigurationData, UserCollections} from './types';
 import {Warning} from './Components/Warning/Warning';
 import {initSeriesAPI} from './modules/clients/series';
 import {createReverseMap} from './modules/createReverseMap';
@@ -40,6 +40,12 @@ export const App: React.FC = ()=>{
         genres: new Map(),
         code_languages: new Map()
     });
+
+    const [userCollections, setUserCollections] = useState<UserCollections>({
+        favorites: [],
+        towatch:[],
+        watched: [],
+    });
     const setUser = (user: User) =>{
         const token = user.token;
         console.log('Token in set user', token);
@@ -50,6 +56,26 @@ export const App: React.FC = ()=>{
             user
         });
     };
+
+    const getIDs = (data: {serie_id: number}[]): number[]=>{
+     return  data.map((item=>item.serie_id));
+    };
+    useEffect(() => {
+        if(!state.user?._id)return;
+        setState(prev => ({...prev, loading: true}));
+        Promise.all([
+            userAPI.getSeries(state.user._id, 'favorites'),
+            userAPI.getSeries(state.user._id, 'towatch'),
+            userAPI.getSeries(state.user._id, 'watched'),
+        ]).then(([favorites, toWatch, watched]) => {
+            setUserCollections({favorites: getIDs(favorites.data), towatch: getIDs(toWatch.data), watched: getIDs(watched.data)});
+            setState(prev => ({...prev, error: false, loading: false }));
+        })
+        .catch(err => {
+            console.error('Error loading user collection:', err);
+            setState(prev => ({...prev, error: true, loading: false}));
+        });
+    }, [state.user]);
 
     const cleanUser = () => {
         setState({
@@ -76,14 +102,11 @@ export const App: React.FC = ()=>{
             api.getGenres()
         ]).then(([countries, languages, genres]) => {
             setConfiguration({genres: genres, countries: countries, languages: languages, code_languages: createReverseMap(languages)});
-            setState(prev => ({...prev, error: false}));
+            setState(prev => ({...prev, error: false, loading: false}));
         })
         .catch(err => {
             console.error('Error loading configuration:', err);
-            setState(prev => ({...prev, error: true}));
-        })
-        .finally(() => {
-            setState(prev => ({...prev, loading: false}));
+            setState(prev => ({...prev, error: true, loading: false}));
         });
     }, []);
 
@@ -95,7 +118,9 @@ export const App: React.FC = ()=>{
             userAPI,
             configuration,
             seriesAPI,
-            actorAPI
+            actorAPI,
+            userCollections,
+            setUserCollections
         }}>
             {warning && <Warning
                 onClick={()=>{

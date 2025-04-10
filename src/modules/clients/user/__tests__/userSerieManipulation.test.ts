@@ -16,10 +16,10 @@ describe('User API: user serie collections manipulation', () => {
         });
 
         it('should remove a serie from a specified collection', async () => {
-            await api.removeSerie(user_id, serie_id, 'to-watch');
+            await api.removeSerie(user_id, serie_id, 'towatch');
 
             expect(fetchMock).toBeCalledWith(
-                expect.stringContaining('to-watch')&&
+                expect.stringContaining('towatch')&&
                 expect.stringContaining((`q=${encodeURIComponent(
                     JSON.stringify({ user_id: user_id, serie_id: serie_id}))}`)),
                 expect.objectContaining({
@@ -68,7 +68,7 @@ describe('User API: user serie collections manipulation', () => {
         });
 
         it('should throw an error if removal of all series fails', async () => {
-            await expect(api.removeAll(user_id,  'to-watch')).rejects.toThrow('Error removing data!');
+            await expect(api.removeAll(user_id,  'towatch')).rejects.toThrow('Error removing data!');
         });
     });
 });

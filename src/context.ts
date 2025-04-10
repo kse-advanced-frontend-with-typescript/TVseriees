@@ -1,6 +1,6 @@
 import React from 'react';
 import { User, initUserAPI } from './modules/clients/user';
-import { ConfigurationData } from './types';
+import {ConfigurationData, UserCollections} from './types';
 import { initSeriesAPI } from './modules/clients/series';
 import {initActorAPI} from './modules/clients/actor';
 
@@ -12,10 +12,13 @@ type AppContext = {
     userAPI: ReturnType<typeof initUserAPI>;
     seriesAPI: ReturnType<typeof initSeriesAPI>;
     actorAPI: ReturnType<typeof initActorAPI>;
+    readonly userCollections: UserCollections;
+    setUserCollections: (userCollections: UserCollections)=>void;
+
 };
 
 export const AppContext = React.createContext<AppContext>({
-    setUser: () => {},
+    setUser: (user: User) => {},
     cleanUser: () => {},
     configuration: {
         countries: new Map(),
@@ -25,6 +28,12 @@ export const AppContext = React.createContext<AppContext>({
     },
     userAPI: {} as ReturnType<typeof initUserAPI>,
     seriesAPI: {} as ReturnType<typeof initSeriesAPI>,
-    actorAPI: {} as ReturnType<typeof initActorAPI>
+    actorAPI: {} as ReturnType<typeof initActorAPI>,
+    userCollections:{
+        favorites: [],
+        watched: [],
+        towatch: []
+    },
+    setUserCollections: (collections: UserCollections)=> {}
 
 });

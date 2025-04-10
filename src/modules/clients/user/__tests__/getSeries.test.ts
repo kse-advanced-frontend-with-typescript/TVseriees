@@ -21,10 +21,10 @@ describe('User API: getSeries', () => {
         const api = initUserAPI(API_KEY, fetchMock);
 
         it('should return the result', async () => {
-            const res = await api.getSeries(0, 50, 'user_id', 'favorites');
+            const res = await api.getSeries('user_id', 'favorites', 1 , 50);
             expect(res).toEqual(body);;
             expect(fetchMock).toBeCalledWith(expect.stringContaining('totals=true'), expect.any(Object));
-            expect(fetchMock).toBeCalledWith(expect.stringContaining('skip=0'), expect.any(Object));
+            expect(fetchMock).toBeCalledWith(expect.stringContaining('skip=1'), expect.any(Object));
             expect(fetchMock).toBeCalledWith(expect.stringContaining('max=50'), expect.any(Object));
             expect(fetchMock).toBeCalledWith(expect.stringContaining('favorites'), expect.any(Object));
             expect(fetchMock).toBeCalledWith(expect.stringContaining((`q=${encodeURIComponent(JSON.stringify({user_id: 'user_id'}))}`)), expect.any(Object));
@@ -43,7 +43,7 @@ describe('User API: getSeries', () => {
         };
         const api = initUserAPI(API_KEY, createFetchMockedWithBody(body));
         it('should throw an error', async () => {
-            await expect(api.getSeries(0, 50, 'user_id', 'favorites')).rejects.toThrow('Data is not valid: /data (Expected array)');
+            await expect(api.getSeries('user_id', 'favorites', 1, 50)).rejects.toThrow('Data is not valid: /data (Expected array)');
         });
     });
 });

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styles from '../UserButtons/style.css';
 import {MiniButton} from '../MiniButton/MiniButton';
 import {Collection, userMap} from '../../types';
+import {AppContext} from '../../context';
 
 type ButtonStates = {
     star: boolean;
@@ -15,10 +16,11 @@ type UserButtonsProps ={
 }
 
 export const UserButtons: React.FC<UserButtonsProps> = ({onIconClick, bigger, id}) => {
+   const context = useContext(AppContext);
     const [topic, setTopic] = React.useState<ButtonStates>({
-        star: false,
-        heart: false,
-        circle: false,
+        star: context.userCollections.towatch.includes(id),
+        heart: context.userCollections.favorites.includes(id),
+        circle: context.userCollections.watched.includes(id),
     });
     const onClick = (type: keyof ButtonStates) => {
         setTopic(previousState => ({

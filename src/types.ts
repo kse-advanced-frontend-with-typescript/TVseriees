@@ -21,11 +21,11 @@ export type ConfigurationData = {
     genres: Map<string, string>,
     code_languages: Map<string, string>
 }
-export type Collection = 'favorites' | 'to-watch' | 'watched';
+export type Collection = 'favorites' | 'towatch' | 'watched';
 
 
 export const userMap: Map<string, Collection> = new Map ([
-    ['star', 'to-watch'],
+    ['star', 'towatch'],
     ['heart', 'favorites'],
     ['circle', 'watched']
 ]);
@@ -35,3 +35,8 @@ export type Serie = {
     poster_path: string | null
 }
 
+export type UserCollections = {
+    favorites: number[],
+    towatch: number[],
+    watched: number[]
+}

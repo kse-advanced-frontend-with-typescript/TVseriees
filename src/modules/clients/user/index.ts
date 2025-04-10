@@ -3,9 +3,7 @@ import {convertToType} from '../../convertToType';
 import {getData} from '../../getData';
 import {getHeaders} from '../../getHeaders';
 import {Collection} from '../../../types';
-
-const base_url: string = 'https://favourites-36a5.restdb.io/rest';
-
+const base_url: string = 'https://mapstorage-7e78.restdb.io/rest';
 const UserItemSchema = Type.Object({
     _id: Type.String(),
     username: Type.String(),
@@ -27,7 +25,6 @@ const SeriesResultSchema = Type.Object({
     })
 });
 
-export type Serie = Static<typeof SeriesShema>;
 export type SeriesResult = Static<typeof SeriesResultSchema>;
 const UserSchema = Type.Array(UserItemSchema);
 export type UserModel = Static<typeof UserItemSchema>;
@@ -108,12 +105,12 @@ export const initUserAPI = (api_key: string, fetchAPI: typeof fetch) => {
         window.localStorage.setItem(SESSION_KEY, token);
     };
 
-    const getSeries = async (skip: number = 0, perPage: number = 1000, id: string, collection: Collection): Promise<SeriesResult> =>{
+    const getSeries = async (id: string, collection: Collection, skip?: number, perPage?: number): Promise<SeriesResult> =>{
         const params = new URLSearchParams();
         params.set('q', JSON.stringify({user_id: id}));
         params.set('totals', 'true');
-        params.set('skip', skip.toString());
-        params.set('max', perPage.toString());
+        if(skip)params.set('skip', skip.toString());
+        if(perPage)params.set('max', perPage.toString());
         const url = `${base_url}/${collection}?${params.toString()}`;
         const data = await getData(fetchAPI, url, getHeaders(api_key, 'restdbio'));
        return convertToType(data, SeriesResultSchema);

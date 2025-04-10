@@ -1,6 +1,6 @@
-import {ConfigurationData, FilterState} from "../../../types";
-import {initSeriesAPI, SerieGetRequestType} from "./index";
-import {SortOptions} from "../../../ExampleData";
+import {ConfigurationData, FilterState} from '../../../types';
+import {initSeriesAPI, SerieGetRequestType} from './index';
+import {SortOptions} from '../../../ExampleData';
 
 export const getSeriesData = async (
     pageToFetch: number,

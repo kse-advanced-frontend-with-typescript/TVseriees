@@ -42,7 +42,7 @@ export const ToWatch: Story = {
         name: 'It',
         averageVote: 67,
         voteCount: 788,
-        topicOfCard: 'to-watch',
+        topicOfCard: 'towatch',
         onIconClick: fn()
     }
 };

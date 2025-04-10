@@ -7,12 +7,12 @@ import styles from './style.css';
 import {SerieGetRequestType} from '../../modules/clients/series';
 import {useLocation, useParams, useSearchParams} from 'react-router';
 import {Icon} from '../../Components/Icon/Icon';
-import {Collection, FilterState, Serie} from '../../types';
+import {Collection, Serie} from '../../types';
 import {AppContext} from '../../context';
 import {SerieCards} from '../../Components/SerieCards/SerieCards';
-import {setNewPageInQueryParams, setNewQueryParams} from "../../modules/NewQueryParams";
-import {getSeriesData} from "../../modules/clients/series/getSeriesData";
-import {getFilterState} from "../../modules/getFilterState";
+import {setNewPageInQueryParams, setNewQueryParams} from '../../modules/NewQueryParams';
+import {getSeriesData} from '../../modules/clients/series/getSeriesData';
+import {getFilterState} from '../../modules/getFilterState';
 
 type PageState = {
     loading: boolean,
@@ -23,6 +23,7 @@ type PageState = {
     series: Serie[],
     currentPage: number
 }
+
 export const Main: React.FC = () => {
     const {request_type} = useParams();
     const requestType: SerieGetRequestType = request_type as SerieGetRequestType  ?? 'trending';
@@ -39,7 +40,6 @@ export const Main: React.FC = () => {
         series: [],
         currentPage: 1
     });
-
 
     const fetchData = async () => {
         const pageToFetch = Number(searchParams.get('page') ?? 1);
@@ -61,7 +61,6 @@ export const Main: React.FC = () => {
         }
     };
 
-
     useEffect(()=>{
         setState(prev=> ({...prev, series: [], currentPage: 1, pageToFetch: 1}));
     }, [requestType]);
@@ -73,8 +72,20 @@ export const Main: React.FC = () => {
     const onUserButtonClick = async (serie_id: number, collection: Collection, add?: boolean)=>{
         try{
             setState(prev => ({...prev, loading: true}));
-            if(add) await context.userAPI.addSerie(context.user!._id, serie_id, collection);
-            else await context.userAPI.removeSerie(context.user!._id, serie_id, collection);
+            if(add) {
+                await context.userAPI.addSerie(context.user!._id, serie_id, collection);
+                context.setUserCollections({
+                    ...context.userCollections,
+                    [collection]: [...context.userCollections[collection], serie_id]
+                });
+            }
+            else {
+                await context.userAPI.removeSerie(context.user!._id, serie_id, collection);
+                context.setUserCollections({
+                    ...context.userCollections,
+                    [collection]: context.userCollections[collection].filter((id: number) => id !== serie_id)
+                });
+            }
             setState(prev => ({...prev, loading: false}));
         }
         catch(e){

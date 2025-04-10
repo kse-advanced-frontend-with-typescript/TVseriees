@@ -1,4 +1,4 @@
-import {FilterState} from "../types";
+import {FilterState} from '../types';
 
 export const getFilterState = (searchParams: URLSearchParams): FilterState =>({
     genre: searchParams.get('genre') ?? '',

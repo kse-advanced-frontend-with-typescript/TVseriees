@@ -47,7 +47,7 @@ export const SeriesCard: React.FC<SeriesCardProps & {authorized: boolean}> = (pr
                         onIconClick={props.onIconClick}
                     />
                 );
-            case 'to-watch':
+            case 'towatch':
                 return (
                     <OtherButtons
                         id={props.id}
