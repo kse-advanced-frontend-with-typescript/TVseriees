@@ -3,14 +3,10 @@ import { getData } from '../getData';
 
 describe('getData:', () => {
     const mockResponseData = { success: true, data: ['item1', 'item2'] };
-    let fetchMock: jest.Mock;
-
-    beforeEach(() => {
-        fetchMock = createFetchMockedWithBody(mockResponseData);
-    });
 
     it('should successfully fetch data', async () => {
         const url = 'url';
+        const fetchMock = createFetchMockedWithBody(mockResponseData);
         const result = await getData(fetchMock, url, expect.any(Headers));
         expect(result).toEqual(mockResponseData);
         expect(fetchMock).toHaveBeenCalledWith(url, {

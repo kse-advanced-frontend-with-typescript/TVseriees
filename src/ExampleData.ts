@@ -10,34 +10,12 @@ export const links: Links = {
     userLinks:['favorites', 'to-watch', 'watched']
 };
 
-export const seriesData = [
-    {   id: 1,
-        imagePath: '/images/breaking-bad.jpg',
-        name: 'Breaking Bad',
-    },
-    {
-        id: 1,
-        imagePath: '/images/stranger-things.jpg',
-        name: 'Stranger Things',
-    },
-    {
-        id: 1,
-        imagePath: '/images/the-crown.jpg',
-        name: 'The Crown',
-    },
-    {
-        id: 1,
-        imagePath: '/images/the-mandalorian.jpg',
-        name: 'The Mandalorian',
-    }
-];
-
 export const myContacts: ContactProp[] = [
     { typeOfContact: 'email', contact: 'margarit.fil@gmail.com' },
-    { typeOfContact: 'call', contact: '+38 097 151 9327' }
+    { typeOfContact: 'email', contact: 'mfilipovych@kse.org.ua' },
+    { typeOfContact: 'call', contact: '+38 097 151 9327' },
+
 ];
-
-
 
 export const actorData = {name: 'Tom Hanks',
     knownFor: [
