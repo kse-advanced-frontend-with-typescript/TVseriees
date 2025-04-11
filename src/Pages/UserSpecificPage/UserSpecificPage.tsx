@@ -10,7 +10,7 @@ import { Button } from '../../Components/Button/Button';
 import { Warning } from '../../Components/Warning/Warning';
 import styles from './style.css';
 import {getCardData} from '../../modules/getCardData';
-import {setNewPageInQueryParams} from "../../modules/NewQueryParams";
+import {setNewPageInQueryParams} from '../../modules/NewQueryParams';
 
 type Card = Serie & {
     voteCount: number

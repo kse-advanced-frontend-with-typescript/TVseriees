@@ -1,4 +1,4 @@
-import {initSeriesAPI} from "./clients/series";
+import {initSeriesAPI} from './clients/series';
 
 type CardData = {
     id: number;

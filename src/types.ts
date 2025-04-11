@@ -1,4 +1,4 @@
-import {UserSerieItems} from "./modules/clients/user";
+import {UserSerieItems} from './modules/clients/user';
 
 export type IconTopic =  'search' | 'tick' | 'star' | 'vote' | 'cross' | 'envelope' | 'call' | 'empty-star' | 'black-cross' | 'caret'
 | 'heart' | 'empty-heart' | 'empty-circle' | 'circle' | 'loading' | 'error' | 'direction' | 'hidden' | 'plus';

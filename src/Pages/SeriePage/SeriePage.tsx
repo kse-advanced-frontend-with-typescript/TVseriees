@@ -90,7 +90,7 @@ export const SeriePage: React.FC = () => {
             const _id = context.userCollections[collection].get(serie_id);
             if(!_id)return;
             await context.userAPI.removeSerie(_id, collection);
-            context.userCollections[collection].delete(serie_id)
+            context.userCollections[collection].delete(serie_id);
             setState(prev => ({...prev, loading: false}));
         }
         catch(e){
