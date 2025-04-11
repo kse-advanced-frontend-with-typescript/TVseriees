@@ -9,10 +9,11 @@ type PaginationProps = {
     onPageSelect: (page: number)=>void,
     onClick: ()=>void,
     page: number
+    disabledShowMoreButton: boolean
 }
-export const Pagination: React.FC<PaginationProps> = ({pageCount, onPageSelect, onClick, page})=>{
+export const Pagination: React.FC<PaginationProps> = ({pageCount, onPageSelect, onClick, page, disabledShowMoreButton})=>{
     return <div className={styles.pagination}>
         <PageParentComponent page={page} pageCount={pageCount} onPageSelect={onPageSelect}/>
-        <Button purpose='Show more' onClick={onClick}/>
+        <Button purpose='Show more' onClick={onClick} disabled={disabledShowMoreButton}/>
     </div>;
 };

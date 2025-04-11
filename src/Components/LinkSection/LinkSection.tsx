@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Links } from '../Footer/Footer';
 import styles from './style.css';
 import classNames from 'classnames';
+import {Links} from '../../types';
 
 export const LinksSection: React.FC<{ links: Links, style: 'menu' | 'footer', authorized: boolean }> = ({ links, style, authorized }) => {
     return (
@@ -18,7 +18,7 @@ export const LinksSection: React.FC<{ links: Links, style: 'menu' | 'footer', au
                 ))}
                 {authorized && links.userLinks.map((link, index) => (
                     <li key={`userlink-${index}`} className={styles.link}>
-                        <Link to={`/user/${link}`}>{link}</Link>
+                        <Link to={`/user/${link.request_type}`}>{link.name}</Link>
                     </li>
                 ))}
             </ul>

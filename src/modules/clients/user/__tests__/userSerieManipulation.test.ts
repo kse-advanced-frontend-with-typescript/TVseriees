@@ -20,10 +20,10 @@ describe('User API: user serie collections manipulation', () => {
         });
 
         it('should remove a serie from a specified collection', async () => {
-            await api.removeSerie(serie_id.toString(), 'towatch');
+            await api.removeSerie(serie_id.toString(), 'future');
 
             expect(fetchMock).toBeCalledWith(
-                expect.stringContaining(`towatch/${serie_id.toString()}`),
+                expect.stringContaining(`future/${serie_id.toString()}`),
                 expect.objectContaining({
                     method: 'DELETE',
                     headers: expect.any(Headers)
@@ -71,7 +71,7 @@ describe('User API: user serie collections manipulation', () => {
         });
 
         it('should throw an error if removal of all series fails', async () => {
-            await expect(api.removeAll(_ids,  'towatch')).rejects.toThrow('Error removing data!');
+            await expect(api.removeAll(_ids,  'future')).rejects.toThrow('Error removing data!');
         });
     });
 });

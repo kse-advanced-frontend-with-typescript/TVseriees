@@ -5,7 +5,7 @@ import {MenuButton} from '../Components/MenuButton/MenuButton';
 import {MiniButton} from '../Components/MiniButton/MiniButton';
 import {AuthorizationButton} from '../Components/AuthorizationButton/AuthorizationButton';
 import {fn} from '@storybook/test';
-import {links} from '../ExampleData';
+import {links} from '../BusinessData';
 
 const meta : Meta<typeof  Header>={
     component: Header,

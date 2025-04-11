@@ -49,7 +49,7 @@ export const SeriesCard: React.FC<SeriesCardProps & {authorized: boolean}> = (pr
                         onDelete={props.onDelete}
                     />
                 );
-            case 'towatch':
+            case 'future':
                 return (
                     <OtherButtons
                         id={props.id}

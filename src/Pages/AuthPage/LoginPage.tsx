@@ -8,7 +8,6 @@ export const LoginPage: React.FC = () => {
     const context = useContext(AppContext);
     const [loginError, setLoginError] = useState<string>('');
     const [processing, setProcessing] = useState<boolean>(false);
-
     useEffect(() => {
         if (context.user?._id)navigate('/');
     }, [context.user, navigate]);
@@ -19,7 +18,6 @@ export const LoginPage: React.FC = () => {
         try {
             const user = await context.userAPI.loginUser(email, password);
             context.setUser(user);
-            alert('Registered successfully!');
         } catch (e) {
             console.error(e);
             setLoginError(e instanceof Error ? e.message : String(e));
@@ -27,7 +25,6 @@ export const LoginPage: React.FC = () => {
             setProcessing(false);
         }
     };
-
     return <>
         <LogInForm onSubmit={login} passError={loginError} processing={processing}/>
     </>;

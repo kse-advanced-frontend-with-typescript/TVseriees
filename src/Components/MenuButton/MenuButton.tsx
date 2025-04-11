@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from './style.css';
 import {MenuExtended} from '../MenuExtended/MenuExtended';
-import {Links} from '../Footer/Footer';
+import {Links} from '../../types';
 
 
 export const MenuButton: React.FC<{authorized: boolean, links: Links}> = ({authorized, links})=>{

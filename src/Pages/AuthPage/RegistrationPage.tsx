@@ -14,7 +14,7 @@ export const RegistrationPage: React.FC = ()=>{
         setProcessing(true);
         try{
             await context.userAPI.registerUser(username, email, password);
-            console.log('register request sent');
+            alert('Registration was successful!!!');
             navigate('/login');
         }catch(e){
             console.log(e);

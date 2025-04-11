@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {SeriesCard} from '../../Components/SeriesCard/SeriesCard';
 import {SearchField} from '../../Components/SearchField/SearchField';
-import {SortOptions} from '../../ExampleData';
+import {SortOptions} from '../../BusinessData';
 import {Pagination} from '../../Components/Pagination/Pagination';
 import styles from './style.css';
 import {SerieGetRequestType} from '../../modules/clients/series';
@@ -13,6 +13,7 @@ import {SerieCards} from '../../Components/SerieCards/SerieCards';
 import {setNewPageInQueryParams, setNewQueryParams} from '../../modules/NewQueryParams';
 import {getSeriesData} from '../../modules/clients/series/getSeriesData';
 import {getFilterState} from '../../modules/getFilterState';
+import {createSeriesOperations} from '../../modules/createSeriesOperations';
 
 type PageState = {
     loading: boolean,
@@ -40,6 +41,10 @@ export const Main: React.FC = () => {
         series: [],
         currentPage: 1
     });
+    const { deleteSerie, addSerie } = useMemo(
+        () => createSeriesOperations(setState, context),
+        [setState, context]
+    );
 
     const fetchData = async () => {
         const pageToFetch = Number(searchParams.get('page') ?? 1);
@@ -69,34 +74,6 @@ export const Main: React.FC = () => {
        fetchData();
     }, [location, context.configuration]);
 
-    const onDelete = async (serie_id: number, collection: Collection)=>{
-        try{
-            setState(prev => ({...prev, loading: true}));
-            const _id = context.userCollections[collection].get(serie_id);
-            if(!_id)return;
-            await context.userAPI.removeSerie(_id, collection);
-            context.userCollections[collection].delete(serie_id);
-            setState(prev => ({...prev, loading: false}));
-        }
-        catch(e){
-            console.log(e);
-            setState(prev => ({...prev, loading: false, error: true}));
-        }
-    };
-
-    const onAdd = async (serie_id: number, collection: Collection)=>{
-        try{
-            setState(prev => ({...prev, loading: true}));
-            const _id: string = await context.userAPI.addSerie(context.user!._id, serie_id, collection);
-            context.userCollections[collection].set(serie_id, _id);
-            setState(prev => ({...prev, loading: false}));
-        }
-        catch(e){
-            console.log(e);
-            setState(prev => ({...prev, loading: false, error: true}));
-        }
-    };
-
 
     return <>
         {state.loading && (<Icon topic='loading' size='big'/>)}
@@ -121,8 +98,8 @@ export const Main: React.FC = () => {
                                 imagePath={serie.poster_path ? `https://image.tmdb.org/t/p/w500${serie.poster_path}` : ''}
                                 name={serie.name}
                                 topicOfCard='usual'
-                                onDelete={onDelete}
-                                onAdd={onAdd}
+                                onDelete={async (serie_id: number, collection: Collection)=> await deleteSerie(serie_id, collection)}
+                                onAdd={async (serie_id: number, collection: Collection)=> await addSerie(serie_id, collection)}
 
                             />
                         )}
@@ -138,6 +115,8 @@ export const Main: React.FC = () => {
                         }}
                         onClick={() => setSearchParams(setNewPageInQueryParams(Math.min(state.pageToFetch + 1, state.totalPages), searchParams))}
                         page={state.currentPage}
+                        disabledShowMoreButton={state.totalPages === state.pageToFetch}
+
                     />
                 )}
             </div>)}

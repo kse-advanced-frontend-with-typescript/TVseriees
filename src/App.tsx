@@ -4,7 +4,7 @@ import {Footer} from './Components/Footer/Footer';
 import {Main} from './Pages/MainPage/Main';
 import {Header} from './Components/Header/Header';
 import {MenuButton} from './Components/MenuButton/MenuButton';
-import {links, myContacts} from './ExampleData';
+import {links, myContacts} from './BusinessData';
 import {AuthorizationButton} from './Components/AuthorizationButton/AuthorizationButton';
 import {LoginPage} from './Pages/AuthPage/LoginPage';
 import {RegistrationPage} from './Pages/AuthPage/RegistrationPage';
@@ -43,13 +43,11 @@ export const App: React.FC = ()=>{
 
     const [userCollections, setUserCollections] = useState<UserCollections>({
         favorites:  new Map(),
-        towatch: new Map(),
+        future: new Map(),
         watched:  new Map(),
     });
     const setUser = (user: User) =>{
         const token = user.token;
-        console.log('Token in set user', token);
-        console.log('User in set user', user);
         userAPI.saveToken(token);
         setState({
             ...state,
@@ -63,10 +61,10 @@ export const App: React.FC = ()=>{
         setState(prev => ({...prev, loading: true}));
         Promise.all([
             userAPI.getSeries(state.user._id, 'favorites'),
-            userAPI.getSeries(state.user._id, 'towatch'),
+            userAPI.getSeries(state.user._id, 'future'),
             userAPI.getSeries(state.user._id, 'watched'),
         ]).then(([favorites, toWatch, watched]) => {
-            setUserCollections({favorites: favorites, towatch: toWatch, watched: watched});
+            setUserCollections({favorites: favorites, future: toWatch, watched: watched});
             setState(prev => ({...prev, error: false, loading: false }));
         })
         .catch(err => {

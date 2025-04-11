@@ -35,7 +35,7 @@ describe('User API: getSeries', () => {
         };
         const api = initUserAPI(API_KEY, createFetchMockedWithBody(body));
         it('should throw an error', async () => {
-            await expect(api.getSeries('user_id', 'favorites')).rejects.toThrow('Data is not valid: /data (Expected array)');
+            await expect(api.getSeries('user_id', 'favorites')).rejects.toThrow('Data is not valid:  (Expected array)');
         });
     });
 });

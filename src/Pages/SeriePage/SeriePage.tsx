@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Poster} from '../../Components/Poster/Poster';
 import {SerieDetails, SeriesDetails} from '../../Components/SeriesDetails/SeriesDetails';
 import {Season, Seasons} from '../../Components/Seasons/Seasons';
@@ -13,6 +13,7 @@ import {AppContext} from '../../context';
 import {Recommended, Review} from '../../modules/clients/series';
 import {Collection} from '../../types';
 import {RecommendedTVs} from '../../Components/Box/Recommended';
+import {createSeriesOperations} from '../../modules/createSeriesOperations';
 type PageState = {
     loading: boolean,
     error: boolean,
@@ -29,6 +30,10 @@ export const SeriePage: React.FC = () => {
         loading: true,
         error: false
     });
+    const { deleteSerie, addSerie } = useMemo(
+        () => createSeriesOperations(setState, context),
+        [setState, context]
+    );
     const {id} = useParams<string>();
     useEffect(() => {
         if(!id)return ;
@@ -83,35 +88,6 @@ export const SeriePage: React.FC = () => {
             });
     }, [id]);
 
-
-    const onDelete = async (serie_id: number, collection: Collection)=>{
-        try{
-            setState(prev => ({...prev, loading: true}));
-            const _id = context.userCollections[collection].get(serie_id);
-            if(!_id)return;
-            await context.userAPI.removeSerie(_id, collection);
-            context.userCollections[collection].delete(serie_id);
-            setState(prev => ({...prev, loading: false}));
-        }
-        catch(e){
-            console.log(e);
-            setState({loading: false, error: true});
-        }
-    };
-
-    const onAdd = async (serie_id: number, collection: Collection)=>{
-        try{
-            setState(prev => ({...prev, loading: true}));
-            const _id: string = await context.userAPI.addSerie(context.user!._id, serie_id, collection);
-            context.userCollections[collection].set(serie_id, _id);
-            setState(prev => ({...prev, loading: false}));
-        }
-        catch(e){
-            console.log(e);
-            setState(prev => ({...prev, loading: false, error: true}));
-        }
-    };
-
     return (
         <div className={style.seriePage}>
             {state.loading && <Icon topic='loading' size='big'/>}
@@ -142,8 +118,8 @@ export const SeriePage: React.FC = () => {
                                 production_countries={state.details.production_countries}
                                 vote_average={state.details.vote_average}
                                 vote_count={state.details.vote_count}
-                                onAdd={onAdd}
-                                onDelete={onDelete}
+                                onDelete={async (serie_id: number, collection: Collection)=> await deleteSerie(serie_id, collection)}
+                                onAdd={async (serie_id: number, collection: Collection)=> await addSerie(serie_id, collection)}
 
                             />
                         </div>

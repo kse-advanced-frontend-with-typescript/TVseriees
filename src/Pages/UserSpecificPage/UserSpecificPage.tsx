@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import { SeriesCard } from '../../Components/SeriesCard/SeriesCard';
-import {useParams, useSearchParams} from 'react-router';
+import {useLocation, useParams, useSearchParams} from 'react-router';
 import { AppContext } from '../../context';
 import { SerieCards } from '../../Components/SerieCards/SerieCards';
 import { Collection, Serie } from '../../types';
@@ -11,6 +11,9 @@ import { Warning } from '../../Components/Warning/Warning';
 import styles from './style.css';
 import {getCardData} from '../../modules/getCardData';
 import {setNewPageInQueryParams} from '../../modules/NewQueryParams';
+import {EmptyTitles, UserPageTitles} from '../../BusinessData';
+import defaultImage from '../../Images/DefaultSerie.png';
+import {createSeriesOperations} from '../../modules/createSeriesOperations';
 
 type Card = Serie & {
     voteCount: number
@@ -21,105 +24,99 @@ type PageState = {
     error: boolean,
     loading: boolean,
     series: Card[],
-    pageToFetch: number,
-    currentPage: number
+    currentPage: number,
+    pageToFetch: number
 }
 
 export const UserSpecificPage: React.FC = () => {
     const { request_type } = useParams();
     const context = useContext(AppContext);
     const [searchParams, setSearchParams] = useSearchParams();
+    const location = useLocation();
+
     const [state, setState] = useState<PageState>({
         error: false,
-        loading: false,
+        loading: true,
         series: [],
+        currentPage: 1,
         pageToFetch: Number(searchParams.get('page') ?? 1),
-        currentPage: 1
     });
 
+    const { deleteSerie, deleteAll } = useMemo(() => createSeriesOperations(setState, context), [context]);
     const PER_PAGE = 20;
-    const startWith = (state.currentPage - 1) * PER_PAGE;
     const [warning, setWarning] = useState<boolean>(false);
-    const sizeOfMap = context.userCollections[request_type as Collection].size;
-    const numberOfPages = sizeOfMap / PER_PAGE;
+
+    const collection = request_type as Collection;
+    const sizeOfMap = context.userCollections[collection].size;
+    const numberOfPages = Math.ceil(sizeOfMap / PER_PAGE);
 
     const getCardsToRender = async () => {
-        if (!context.user || !context.user._id) {
+        if (!context.user || !context.user._id) return;
+        if (sizeOfMap === 0) {
+            setState(prev => ({ ...prev, series: [], loading: false }));
             return;
         }
-        setState(prev => ({ ...prev, loading: true }));
+        const pageToFetch = Number(searchParams.get('page') ?? 1);
+        setState(prev => ({ ...prev, loading: true, pageToFetch, currentPage: pageToFetch }));
         try {
             const result = await getCardData(
-                startWith,
+                pageToFetch,
                 PER_PAGE,
-                Array.from(context.userCollections[request_type as Collection ?? 'favorites'].keys()),
+                Array.from(context.userCollections[collection].keys()),
                 context.seriesAPI
             );
-
             setState(prev => ({
                 ...prev,
-                series: state.pageToFetch === 1 ? result : [...prev.series, ...result],
+                pageToFetch,
+                series: pageToFetch === 1 ? result : [...prev.series, ...result],
                 error: false,
                 loading: false
             }));
-
         } catch (err) {
-            console.error(err);
-            setState(prev => ({
-                ...prev,
-                error: true,
-                loading: false
-            }));
-        }
-    };
-
-    const handleIconClick = async (serie_id: number, collection: Collection) => {
-        try {
-            setState(prev => ({ ...prev, loading: true, pageToFetch: 1, currentPage: 1 }));
-            const _id = context.userCollections[collection as Collection].get(serie_id);
-            if(!_id)return;
-            await context.userAPI.removeSerie(_id, collection);
-            context.userCollections[collection as Collection].delete(serie_id);
-            setState(prev => ({ ...prev, error: false, loading: false }));
-        } catch (e) {
-            console.error(e);
-            setState(prev => ({ ...prev, error: true, loading: false }));
-        }
-    };
-
-    useEffect(() => {
-         getCardsToRender();
-    }, [state.pageToFetch, request_type]);
-
-    const deleteAll = async () => {
-        try {
-            setState(prev => ({ ...prev, loading: true }));
-            await context.userAPI.removeAll(Array.from(context.userCollections[request_type as Collection].values()), request_type as Collection);
-            context.userCollections[request_type as Collection] = new Map();
-            setState(prev => ({...prev, series: [], pageToFetch: 1, loading: false,  currentPage: 1}));
-            setWarning(false);
-        } catch (e) {
-            console.error(e);
+            console.error('Error fetching cards:', err);
             setState(prev => ({...prev, error: true, loading: false}));
         }
     };
 
+    useEffect(()=>{
+        setState(prev=> ({...prev, series: [], currentPage: 1, pageToFetch: 1}));
+        setSearchParams(setNewPageInQueryParams(1, searchParams));
+    }, [collection]);
 
+    useEffect(() => {
+        getCardsToRender();
+    }, [location, context.userCollections]);
+
+
+    const handleIconClick = async (serie_id: number, collection: Collection) => {
+        await deleteSerie(serie_id, collection);
+        await getCardsToRender();
+    };
+
+    const deleteAllSeries = async () => {
+        await deleteAll(collection);
+        setSearchParams(setNewPageInQueryParams(1, searchParams));
+        setState(prev => ({...prev, series: [], currentPage: 1, pageToFetch: 1}));
+        setWarning(false);
+    };
     return (
         <>
             {state.loading && <Icon topic='loading' size='big' />}
             {state.error && <Icon topic='error' size='big' />}
-
             {!state.error && (
                 <>
-                    {state.series.length === 0 && <h2 className={styles.empty}>No items in your {request_type} collection yet!</h2>}
-                    {state.series.length > 0 && (
-                        <>
-
-                            <Button purpose='delete all' onClick={() => setWarning(true)} />
+                    {state.series.length === 0 && sizeOfMap === 0 && !state.loading && (
+                        <h2 className={styles.empty}>{EmptyTitles.get(collection)}</h2>
+                    )}
+                    {(state.series.length > 0 || (sizeOfMap > 0 && !state.loading)) && (
+                        <div className={styles.userPage}>
+                            <div className={styles.userHeader}>
+                                <h2>{UserPageTitles.get(collection)}</h2>
+                                <Button purpose='delete all' onClick={() => setWarning(true)} disabled={context.userCollections[collection].size == 0}/>
+                            </div>
                             {warning && (
                                 <Warning
-                                    onClick={deleteAll}
+                                    onClick={deleteAllSeries}
                                     onCancel={() => setWarning(false)}
                                     purpose={'delete everything'}
                                     message={'Are you sure?'}
@@ -129,32 +126,32 @@ export const UserSpecificPage: React.FC = () => {
                                 {state.series.map((card, index) => (
                                     <SeriesCard
                                         key={card.name + index}
-                                        imagePath={card.poster_path ?? ''}
+                                        imagePath={card.poster_path ?? defaultImage}
                                         name={card.name}
                                         id={card.id}
                                         onDelete={handleIconClick}
-                                        topicOfCard={request_type as Collection}
+                                        topicOfCard={collection}
                                         authorized={true}
                                         voteCount={card.voteCount}
                                         averageVote={card.averageVote}
                                     />
                                 ))}
                             </SerieCards>
-                        </>
+                            {numberOfPages > 1 && (
+                                <Pagination
+                                    pageCount={numberOfPages}
+                                    onPageSelect={(page: number)=>{
+                                        setSearchParams(setNewPageInQueryParams(page, searchParams));
+                                        setState(prev => ({...prev, series: [], currentPage: page}));
+                                    }}
+                                    onClick={() => setSearchParams(setNewPageInQueryParams(Math.min(state.pageToFetch + 1, numberOfPages), searchParams))}
+                                    page={state.currentPage}
+                                    disabledShowMoreButton={numberOfPages === state.pageToFetch}
+                                />
+                            )}
+                        </div>
                     )}
                 </>
-            )}
-
-            {numberOfPages > 1 && (
-                <Pagination
-                    pageCount={numberOfPages}
-                    onPageSelect={(page: number)=>{
-                        setSearchParams(setNewPageInQueryParams(page, searchParams));
-                        setState(prev => ({...prev, series: [], currentPage: page}));
-                    }}
-                    onClick={() => setSearchParams(setNewPageInQueryParams(Math.min(state.pageToFetch + 1, context.userCollections[request_type as Collection].size), searchParams))}
-                    page={state.currentPage}
-                />
             )}
         </>
     );

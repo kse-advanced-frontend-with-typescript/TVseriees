@@ -1,13 +1,17 @@
-import {ContactProp, Links} from './Components/Footer/Footer';
+import {Collection, ContactProp, Links} from './types';
 
 export const links: Links = {
     links:[
-        {request_type: 'top_rated', name:  'top-rated'},
+        {request_type: 'top_rated', name: 'top-rated'},
         {request_type: 'popular', name:  'popular'},
         {request_type: 'on_the_air', name:  'on the air'},
         {request_type: 'airing_today', name: 'airing today'}
     ],
-    userLinks:['favorites', 'to-watch', 'watched']
+    userLinks:[
+        {request_type: 'favorites', name: 'favorites'},
+        {request_type: 'future', name:  'want to watch'},
+        {request_type: 'watched', name:  'already watched'},
+    ]
 };
 
 export const myContacts: ContactProp[] = [
@@ -16,15 +20,6 @@ export const myContacts: ContactProp[] = [
     { typeOfContact: 'call', contact: '+38 097 151 9327' },
 
 ];
-
-export const actorData = {name: 'Tom Hanks',
-    knownFor: [
-        {id: 1, name: 'Forrest Gump'},
-        {id: 1, name:'Saving Private Ryan'},
-        {id: 1, name:'Cast Away'},
-        {id: 1, name:'The Green Mile'},
-        {id: 1, name:'Toy Story'}
-]};
 
 export const SortOptions: Map<string, string> = new Map([
     ['first air date (from oldest)', 'first_air_date.asc'],
@@ -37,4 +32,16 @@ export const SortOptions: Map<string, string> = new Map([
     ['rating (high to low)', 'vote_average.desc'],
     ['vote count (low to high)', 'vote_count.asc'],
     ['vote count (high to low)', 'vote_count.desc']
+]);
+
+export const UserPageTitles: Map<Collection, string> = new Map([
+    ['watched', 'You\'ve already seen these:'],
+    ['favorites', 'These are your favourite:'],
+    ['future', 'You should definitely consider watching these:'],
+]);
+
+export const EmptyTitles: Map<Collection, string> = new Map([
+    ['watched', 'You haven\'t seen anything yet:(('],
+    ['favorites', 'It seems like you don\'t consider any TV serie as your favourite:('],
+    ['future', 'You haven\'t chosen anything to watch tonight:('],
 ]);

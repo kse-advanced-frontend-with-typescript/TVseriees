@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import styles from '../UserButtons/style.css';
 import {MiniButton} from '../MiniButton/MiniButton';
 import {Collection, userMap} from '../../types';
@@ -18,22 +18,18 @@ type UserButtonsProps ={
 
 export const UserButtons: React.FC<UserButtonsProps> = ({onDelete, onAdd, bigger, id}) => {
     const context = useContext(AppContext);
-
     const [buttonStates, setButtonStates] = useState<ButtonStates>({
-        star: context.userCollections.towatch.has(id),
+        star: context.userCollections.future.has(id),
         heart: context.userCollections.favorites.has(id),
         circle: context.userCollections.watched.has(id),
     });
-    console.log(`Buttons for serie with id ${id}:  ${buttonStates.circle} ${buttonStates.heart} ${buttonStates.star}`);
-
     useEffect(() => {
         setButtonStates({
-            star: context.userCollections.towatch.has(id),
+            star: context.userCollections.future.has(id),
             heart: context.userCollections.favorites.has(id),
             circle: context.userCollections.watched.has(id),
-        }) ;
-        console.log('User collections: ', context.userCollections);
-    }, [context.userCollections]);
+        });
+    }, [context.userCollections, id]);
 
     const onClick = (type: keyof ButtonStates) => {
         const currentState = buttonStates[type];

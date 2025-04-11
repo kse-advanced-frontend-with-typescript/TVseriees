@@ -4,7 +4,7 @@ import {ConfigurationData, UserCollections} from './types';
 import { initSeriesAPI } from './modules/clients/series';
 import {initActorAPI} from './modules/clients/actor';
 
-type AppContext = {
+export type AppContext = {
     readonly user?: User;
     setUser: (user: User) => void;
     cleanUser: () => void;
@@ -31,6 +31,6 @@ export const AppContext = React.createContext<AppContext>({
     userCollections:{
         favorites: new Map(),
         watched: new Map(),
-        towatch: new Map(),
+        future: new Map(),
     },
 });

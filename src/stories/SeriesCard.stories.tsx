@@ -43,7 +43,7 @@ export const ToWatch: Story = {
         name: 'It',
         averageVote: 67,
         voteCount: 788,
-        topicOfCard: 'towatch',
+        topicOfCard: 'future',
         onDelete: fn()
     }
 };

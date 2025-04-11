@@ -1,28 +1,13 @@
 import React from 'react';
 import styles from './style.css';
 import {Icon} from '../Icon/Icon';
-import {SerieGetRequestType} from '../../modules/clients/series';
 import {LinksSection} from '../LinkSection/LinkSection';
-
-export type ContactProp = {
-    typeOfContact: 'email' | 'call',
-    contact: string
-}
-
-export type LinkItem = {
-    name: string,
-    request_type: SerieGetRequestType
-}
-
-export type Links = {
-    links: LinkItem[],
-    userLinks: string[]
-}
+import {ContactProp, Links} from '../../types';
 
 type FooterProps = {
-    links: Links,
+    authorized: boolean,
     contacts: ContactProp[],
-    authorized: boolean
+    links: Links
 }
 
 export const Footer: React.FC<FooterProps> = ({links, contacts, authorized}) => {

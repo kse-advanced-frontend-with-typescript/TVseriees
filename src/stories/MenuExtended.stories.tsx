@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
 import {MenuExtended} from '../Components/MenuExtended/MenuExtended';
-import {links} from '../ExampleData';
+import {links} from '../BusinessData';
 
 const meta : Meta<typeof  MenuExtended>={
     component: MenuExtended,

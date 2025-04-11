@@ -1,8 +1,22 @@
-import {UserSerieItems} from './modules/clients/user';
+import {SerieGetRequestType} from './modules/clients/series';
 
 export type IconTopic =  'search' | 'tick' | 'star' | 'vote' | 'cross' | 'envelope' | 'call' | 'empty-star' | 'black-cross' | 'caret'
 | 'heart' | 'empty-heart' | 'empty-circle' | 'circle' | 'loading' | 'error' | 'direction' | 'hidden' | 'plus';
 
+export type ContactProp = {
+    typeOfContact: 'email' | 'call',
+    contact: string
+}
+
+export type LinkItem = {
+    name: string,
+    request_type: SerieGetRequestType | Collection
+}
+
+export type Links = {
+    links: LinkItem[],
+    userLinks: LinkItem[]
+}
 export type PicturesProps = {
     name: string,
     paths: string[]
@@ -23,11 +37,11 @@ export type ConfigurationData = {
     genres: Map<string, string>,
     code_languages: Map<string, string>
 }
-export type Collection = 'favorites' | 'towatch' | 'watched';
+export type Collection = 'favorites' | 'future' | 'watched';
 
 
 export const userMap: Map<string, Collection> = new Map ([
-    ['star', 'towatch'],
+    ['star', 'future'],
     ['heart', 'favorites'],
     ['circle', 'watched']
 ]);
@@ -39,6 +53,6 @@ export type Serie = {
 
 export type UserCollections = {
     favorites: Map<number, string>,
-    towatch: Map<number, string>,
+    future: Map<number, string>,
     watched: Map<number, string>
 }
