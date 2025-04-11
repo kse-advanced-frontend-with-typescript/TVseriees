@@ -3,7 +3,6 @@ import styles from './style.css';
 import {PageParentComponent} from '../PageNavigator/PageNavigator';
 import {Button} from '../Button/Button';
 
-
 type PaginationProps = {
     pageCount: number,
     onPageSelect: (page: number)=>void,

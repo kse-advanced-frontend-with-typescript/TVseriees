@@ -3,7 +3,7 @@ import { SeriesCard } from '../../Components/SeriesCard/SeriesCard';
 import {useLocation, useParams, useSearchParams} from 'react-router';
 import { AppContext } from '../../context';
 import { SerieCards } from '../../Components/SerieCards/SerieCards';
-import { Collection, Serie } from '../../types';
+import {Collection, Serie, StateWithPagination} from '../../types';
 import { Pagination } from '../../Components/Pagination/Pagination';
 import { Icon } from '../../Components/Icon/Icon';
 import { Button } from '../../Components/Button/Button';
@@ -20,24 +20,15 @@ type Card = Serie & {
     averageVote: number
 }
 
-type PageState = {
-    error: boolean,
-    loading: boolean,
-    series: Card[],
-    currentPage: number,
-    pageToFetch: number
-}
-
 export const UserSpecificPage: React.FC = () => {
     const { request_type } = useParams();
     const context = useContext(AppContext);
     const [searchParams, setSearchParams] = useSearchParams();
     const location = useLocation();
-
-    const [state, setState] = useState<PageState>({
+    const [series, setSeries] = useState<Card[]>([]);
+    const [state, setState] = useState<StateWithPagination>({
         error: false,
         loading: true,
-        series: [],
         currentPage: 1,
         pageToFetch: Number(searchParams.get('page') ?? 1),
     });
@@ -68,10 +59,10 @@ export const UserSpecificPage: React.FC = () => {
             setState(prev => ({
                 ...prev,
                 pageToFetch,
-                series: pageToFetch === 1 ? result : [...prev.series, ...result],
                 error: false,
                 loading: false
             }));
+            setSeries(prev => pageToFetch === 1 ? result : [...prev, ...result]);
         } catch (err) {
             console.error('Error fetching cards:', err);
             setState(prev => ({...prev, error: true, loading: false}));
@@ -105,10 +96,10 @@ export const UserSpecificPage: React.FC = () => {
             {state.error && <Icon topic='error' size='big' />}
             {!state.error && (
                 <>
-                    {state.series.length === 0 && sizeOfMap === 0 && !state.loading && (
+                    {series.length === 0 && sizeOfMap === 0 && !state.loading && (
                         <h2 className={styles.empty}>{EmptyTitles.get(collection)}</h2>
                     )}
-                    {(state.series.length > 0 || (sizeOfMap > 0 && !state.loading)) && (
+                    {(series.length > 0 || (sizeOfMap > 0 && !state.loading)) && (
                         <div className={styles.userPage}>
                             <div className={styles.userHeader}>
                                 <h2>{UserPageTitles.get(collection)}</h2>
@@ -123,7 +114,7 @@ export const UserSpecificPage: React.FC = () => {
                                 />
                             )}
                             <SerieCards>
-                                {state.series.map((card, index) => (
+                                {series.map((card, index) => (
                                     <SeriesCard
                                         key={card.name + index}
                                         imagePath={card.poster_path ?? defaultImage}

@@ -11,12 +11,10 @@ import {Icon} from '../../Components/Icon/Icon';
 import defaultImage from '../../Images/DefaultSerie.png';
 import {AppContext} from '../../context';
 import {Recommended, Review} from '../../modules/clients/series';
-import {Collection} from '../../types';
+import {Collection, State} from '../../types';
 import {RecommendedTVs} from '../../Components/Box/Recommended';
 import {createSeriesOperations} from '../../modules/createSeriesOperations';
-type PageState = {
-    loading: boolean,
-    error: boolean,
+type PageState = State &{
     details?: SerieDetails,
     reviews?: Review,
     images?: string[],

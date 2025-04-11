@@ -1,11 +1,6 @@
-import {Collection} from '../types';
+import {Collection, State} from '../types';
 import {Dispatch, SetStateAction} from 'react';
 import {AppContext} from '../context';
-
-type StateWithLoadingAndError = {
-    loading: boolean;
-    error: boolean;
-}
 
 type SeriesOperations = {
     deleteSerie: (serie_id: number, collection: Collection) => Promise<void>;
@@ -13,7 +8,7 @@ type SeriesOperations = {
     deleteAll: (collection: Collection) => Promise<void>;
 }
 
-export const createSeriesOperations = <T extends StateWithLoadingAndError>(
+export const createSeriesOperations = <T extends State>(
     setState: Dispatch<SetStateAction<T>>,
     context: AppContext
 ): SeriesOperations => {

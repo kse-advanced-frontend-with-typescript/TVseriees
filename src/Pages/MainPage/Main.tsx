@@ -7,7 +7,7 @@ import styles from './style.css';
 import {SerieGetRequestType} from '../../modules/clients/series';
 import {useLocation, useParams, useSearchParams} from 'react-router';
 import {Icon} from '../../Components/Icon/Icon';
-import {Collection, Serie} from '../../types';
+import {Collection, Serie, StateWithPagination} from '../../types';
 import {AppContext} from '../../context';
 import {SerieCards} from '../../Components/SerieCards/SerieCards';
 import {setNewPageInQueryParams, setNewQueryParams} from '../../modules/NewQueryParams';
@@ -15,14 +15,10 @@ import {getSeriesData} from '../../modules/clients/series/getSeriesData';
 import {getFilterState} from '../../modules/getFilterState';
 import {createSeriesOperations} from '../../modules/createSeriesOperations';
 
-type PageState = {
-    loading: boolean,
-    error: boolean,
+type PageState = StateWithPagination & {
     totalPages: number,
     totalResults: number,
-    pageToFetch: number,
     series: Serie[],
-    currentPage: number
 }
 
 export const Main: React.FC = () => {

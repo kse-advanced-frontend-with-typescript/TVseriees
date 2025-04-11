@@ -56,3 +56,19 @@ export type UserCollections = {
     future: Map<number, string>,
     watched: Map<number, string>
 }
+
+export type State = {
+    loading: boolean,
+    error: boolean
+}
+
+export type StateWithPagination = State & {
+    pageToFetch: number,
+    currentPage: number
+}
+
+export type ActorResponse = {
+    name: string;
+    image: string;
+    series: Array<{ id: number; name: string }>;
+};
