@@ -1,30 +1,14 @@
-import {Collection} from '../../types';
 import {initSeriesAPI} from '../clients/series';
-import {initUserAPI} from '../clients/user';
 import {getCardData} from '../getCardData';
 import {createFetchMockedWithBody} from '../fetchMocked';
 import {getImagePath} from '../getImagePath';
 
 describe('getCardData', () => {
     const API_KEY = 'API_KEY';
-    const startWith = 8;
-    const perPage = 90;
-    const userId = '45444';
-    const collectionType: Collection = 'favorites';
+    const startWith = 1;
+    const perPage = 4;
 
-    const mockUserAPIResponse = {
-        data: [
-            { serie_id: 101 },
-            { serie_id: 102 }
-        ],
-        totals: {
-            total: 2,
-            count: 2,
-            skip: 0,
-            max: 90,
-        }
-    };
-
+    const series_ids: number[] = [101, 200, 3000, 8888, 9999, 9999999];
     const mockSeriesDetailResponse = {
         id: 101,
         name: 'Mock Show',
@@ -45,19 +29,17 @@ describe('getCardData', () => {
         overview: 'Overview',
     };
 
-    const userAPI = initUserAPI(API_KEY, createFetchMockedWithBody(mockUserAPIResponse));
     const seriesAPI = initSeriesAPI(API_KEY, createFetchMockedWithBody(mockSeriesDetailResponse));
 
     it('should return formatted card data and total', async () => {
-        const result = await getCardData(startWith, perPage, userId, collectionType, seriesAPI, userAPI);
-        expect(result.series).toHaveLength(2);
-        expect(result.series[0]).toEqual({
+        const result = await getCardData(startWith, perPage, series_ids, seriesAPI);
+        expect(result).toHaveLength(4);
+        expect(result[0]).toEqual({
             id: 101,
             name: 'Mock Show',
             poster_path: getImagePath('/mock.jpg'),
             voteCount: 100,
             averageVote: 8.5
         });
-        expect(result.total).toBe(2);
     });
 });

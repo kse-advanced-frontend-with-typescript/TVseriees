@@ -1,3 +1,5 @@
+import {UserSerieItems} from "./modules/clients/user";
+
 export type IconTopic =  'search' | 'tick' | 'star' | 'vote' | 'cross' | 'envelope' | 'call' | 'empty-star' | 'black-cross' | 'caret'
 | 'heart' | 'empty-heart' | 'empty-circle' | 'circle' | 'loading' | 'error' | 'direction' | 'hidden' | 'plus';
 
@@ -36,7 +38,7 @@ export type Serie = {
 }
 
 export type UserCollections = {
-    favorites: number[],
-    towatch: number[],
-    watched: number[]
+    favorites: Map<number, string>,
+    towatch: Map<number, string>,
+    watched: Map<number, string>
 }

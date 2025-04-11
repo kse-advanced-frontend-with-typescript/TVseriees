@@ -12,12 +12,13 @@ type SeriesCardBaseProps = {
     imagePath: string;
     name: string,
     id: number
-    onIconClick: (serie_id: number, collection: Collection, add?: boolean) => void;
+    onDelete: (serie_id: number, collection: Collection) => void;
 };
 
 export type SeriesCardProps =
     (SeriesCardBaseProps & {
         topicOfCard: 'usual'
+        onAdd: (serie_id: number, collection: Collection) => void;
     }) |
     (SeriesCardBaseProps & {
         topicOfCard: Collection
@@ -34,7 +35,8 @@ export const SeriesCard: React.FC<SeriesCardProps & {authorized: boolean}> = (pr
                 return (
                     <UserButtons
                         id={props.id}
-                        onIconClick={props.onIconClick}
+                        onDelete={props.onDelete}
+                        onAdd={props.onAdd}
                     />
                 );
             case 'favorites':
@@ -44,7 +46,7 @@ export const SeriesCard: React.FC<SeriesCardProps & {authorized: boolean}> = (pr
                         displayType="heart"
                         voteCount={props.voteCount}
                         averageVote={props.averageVote}
-                        onIconClick={props.onIconClick}
+                        onDelete={props.onDelete}
                     />
                 );
             case 'towatch':
@@ -54,7 +56,7 @@ export const SeriesCard: React.FC<SeriesCardProps & {authorized: boolean}> = (pr
                         displayType="star"
                         voteCount={props.voteCount}
                         averageVote={props.averageVote}
-                        onIconClick={props.onIconClick}
+                        onDelete={props.onDelete}
                     />
                 );
             case 'watched':
@@ -64,7 +66,7 @@ export const SeriesCard: React.FC<SeriesCardProps & {authorized: boolean}> = (pr
                         displayType="circle"
                         voteCount={props.voteCount}
                         averageVote={props.averageVote}
-                        onIconClick={props.onIconClick}
+                        onDelete={props.onDelete}
                     />
                 );
         }
@@ -94,10 +96,10 @@ type OtherButtonsProps = {
     voteCount: number;
     averageVote: number;
     displayType: 'star' | 'heart' | 'circle';
-    onIconClick: (serie_id: number, collection: Collection) => void;
+    onDelete: (serie_id: number, collection: Collection) => void;
 };
 
-const OtherButtons: React.FC<OtherButtonsProps> = ({voteCount, averageVote, displayType, onIconClick, id
+const OtherButtons: React.FC<OtherButtonsProps> = ({voteCount, averageVote, displayType, onDelete, id
 }) => {
     return (
         <div className={styles.buttonsRating}>
@@ -109,7 +111,7 @@ const OtherButtons: React.FC<OtherButtonsProps> = ({voteCount, averageVote, disp
             <MiniButton
                 topic={displayType}
                 size='mini'
-                onClick={()=> onIconClick(id, userMap.get(String(displayType)) as Collection)}
+                onClick={()=> onDelete(id, userMap.get(String(displayType)) as Collection)}
             />
         </div>
     );

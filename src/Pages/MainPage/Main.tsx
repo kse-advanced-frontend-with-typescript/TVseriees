@@ -69,23 +69,13 @@ export const Main: React.FC = () => {
        fetchData();
     }, [location, context.configuration]);
 
-    const onUserButtonClick = async (serie_id: number, collection: Collection, add?: boolean)=>{
+    const onDelete = async (serie_id: number, collection: Collection)=>{
         try{
             setState(prev => ({...prev, loading: true}));
-            if(add) {
-                await context.userAPI.addSerie(context.user!._id, serie_id, collection);
-                context.setUserCollections({
-                    ...context.userCollections,
-                    [collection]: [...context.userCollections[collection], serie_id]
-                });
-            }
-            else {
-                await context.userAPI.removeSerie(context.user!._id, serie_id, collection);
-                context.setUserCollections({
-                    ...context.userCollections,
-                    [collection]: context.userCollections[collection].filter((id: number) => id !== serie_id)
-                });
-            }
+            const _id = context.userCollections[collection].get(serie_id);
+            if(!_id)return;
+            await context.userAPI.removeSerie(_id, collection);
+            context.userCollections[collection].delete(serie_id);
             setState(prev => ({...prev, loading: false}));
         }
         catch(e){
@@ -93,6 +83,20 @@ export const Main: React.FC = () => {
             setState(prev => ({...prev, loading: false, error: true}));
         }
     };
+
+    const onAdd = async (serie_id: number, collection: Collection)=>{
+        try{
+            setState(prev => ({...prev, loading: true}));
+            const _id: string = await context.userAPI.addSerie(context.user!._id, serie_id, collection);
+            context.userCollections[collection].set(serie_id, _id);
+            setState(prev => ({...prev, loading: false}));
+        }
+        catch(e){
+            console.log(e);
+            setState(prev => ({...prev, loading: false, error: true}));
+        }
+    };
+
 
     return <>
         {state.loading && (<Icon topic='loading' size='big'/>)}
@@ -117,7 +121,9 @@ export const Main: React.FC = () => {
                                 imagePath={serie.poster_path ? `https://image.tmdb.org/t/p/w500${serie.poster_path}` : ''}
                                 name={serie.name}
                                 topicOfCard='usual'
-                                onIconClick={onUserButtonClick}
+                                onDelete={onDelete}
+                                onAdd={onAdd}
+
                             />
                         )}
                     </SerieCards>

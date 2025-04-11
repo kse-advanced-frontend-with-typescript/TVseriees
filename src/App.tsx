@@ -42,9 +42,9 @@ export const App: React.FC = ()=>{
     });
 
     const [userCollections, setUserCollections] = useState<UserCollections>({
-        favorites: [],
-        towatch:[],
-        watched: [],
+        favorites:  new Map(),
+        towatch: new Map(),
+        watched:  new Map(),
     });
     const setUser = (user: User) =>{
         const token = user.token;
@@ -57,9 +57,7 @@ export const App: React.FC = ()=>{
         });
     };
 
-    const getIDs = (data: {serie_id: number}[]): number[]=>{
-     return  data.map((item=>item.serie_id));
-    };
+
     useEffect(() => {
         if(!state.user?._id)return;
         setState(prev => ({...prev, loading: true}));
@@ -68,7 +66,7 @@ export const App: React.FC = ()=>{
             userAPI.getSeries(state.user._id, 'towatch'),
             userAPI.getSeries(state.user._id, 'watched'),
         ]).then(([favorites, toWatch, watched]) => {
-            setUserCollections({favorites: getIDs(favorites.data), towatch: getIDs(toWatch.data), watched: getIDs(watched.data)});
+            setUserCollections({favorites: favorites, towatch: toWatch, watched: watched});
             setState(prev => ({...prev, error: false, loading: false }));
         })
         .catch(err => {
@@ -119,8 +117,7 @@ export const App: React.FC = ()=>{
             configuration,
             seriesAPI,
             actorAPI,
-            userCollections,
-            setUserCollections
+            userCollections
         }}>
             {warning && <Warning
                 onClick={()=>{

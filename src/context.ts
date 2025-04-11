@@ -12,8 +12,7 @@ type AppContext = {
     userAPI: ReturnType<typeof initUserAPI>;
     seriesAPI: ReturnType<typeof initSeriesAPI>;
     actorAPI: ReturnType<typeof initActorAPI>;
-    readonly userCollections: UserCollections;
-    setUserCollections: (userCollections: UserCollections)=>void;
+    userCollections: UserCollections;
 
 };
 
@@ -30,10 +29,8 @@ export const AppContext = React.createContext<AppContext>({
     seriesAPI: {} as ReturnType<typeof initSeriesAPI>,
     actorAPI: {} as ReturnType<typeof initActorAPI>,
     userCollections:{
-        favorites: [],
-        watched: [],
-        towatch: []
+        favorites: new Map(),
+        watched: new Map(),
+        towatch: new Map(),
     },
-    setUserCollections: (collections: UserCollections)=> {}
-
 });

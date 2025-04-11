@@ -11,20 +11,13 @@ const UserItemSchema = Type.Object({
     token: Type.String(),
     password: Type.String()
 });
-const SeriesShema = Type.Array(Type.Object({
+const CollectionRecordSchema = Type.Object({
+    _id: Type.String(),
     serie_id: Type.Number(),
-}));
-
-const SeriesResultSchema = Type.Object({
-    data: SeriesShema,
-    totals: Type.Object({
-        total: Type.Number(),
-        count: Type.Number(),
-        skip: Type.Number(),
-        max: Type.Number(),
-    })
 });
-
+const SeriesResultSchema = Type.Array(CollectionRecordSchema);
+export type CollectionRecord = Static<typeof CollectionRecordSchema>
+export type UserSerieItems = Static<typeof SeriesResultSchema>;
 export type SeriesResult = Static<typeof SeriesResultSchema>;
 const UserSchema = Type.Array(UserItemSchema);
 export type UserModel = Static<typeof UserItemSchema>;
@@ -105,24 +98,17 @@ export const initUserAPI = (api_key: string, fetchAPI: typeof fetch) => {
         window.localStorage.setItem(SESSION_KEY, token);
     };
 
-    const getSeries = async (id: string, collection: Collection, skip?: number, perPage?: number): Promise<SeriesResult> =>{
+    const getSeries = async (id: string, collection: Collection): Promise<Map<number, string>> =>{
         const params = new URLSearchParams();
         params.set('q', JSON.stringify({user_id: id}));
-        params.set('totals', 'true');
-        if(skip)params.set('skip', skip.toString());
-        if(perPage)params.set('max', perPage.toString());
         const url = `${base_url}/${collection}?${params.toString()}`;
         const data = await getData(fetchAPI, url, getHeaders(api_key, 'restdbio'));
-       return convertToType(data, SeriesResultSchema);
+        const convertedData =  convertToType(data, SeriesResultSchema);
+        return new Map(convertedData.map(item=> [item.serie_id, item._id]));
     };
 
-    const removeSerie = async (id: string, serieId: number, collection: Collection) =>{
-        const params = new URLSearchParams();
-        params.set('q', JSON.stringify({
-            user_id: id,
-            serie_id: serieId
-        }));
-        const url = `${base_url}${collection}?${params.toString()}`;
+    const removeSerie = async (_id: string, collection: Collection) =>{
+        const url = `${base_url}/${collection}/${_id}`;
         const headers = getHeaders(api_key, 'restdbio');
         const response = await fetchAPI(url, {
             method: 'DELETE',
@@ -131,7 +117,7 @@ export const initUserAPI = (api_key: string, fetchAPI: typeof fetch) => {
         if(!response.ok) throw new Error('Error removing data!');
     };
 
-    const addSerie = async (user_id: string, serie_id: number, collection: Collection) =>{
+    const addSerie = async (user_id: string, serie_id: number, collection: Collection): Promise<string> =>{
         const headers = getHeaders(api_key, 'restdbio');
         const response = await fetchAPI(`${base_url}/${collection}`, {
             method: 'POST',
@@ -141,18 +127,23 @@ export const initUserAPI = (api_key: string, fetchAPI: typeof fetch) => {
             }),
             headers
         });
-        if(!response.ok) throw new Error('Error adding data!');
+        if (!response.ok) {
+            throw new Error('Error adding data!');
+        }
+        const responseData = await response.json();
+        const data = convertToType(responseData, CollectionRecordSchema);
+        return data._id;
     };
 
-    const removeAll = async (id: string, collection: Collection) =>{
-        const params = new URLSearchParams();
-        params.set('q', JSON.stringify({user_id: id}));
-        const url = `${base_url}${collection}?${params.toString()}`;
+    const removeAll = async (_ids: string[], collection: Collection) =>{
+        const url = `${base_url}/${collection}/*`;
         const headers = getHeaders(api_key, 'restdbio');
         const response = await fetchAPI(url, {
             method: 'DELETE',
-            headers
+            headers,
+            body: JSON.stringify(_ids)
         });
+
         if(!response.ok) throw new Error('Error removing data!');
     };
 

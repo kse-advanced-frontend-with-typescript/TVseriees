@@ -29,14 +29,14 @@ export type SerieDetails = {
     poster_path: string
 };
 type SeriesDetailsProps = Omit<SerieDetails, 'overview' | 'poster_path'>;
-export const SeriesDetails: React.FC<SeriesDetailsProps & {authorized: boolean,  onIconClick: (serie_id: number, collection: Collection, add: boolean) => void}> = (props) => {
+export const SeriesDetails: React.FC<SeriesDetailsProps & {authorized: boolean,  onAdd: (serie_id: number, collection: Collection) => void,  onDelete: (serie_id: number, collection: Collection) => void}> = (props) => {
     return (
         <div className={styles.detailItems}>
             <h2>{props.name}</h2>
             <Details {...props}/>
             <div className={styles.buttons}>
                 <Rating averageVote={props.vote_average} voteCount={props.vote_count} size='premedium'/>
-                {props.authorized && <UserButtons id={props.id} onIconClick={props.onIconClick} bigger={true}/>}
+                {props.authorized && <UserButtons id={props.id} onAdd={props.onAdd} onDelete={props.onDelete} bigger={true}/>}
             </div>
         </div>
     );

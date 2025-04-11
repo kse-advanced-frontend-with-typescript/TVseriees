@@ -1,6 +1,4 @@
-import {Collection} from '../types';
-import {initSeriesAPI} from './clients/series';
-import {initUserAPI} from './clients/user';
+import {initSeriesAPI} from "./clients/series";
 
 type CardData = {
     id: number;
@@ -10,22 +8,15 @@ type CardData = {
     averageVote: number;
 }
 
-type CardDataResult = {
-    series: CardData[];
-    total: number;
-}
-
 export const getCardData = async (
     startWith: number,
     perPage: number,
-    userId: string,
-    collectionType: Collection,
+    collection: number[],
     seriesAPI: ReturnType<typeof initSeriesAPI>,
-    userAPI: ReturnType<typeof initUserAPI>
-): Promise<CardDataResult> => {
-    const seriesResponse = await userAPI.getSeries(userId, collectionType, startWith, perPage);
-    const fetchPromises = seriesResponse.data.map(async (item) => {
-        const res = await seriesAPI.getDetails(item.serie_id);
+): Promise<CardData[]> => {
+    const endIndex = Math.min(startWith + perPage, collection.length);
+    const fetchPromises = collection.slice(startWith, endIndex).map(async (id) => {
+        const res = await seriesAPI.getDetails(id);
         return {
             id: res.id,
             name: res.name,
@@ -34,9 +25,5 @@ export const getCardData = async (
             averageVote: res.vote_average
         };
     });
-    const series = await Promise.all(fetchPromises);
-    return {
-        series,
-        total: seriesResponse.totals.total
-    };
+    return await Promise.all(fetchPromises);
 };

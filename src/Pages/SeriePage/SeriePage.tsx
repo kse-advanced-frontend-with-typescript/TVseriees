@@ -15,7 +15,7 @@ import {Collection} from '../../types';
 import {RecommendedTVs} from '../../Components/Box/Recommended';
 type PageState = {
     loading: boolean,
-    error: string,
+    error: boolean,
     details?: SerieDetails,
     reviews?: Review,
     images?: string[],
@@ -25,28 +25,28 @@ type PageState = {
 
 export const SeriePage: React.FC = () => {
     const context = useContext(AppContext);
-    const [pageState, setPageState] = useState<PageState>({
+    const [state, setState] = useState<PageState>({
         loading: true,
-        error: ''
+        error: false
     });
     const {id} = useParams<string>();
     useEffect(() => {
         if(!id)return ;
         const seriesId = parseInt(id);
-        setPageState(prev => ({...prev, loading: true}));
+        setState(prev => ({...prev, loading: true}));
         Promise.all([
             context.seriesAPI.getDetails(seriesId),
             context.seriesAPI.getReviews(seriesId),
             context.seriesAPI.getImages(seriesId),
             context.seriesAPI.getRecommended(seriesId)
         ]).then(([detailsData, reviewsData, imagesData, recommendedData]) => {
-            setPageState(prev => ({
+            setState(prev => ({
                 ...prev,
                 details: detailsData,
                 reviews: reviewsData,
                 images: imagesData,
                 recommended: recommendedData,
-                error: ''
+                error: false
             }));
 
             if (detailsData && detailsData.number_of_seasons) {
@@ -57,72 +57,101 @@ export const SeriePage: React.FC = () => {
 
                 Promise.all(seasonPromises)
                     .then(allSeasonsData => {
-                        setPageState(prev => ({
+                        setState(prev => ({
                             ...prev,
                             seasons: allSeasonsData,
                         }));
                     })
                     .catch(err => {
-                        setPageState(prev => ({
+                        console.log(err);
+                        setState(prev => ({
                             ...prev,
-                            error: err instanceof Error ? err.message : 'An error occurred, sorry:((('
+                            error: true
                         }));
                     });
             }
         })
             .catch(err => {
-                setPageState(prev => ({
+                console.log(err);
+                setState(prev => ({
                     ...prev,
-                    error: err instanceof Error ? err.message : 'An error occurred, sorry:((('
+                    error:true
                 }));
             })
             .finally(() => {
-                setPageState(prev => ({...prev, loading: false}));
+                setState(prev => ({...prev, loading: false}));
             });
     }, [id]);
-    const onUserButtonClick = async ( serie_id: number, collection: Collection, add: boolean)=>{
-        if(add) await context.userAPI.addSerie(context.user!._id, serie_id, collection);
-        else await context.userAPI.removeSerie(context.user!._id, serie_id, collection);
+
+
+    const onDelete = async (serie_id: number, collection: Collection)=>{
+        try{
+            setState(prev => ({...prev, loading: true}));
+            const _id = context.userCollections[collection].get(serie_id);
+            if(!_id)return;
+            await context.userAPI.removeSerie(_id, collection);
+            context.userCollections[collection].delete(serie_id)
+            setState(prev => ({...prev, loading: false}));
+        }
+        catch(e){
+            console.log(e);
+            setState({loading: false, error: true});
+        }
     };
+
+    const onAdd = async (serie_id: number, collection: Collection)=>{
+        try{
+            setState(prev => ({...prev, loading: true}));
+            const _id: string = await context.userAPI.addSerie(context.user!._id, serie_id, collection);
+            context.userCollections[collection].set(serie_id, _id);
+            setState(prev => ({...prev, loading: false}));
+        }
+        catch(e){
+            console.log(e);
+            setState(prev => ({...prev, loading: false, error: true}));
+        }
+    };
+
     return (
         <div className={style.seriePage}>
-            {pageState.loading && <Icon topic='loading' size='big'/>}
-            {pageState.error &&  <Icon topic='error' size='big'/>}
+            {state.loading && <Icon topic='loading' size='big'/>}
+            {state.error &&  <Icon topic='error' size='big'/>}
             {
-                !pageState.loading && !pageState.error && pageState.details && (
+                !state.loading && !state.error && state.details && (
                     <>
                         <div className={style.details}>
                             <Poster
-                                path={pageState.details.poster_path? pageState.details.poster_path: defaultImage}
-                                name={pageState.details.name}
+                                path={state.details.poster_path? state.details.poster_path: defaultImage}
+                                name={state.details.name}
                                 layout='vertical'
                             />
                             <SeriesDetails
-                                id={pageState.details.id}
+                                id={state.details.id}
                                 authorized={!!context.user}
-                                cast={pageState.details.cast}
-                                episode_run_time={pageState.details.episode_run_time}
-                                first_air_date={pageState.details.first_air_date}
-                                created_by={pageState.details.created_by}
-                                genres={pageState.details.genres}
-                                name={pageState.details.name}
-                                number_of_episodes={pageState.details.number_of_episodes}
-                                number_of_seasons={pageState.details.number_of_seasons}
-                                original_language={context.configuration.code_languages.get(pageState.details.original_language) ?? 'unknown'}
-                                original_name={pageState.details.original_name}
-                                production_companies={pageState.details.production_companies}
-                                production_countries={pageState.details.production_countries}
-                                vote_average={pageState.details.vote_average}
-                                vote_count={pageState.details.vote_count}
-                                onIconClick={onUserButtonClick}
+                                cast={state.details.cast}
+                                episode_run_time={state.details.episode_run_time}
+                                first_air_date={state.details.first_air_date}
+                                created_by={state.details.created_by}
+                                genres={state.details.genres}
+                                name={state.details.name}
+                                number_of_episodes={state.details.number_of_episodes}
+                                number_of_seasons={state.details.number_of_seasons}
+                                original_language={context.configuration.code_languages.get(state.details.original_language) ?? 'unknown'}
+                                original_name={state.details.original_name}
+                                production_companies={state.details.production_companies}
+                                production_countries={state.details.production_countries}
+                                vote_average={state.details.vote_average}
+                                vote_count={state.details.vote_count}
+                                onAdd={onAdd}
+                                onDelete={onDelete}
 
                             />
                         </div>
-                        {pageState.details.overview.length > 0 && <Overview overview={pageState.details.overview}/>}
-                        {pageState.seasons && (<Seasons seasons={pageState.seasons}/>)}
-                        {pageState.images && pageState.images.length>0 && (<Pictures name={pageState.details.name} paths={pageState.images}/>)}
-                        {pageState.reviews && pageState.reviews.results.length > 0 && (<Reviews reviews={pageState.reviews.results}/>)}
-                        {pageState.recommended && pageState.recommended.results.length > 0 && <RecommendedTVs series={pageState.recommended.results}/>}
+                        {state.details.overview.length > 0 && <Overview overview={state.details.overview}/>}
+                        {state.seasons && (<Seasons seasons={state.seasons}/>)}
+                        {state.images && state.images.length>0 && (<Pictures name={state.details.name} paths={state.images}/>)}
+                        {state.reviews && state.reviews.results.length > 0 && (<Reviews reviews={state.reviews.results}/>)}
+                        {state.recommended && state.recommended.results.length > 0 && <RecommendedTVs series={state.recommended.results}/>}
                     </>
                 )
             }
