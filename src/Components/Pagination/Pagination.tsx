@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './style.css';
-import {PageParentComponent} from '../PageNavigator/PageNavigator';
+import {PageNavigator} from '../PageNavigator/PageNavigator';
 import {Button} from '../Button/Button';
 
 type PaginationProps = {
@@ -12,7 +12,7 @@ type PaginationProps = {
 }
 export const Pagination: React.FC<PaginationProps> = ({pageCount, onPageSelect, onClick, page, disabledShowMoreButton})=>{
     return <div className={styles.pagination}>
-        <PageParentComponent page={page} pageCount={pageCount} onPageSelect={onPageSelect}/>
+        <PageNavigator page={page} pageCount={pageCount} onPageSelect={onPageSelect}/>
         <Button purpose='Show more' onClick={onClick} disabled={disabledShowMoreButton}/>
     </div>;
 };

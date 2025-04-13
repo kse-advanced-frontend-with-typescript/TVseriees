@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {SeriesCard} from '../../Components/SeriesCard/SeriesCard';
 import {SearchField} from '../../Components/SearchField/SearchField';
-import {SortOptions} from '../../BusinessData';
+import {sortOptions} from '../../BusinessData';
 import {Pagination} from '../../Components/Pagination/Pagination';
 import styles from './style.css';
 import {SerieGetRequestType} from '../../modules/clients/series';
@@ -80,7 +80,7 @@ export const Main: React.FC = () => {
                     genres={Array.from(context.configuration.genres.keys())}
                     languages={Array.from(context.configuration.languages.keys())}
                     countries={Array.from(context.configuration.countries.keys())}
-                    sortOptions={Array.from(SortOptions.keys())}
+                    sortOptions={Array.from(sortOptions.keys())}
                     filter={getFilterState(searchParams)}
                     onFilterChange={(key, value) => setSearchParams(setNewQueryParams(key, value, searchParams))}
                 />

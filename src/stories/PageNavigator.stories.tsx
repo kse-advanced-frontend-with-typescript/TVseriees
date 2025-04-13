@@ -1,8 +1,9 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {PageParentComponent} from '../Components/PageNavigator/PageNavigator';
+import {PageNavigator} from '../Components/PageNavigator/PageNavigator';
+import {fn} from '@storybook/test';
 
-const meta : Meta<typeof  PageParentComponent>={
-    component: PageParentComponent,
+const meta : Meta<typeof  PageNavigator>={
+    component: PageNavigator,
     title: 'PageNavigator',
     tags: ['autodocs']
 
@@ -13,6 +14,7 @@ type Story = StoryObj<typeof meta>
 export const Primary: Story = {
     args: {
         page: 1,
-        pageCount: 10
+        pageCount: 10,
+        onPageSelect: fn()
     }
 };

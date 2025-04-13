@@ -1,8 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import styles from '../UserButtons/style.css';
 import {MiniButton} from '../MiniButton/MiniButton';
-import {Collection, userMap} from '../../types';
+import {Collection} from '../../types';
 import {AppContext} from '../../context';
+import {userMap} from '../../BusinessData';
 
 type ButtonStates = {
     star: boolean;
@@ -35,7 +36,6 @@ export const UserButtons: React.FC<UserButtonsProps> = ({onDelete, onAdd, bigger
         const currentState = buttonStates[type];
         if(currentState) onDelete(id, userMap.get(String(type)) as Collection);
         else onAdd(id, userMap.get(String(type)) as Collection);
-
         setButtonStates({...buttonStates, [type]: !currentState}) ;
     };
 

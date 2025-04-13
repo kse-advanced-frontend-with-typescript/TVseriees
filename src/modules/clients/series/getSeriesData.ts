@@ -1,6 +1,6 @@
 import {ConfigurationData, FilterState} from '../../../types';
 import {initSeriesAPI, SerieGetRequestType} from './index';
-import {SortOptions} from '../../../BusinessData';
+import {sortOptions} from '../../../BusinessData';
 
 export const getSeriesData = async (
     pageToFetch: number,
@@ -17,7 +17,7 @@ export const getSeriesData = async (
             genre: configuration.genres.get(filters.genre) ?? '',
             year: filters.year,
             name: filters.name,
-            sortOption: SortOptions.get(filters.sortOption) ?? ''
+            sortOption: sortOptions.get(filters.sortOption) ?? ''
         };
         return await seriesAPI.getDynamic(pageToFetch, dataToPass);
     } else return await seriesAPI.get(pageToFetch, currentRequestType);

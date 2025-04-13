@@ -18,10 +18,15 @@ export const myContacts: ContactProp[] = [
     { typeOfContact: 'email', contact: 'margarit.fil@gmail.com' },
     { typeOfContact: 'email', contact: 'mfilipovych@kse.org.ua' },
     { typeOfContact: 'call', contact: '+38 097 151 9327' },
-
 ];
 
-export const SortOptions: Map<string, string> = new Map([
+export const userMap: Map<string, Collection> = new Map ([
+    ['star', 'future'],
+    ['heart', 'favorites'],
+    ['circle', 'watched']
+]);
+
+export const sortOptions: Map<string, string> = new Map([
     ['first air date (from oldest)', 'first_air_date.asc'],
     ['first air date (from newest)', 'first_air_date.desc'],
     ['name (A-Z)', 'name.asc'],
@@ -34,13 +39,13 @@ export const SortOptions: Map<string, string> = new Map([
     ['vote count (high to low)', 'vote_count.desc']
 ]);
 
-export const UserPageTitles: Map<Collection, string> = new Map([
+export const userPageTitles: Map<Collection, string> = new Map([
     ['watched', 'You\'ve already seen these:'],
     ['favorites', 'These are your favourite:'],
     ['future', 'You should definitely consider watching these:'],
 ]);
 
-export const EmptyTitles: Map<Collection, string> = new Map([
+export const emptyTitles: Map<Collection, string> = new Map([
     ['watched', 'You haven\'t seen anything yet:(('],
     ['favorites', 'It seems like you don\'t consider any TV serie as your favourite:('],
     ['future', 'You haven\'t chosen anything to watch tonight:('],

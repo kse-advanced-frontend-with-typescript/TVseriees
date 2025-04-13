@@ -11,7 +11,7 @@ import { Warning } from '../../Components/Warning/Warning';
 import styles from './style.css';
 import {getCardData} from '../../modules/getCardData';
 import {setNewPageInQueryParams} from '../../modules/NewQueryParams';
-import {EmptyTitles, UserPageTitles} from '../../BusinessData';
+import {emptyTitles, userPageTitles} from '../../BusinessData';
 import defaultImage from '../../Images/DefaultSerie.png';
 import {createSeriesOperations} from '../../modules/createSeriesOperations';
 
@@ -97,12 +97,12 @@ export const UserSpecificPage: React.FC = () => {
             {!state.error && (
                 <>
                     {series.length === 0 && sizeOfMap === 0 && !state.loading && (
-                        <h2 className={styles.empty}>{EmptyTitles.get(collection)}</h2>
+                        <h2 className={styles.empty}>{emptyTitles.get(collection)}</h2>
                     )}
                     {(series.length > 0 || (sizeOfMap > 0 && !state.loading)) && (
                         <div className={styles.userPage}>
                             <div className={styles.userHeader}>
-                                <h2>{UserPageTitles.get(collection)}</h2>
+                                <h2>{userPageTitles.get(collection)}</h2>
                                 <Button purpose='delete all' onClick={() => setWarning(true)} disabled={context.userCollections[collection].size == 0}/>
                             </div>
                             {warning && (

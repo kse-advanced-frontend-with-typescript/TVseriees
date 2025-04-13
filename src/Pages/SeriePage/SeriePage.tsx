@@ -14,6 +14,7 @@ import {Recommended, Review} from '../../modules/clients/series';
 import {Collection, State} from '../../types';
 import {RecommendedTVs} from '../../Components/Box/Recommended';
 import {createSeriesOperations} from '../../modules/createSeriesOperations';
+
 type PageState = State &{
     details?: SerieDetails,
     reviews?: Review,
@@ -28,11 +29,14 @@ export const SeriePage: React.FC = () => {
         loading: true,
         error: false
     });
+
     const { deleteSerie, addSerie } = useMemo(
         () => createSeriesOperations(setState, context),
         [setState, context]
     );
+
     const {id} = useParams<string>();
+
     useEffect(() => {
         if(!id)return ;
         const seriesId = parseInt(id);
@@ -60,26 +64,17 @@ export const SeriePage: React.FC = () => {
 
                 Promise.all(seasonPromises)
                     .then(allSeasonsData => {
-                        setState(prev => ({
-                            ...prev,
-                            seasons: allSeasonsData,
-                        }));
+                        setState(prev => ({...prev, seasons: allSeasonsData,}));
                     })
                     .catch(err => {
                         console.log(err);
-                        setState(prev => ({
-                            ...prev,
-                            error: true
-                        }));
+                        setState(prev => ({...prev, error: true}));
                     });
             }
         })
             .catch(err => {
                 console.log(err);
-                setState(prev => ({
-                    ...prev,
-                    error:true
-                }));
+                setState(prev => ({...prev, error:true}));
             })
             .finally(() => {
                 setState(prev => ({...prev, loading: false}));

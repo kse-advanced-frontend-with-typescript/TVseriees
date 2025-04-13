@@ -1,7 +1,10 @@
 import {SerieGetRequestType} from './modules/clients/series';
 
-export type IconTopic =  'search' | 'tick' | 'star' | 'vote' | 'cross' | 'envelope' | 'call' | 'empty-star' | 'black-cross' | 'caret'
-| 'heart' | 'empty-heart' | 'empty-circle' | 'circle' | 'loading' | 'error' | 'direction' | 'hidden' | 'plus';
+export type IconTopic =  'search' | 'tick' | 'star' | 'vote'
+    | 'cross' | 'envelope' | 'call' | 'empty-star'
+    | 'black-cross' | 'caret' | 'heart' | 'empty-heart'
+    | 'empty-circle' | 'circle' | 'loading' | 'error'
+    | 'direction' | 'hidden' | 'plus';
 
 export type ContactProp = {
     typeOfContact: 'email' | 'call',
@@ -17,6 +20,7 @@ export type Links = {
     links: LinkItem[],
     userLinks: LinkItem[]
 }
+
 export type PicturesProps = {
     name: string,
     paths: string[]
@@ -37,14 +41,10 @@ export type ConfigurationData = {
     genres: Map<string, string>,
     code_languages: Map<string, string>
 }
+
 export type Collection = 'favorites' | 'future' | 'watched';
 
 
-export const userMap: Map<string, Collection> = new Map ([
-    ['star', 'future'],
-    ['heart', 'favorites'],
-    ['circle', 'watched']
-]);
 export type Serie = {
     id: number,
     name: string,
@@ -72,3 +72,20 @@ export type ActorResponse = {
     image: string;
     series: Array<{ id: number; name: string }>;
 };
+type SeriesCardBaseProps = {
+    imagePath: string;
+    name: string,
+    id: number
+    onDelete: (serie_id: number, collection: Collection) => void;
+};
+
+export type SeriesCardProps =
+    (SeriesCardBaseProps & {
+        topicOfCard: 'usual'
+        onAdd: (serie_id: number, collection: Collection) => void;
+    }) |
+    (SeriesCardBaseProps & {
+        topicOfCard: Collection
+        voteCount: number
+        averageVote: number
+    });

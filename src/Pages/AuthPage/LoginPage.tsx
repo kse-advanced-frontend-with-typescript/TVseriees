@@ -8,6 +8,7 @@ export const LoginPage: React.FC = () => {
     const context = useContext(AppContext);
     const [loginError, setLoginError] = useState<string>('');
     const [processing, setProcessing] = useState<boolean>(false);
+
     useEffect(() => {
         if (context.user?._id)navigate('/');
     }, [context.user, navigate]);

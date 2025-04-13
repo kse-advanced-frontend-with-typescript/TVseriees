@@ -5,26 +5,10 @@ import { Rating } from '../Rating/Rating';
 import { Link } from 'react-router';
 import classNames from 'classnames';
 import defaultImage from '../../Images/DefaultSerie.png';
-import {Collection, userMap} from '../../types';
+import {Collection, SeriesCardProps} from '../../types';
 import { UserButtons } from '../UserButtons/UserButtons';
+import {userMap} from '../../BusinessData';
 
-type SeriesCardBaseProps = {
-    imagePath: string;
-    name: string,
-    id: number
-    onDelete: (serie_id: number, collection: Collection) => void;
-};
-
-export type SeriesCardProps =
-    (SeriesCardBaseProps & {
-        topicOfCard: 'usual'
-        onAdd: (serie_id: number, collection: Collection) => void;
-    }) |
-    (SeriesCardBaseProps & {
-        topicOfCard: Collection
-        voteCount: number
-        averageVote: number
-    });
 
 export const SeriesCard: React.FC<SeriesCardProps & {authorized: boolean}> = (props) => {
     const { imagePath, name, topicOfCard } = props;
