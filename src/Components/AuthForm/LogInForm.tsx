@@ -4,7 +4,7 @@ import {AuthorizationButton} from '../AuthorizationButton/AuthorizationButton';
 
 export const LogInForm: React.FC<{
     onSubmit: (email: string, password: string) => void,
-    passError: string,
+    passError: boolean,
     processing: boolean
 }> = ({onSubmit, passError, processing}) => {
     const formRef = useRef<HTMLFormElement>(null);
@@ -20,11 +20,7 @@ export const LogInForm: React.FC<{
 
     return (
         <form className={styles.form} onSubmit={submit} ref={formRef}>
-            {passError && (
-                <p className={styles.errorMessage}>
-                    {passError}
-                </p>
-            )}
+            {passError && (<p className={styles.errorMessage}>Login or password is incorrect!</p>)}
             <input
                 name='email'
                 type='email'
@@ -38,7 +34,7 @@ export const LogInForm: React.FC<{
                 type='password'
                 id='password'
                 placeholder='password...'
-                minLength={8}
+                minLength={5}
                 required
                 aria-label='Password'
             />

@@ -1,4 +1,4 @@
-import {Link, Route, Routes} from 'react-router';
+import {Link, Route, Routes, useNavigate} from 'react-router';
 import React, {useEffect, useState} from 'react';
 import {Footer} from './Components/Footer/Footer';
 import {Main} from './Pages/MainPage/Main';
@@ -29,6 +29,7 @@ export const App: React.FC = ()=>{
             error: false
     });
     const [warning, setWarning] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const userAPI = initUserAPI(process.env.REST_API_KEY!, fetch);
     const seriesAPI = initSeriesAPI(process.env.API_KEY!, fetch);
@@ -90,6 +91,8 @@ export const App: React.FC = ()=>{
     }, []);
 
 
+
+
     useEffect(() => {
         const api = initSearchAPI(process.env.API_KEY ?? '', fetch);
         Promise.all([
@@ -121,6 +124,7 @@ export const App: React.FC = ()=>{
                 onClick={()=>{
                         setWarning(false);
                         cleanUser();
+                        navigate('/');
                 }}
                 onCancel={()=>setWarning(false)}
                 purpose='log-out'

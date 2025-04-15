@@ -52,8 +52,6 @@ export const initUserAPI = (api_key: string, fetchAPI: typeof fetch) => {
         const url = `${base_url}/my-site-users?${params.toString()}`;
         const data = await getData(fetchAPI, url, getHeaders(api_key, 'restdbio'));
         const user = convertToType(data, UserSchema);
-        console.log('register request sent');
-
         return user;
     };
 

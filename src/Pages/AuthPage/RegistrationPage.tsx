@@ -17,7 +17,6 @@ export const RegistrationPage: React.FC = ()=>{
             alert('Registration was successful!!!');
             navigate('/login');
         }catch(e){
-            console.log(e);
             setRegisterError(e instanceof Error ? e.message : String(e));
         }finally {
             setProcessing(false);

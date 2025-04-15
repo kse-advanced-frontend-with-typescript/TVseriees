@@ -4,7 +4,7 @@ import {getData} from '../../getData';
 import {Season} from '../../../Components/Seasons/Seasons';
 import {getImagePath} from '../../getImagePath';
 import {SerieDetails} from '../../../Components/SeriesDetails/SeriesDetails';
-import {FilterState} from '../../../types';
+import {FilterState, SerieGetRequestType} from '../../../types';
 import {getHeaders} from '../../getHeaders';
 const getUrl = (urlPart: string)=>`https://api.themoviedb.org/3/tv/${urlPart}`;
 
@@ -87,7 +87,6 @@ const CastSchema = Type.Object({
 );
 
 export type SeriesResult = Static<typeof SerieCardItemResultSchema>
-export type SerieGetRequestType = 'airing_today' | 'trending' | 'on_the_air' | 'popular' | 'top_rated';
 export type Review = Static<typeof ReviewSchema>;
 export type Cast = Static<typeof CastSchema>;
 export type SeasonFromShema = Static<typeof SeasonSchema>;

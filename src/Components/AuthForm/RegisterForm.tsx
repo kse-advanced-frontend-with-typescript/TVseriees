@@ -1,4 +1,4 @@
-import React, {FormEvent, useRef, useState} from 'react';
+import React, {FormEvent, useEffect, useRef, useState} from 'react';
 import styles from './style.css';
 import { AuthorizationButton } from '../AuthorizationButton/AuthorizationButton';
 
@@ -25,11 +25,14 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({onSubmit, processing,
             setPasswordError('Passwords do not match!');
             return;
         }
-
         setPasswordError('');
-        console.log('Form data collected', { username, email, password });
         onSubmit(username, email, password);
     };
+    useEffect(() => {
+        if (error) {
+            setPasswordError(error);
+        }
+    }, [error]);
 
     return (
         <form className={styles.form} onSubmit={submit} ref={formRef}>
@@ -53,7 +56,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({onSubmit, processing,
                 id='password'
                 name='password'
                 placeholder='password...'
-                minLength={8}
+                minLength={5}
                 required
             />
             <input
@@ -61,7 +64,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({onSubmit, processing,
                 id='confirmPassword'
                 name='confirmPassword'
                 placeholder='confirm password...'
-                minLength={8}
+                minLength={5}
                 required
             />
             <AuthorizationButton

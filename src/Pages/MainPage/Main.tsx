@@ -4,10 +4,9 @@ import {SearchField} from '../../Components/SearchField/SearchField';
 import {sortOptions} from '../../BusinessData';
 import {Pagination} from '../../Components/Pagination/Pagination';
 import styles from './style.css';
-import {SerieGetRequestType} from '../../modules/clients/series';
 import {useLocation, useParams, useSearchParams} from 'react-router';
 import {Icon} from '../../Components/Icon/Icon';
-import {Collection, Serie, StateWithPagination} from '../../types';
+import {Collection, Serie, SerieGetRequestType, StateWithPagination} from '../../types';
 import {AppContext} from '../../context';
 import {SerieCards} from '../../Components/SerieCards/SerieCards';
 import {setNewPageInQueryParams, setNewQueryParams} from '../../modules/NewQueryParams';
@@ -57,7 +56,6 @@ export const Main: React.FC = () => {
                 series: pageToFetch === 1 ? response.results : [...prev.series, ...response.results]
             }));
         } catch (err) {
-            console.error(err);
             setState(prev => ({...prev, error: true, loading: false}));
         }
     };
@@ -84,6 +82,7 @@ export const Main: React.FC = () => {
                     filter={getFilterState(searchParams)}
                     onFilterChange={(key, value) => setSearchParams(setNewQueryParams(key, value, searchParams))}
                 />
+                {state.series.length == 0 && <h2 className={styles.message}>No results:(((</h2>}
                 {state.series.length > 0 && (
                     <SerieCards>
                         {state.series.map((serie, index) =>

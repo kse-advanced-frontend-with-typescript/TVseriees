@@ -25,7 +25,6 @@ export const ActorPage: React.FC = ()=> {
             setPageState(prev => ({...prev, error: false, loading: false}));
             setActor(res);
         }).catch(err => {
-            console.log(err);
             setPageState(prev => ({...prev, error: true, loading: false}));
         });
     }, [id]);

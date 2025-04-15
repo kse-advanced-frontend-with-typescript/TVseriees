@@ -1,4 +1,3 @@
-import {SerieGetRequestType} from './modules/clients/series';
 
 export type IconTopic =  'search' | 'tick' | 'star' | 'vote'
     | 'cross' | 'envelope' | 'call' | 'empty-star'
@@ -10,6 +9,7 @@ export type ContactProp = {
     typeOfContact: 'email' | 'call',
     contact: string
 }
+export type SerieGetRequestType = 'airing_today' | 'trending' | 'on_the_air' | 'popular' | 'top_rated';
 
 export type LinkItem = {
     name: string,

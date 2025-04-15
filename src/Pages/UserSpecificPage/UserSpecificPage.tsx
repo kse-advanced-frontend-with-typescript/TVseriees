@@ -64,7 +64,6 @@ export const UserSpecificPage: React.FC = () => {
             }));
             setSeries(prev => pageToFetch === 1 ? result : [...prev, ...result]);
         } catch (err) {
-            console.error('Error fetching cards:', err);
             setState(prev => ({...prev, error: true, loading: false}));
         }
     };

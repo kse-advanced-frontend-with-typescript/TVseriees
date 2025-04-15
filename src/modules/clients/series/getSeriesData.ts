@@ -1,5 +1,5 @@
-import {ConfigurationData, FilterState} from '../../../types';
-import {initSeriesAPI, SerieGetRequestType} from './index';
+import {ConfigurationData, FilterState, SerieGetRequestType} from '../../../types';
+import {initSeriesAPI} from './index';
 import {sortOptions} from '../../../BusinessData';
 
 export const getSeriesData = async (

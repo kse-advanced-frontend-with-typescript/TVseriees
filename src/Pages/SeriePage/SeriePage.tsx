@@ -67,7 +67,6 @@ export const SeriePage: React.FC = () => {
                         setState(prev => ({...prev, seasons: allSeasonsData,}));
                     })
                     .catch(err => {
-                        console.log(err);
                         setState(prev => ({...prev, error: true}));
                     });
             }

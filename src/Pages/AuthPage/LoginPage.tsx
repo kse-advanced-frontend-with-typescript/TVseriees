@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router';
 export const LoginPage: React.FC = () => {
     const navigate = useNavigate();
     const context = useContext(AppContext);
-    const [loginError, setLoginError] = useState<string>('');
+    const [loginError, setLoginError] = useState<boolean>(false);
     const [processing, setProcessing] = useState<boolean>(false);
 
     useEffect(() => {
@@ -14,14 +14,13 @@ export const LoginPage: React.FC = () => {
     }, [context.user, navigate]);
 
     const login = async (email: string, password: string) => {
-        setLoginError('');
+        setLoginError(false);
         setProcessing(true);
         try {
             const user = await context.userAPI.loginUser(email, password);
             context.setUser(user);
         } catch (e) {
-            console.error(e);
-            setLoginError(e instanceof Error ? e.message : String(e));
+            setLoginError(true);
         } finally {
             setProcessing(false);
         }
