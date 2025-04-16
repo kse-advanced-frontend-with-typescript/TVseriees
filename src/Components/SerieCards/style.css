@@ -1,0 +1,24 @@
+.series-container{
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin: 0 auto;
+    justify-items: center;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .series-container{
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .series-container{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}

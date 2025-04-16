@@ -1,0 +1,42 @@
+.pictures-container{
+    width: 85%;
+    background-color: #011a21;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+    gap: 1.4rem;
+    padding: 2rem 1rem;
+
+}
+.pictures{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-evenly;
+
+
+}
+.pictures-container h2{
+    margin-top: 0.3rem;
+    color: #163b5d;
+    font-size: 1.8rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .pictures-container h2{
+        margin-bottom: 0.3rem;
+        font-size: 1.5rem;
+        margin-top: 0;
+
+    }
+    .pictures-container{
+
+        gap: 1.4rem;
+        padding: 1.5rem 1rem;
+
+    }
+}

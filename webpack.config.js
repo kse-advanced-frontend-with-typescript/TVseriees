@@ -1,10 +1,16 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+
 module.exports = {
     entry: './src/index.tsx',
+    devServer: {
+        historyApiFallback: true
+    },
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/'
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js']
@@ -38,12 +44,21 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                    },
+                ],
             }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './public/index.html'
-        })
+        }),
+        new Dotenv()
     ]
 };
