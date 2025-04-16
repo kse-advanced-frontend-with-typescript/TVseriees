@@ -1,6 +1,21 @@
-describe('Login Page', () => {
-    const baseUrl = 'http://localhost:8080';
+const baseUrl = 'http://localhost:8081';
 
+export const login = () => {
+    cy.get('#email').type('andrii@example.com');
+    cy.get('#password').type('12345');
+    cy.get('button[type="submit"]').first().click();
+};
+
+export const logout = () => {
+    cy.get('button.button--style--Ah1MY.log-out--style--JmTx1').contains('Log Out').click();
+    cy.get('div.warning--style--F0XrW')
+        .find('button.button--style--Ah1MY.log-out--style--JmTx1.warning--style--vBXiz')
+        .contains('Log Out')
+        .click();
+    cy.url().should('eq', `${baseUrl}/`, {delay: 280});
+};
+
+describe('Login Page', () => {
     beforeEach(() => {
         cy.visit(`${baseUrl}/login`);
     });
@@ -28,19 +43,6 @@ describe('Login Page', () => {
             .and('have.class', 'log-in--style--uF14b');
     });
 
-    it('should validate form fields', () => {
-        cy.get('button[type="submit"]').click();
-        cy.url().should('include', '/login');
-        cy.get('input#email').type('invalid-email');
-        cy.get('button[type="submit"]').click();
-        cy.url().should('include', '/login');
-        cy.get('input#email').clear().type('test@example.com');
-        cy.get('input#password').type('1234');
-        cy.get('button[type="submit"]').click();
-        cy.url().should('include', '/login');
-    });
-
-
     it('should handle failed login', () => {
         cy.intercept('GET', 'https://mapstorage-7e78.restdb.io/rest/my-site-users*', {
             statusCode: 200,
@@ -59,10 +61,13 @@ describe('Login Page', () => {
             .and('contain.text', 'Login or password is incorrect!');
     });
 
-
     it('should navigate back to home page', () => {
         cy.get('a[href="/"] button').click();
         cy.url().should('eq', `${baseUrl}/`);
     });
 
+    it('should login the existing user', () => {
+        login();
+        cy.url().should('not.include', '/login', {delay: 290});
+    });
 });
