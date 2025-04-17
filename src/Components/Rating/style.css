@@ -1,0 +1,40 @@
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-family: "Joti One", serif;
+    color: #020f1b;
+}
+
+.group {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.text {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    line-height: 1;
+}
+
+.small {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: "Joti One", serif;
+    color: #020f1b;
+}
+
+.small .group {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 1rem;
+    text-align: justify;
+}
+
+.small .text {
+    font-size: 1rem;
+}

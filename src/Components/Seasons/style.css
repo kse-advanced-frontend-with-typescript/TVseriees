@@ -1,0 +1,159 @@
+.seasons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.season {
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(156, 234, 255, 0.82);
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    height: 3rem;
+    width: 85%;
+}
+
+.season h2 {
+    font-size: 1.5rem;
+}
+
+.episodes {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2.5rem;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.episode {
+    width: 100%;
+    padding: 2rem;
+    color: white;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    background-color: #29393D;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    grid-template-columns: 1fr 2fr;
+    gap: 1rem;
+
+}
+.episode-number{
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.episode-overview{
+    grid-row: span 2;
+    grid-column: 2;
+}
+
+.episode-number h3{
+    margin-top: 0;
+    font-size: 1.7rem;
+}
+.episode-info {
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.4rem;
+}
+
+.episode-overview {
+    position: relative;
+    box-sizing: border-box;
+    padding: 1rem 2rem;
+    width: 100%;
+    height: 20rem;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    background-color: #244650;
+}
+
+.episode-overview > :last-child {
+    position: absolute;
+    bottom: 1rem;
+    left: 2rem;
+}
+
+.episode-overview h2 {
+    text-align: center;
+    color: #020f1b;
+}
+
+.episode-overview article {
+    font-family: "Indie Flower", cursive;
+    font-weight: bold;
+    text-align: justify;
+}
+
+@media only screen and (max-width: 768px) {
+    .seasons {
+        margin: 3rem 0;
+        gap: 1rem;
+    }
+
+    .season {
+        padding: 0 1rem;
+        margin: 0 auto;
+        height: 2.5rem;
+        width: 90%;
+        max-width: 20rem;
+    }
+
+    .season h2 {
+        font-size: 1.2rem;
+    }
+
+    .episodes {
+        gap: 1.5rem;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .episode {
+        width: 100%;
+        padding: 1rem;
+        margin: 0 auto;
+    }
+
+    .episode-number {
+        margin-top: 0;
+        font-size: 1.2rem;
+    }
+
+    .episode-info {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .episode-overview {
+        position: relative;
+        padding: 0.8rem 1.2rem;
+        width: 100%;
+        height: auto;
+        min-height: 30rem;
+        margin-top: 1rem;
+    }
+
+    .episode-overview > :last-child {
+        position: absolute;
+        bottom: 1rem;
+        left: 1.2rem;
+    }
+
+    .episode-overview h2 {
+        font-size: 1.4rem;
+        margin-top: 0.5rem;
+    }
+
+    .episode-overview article {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin-bottom: 3rem;
+    }
+}
