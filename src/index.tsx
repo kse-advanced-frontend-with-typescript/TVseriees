@@ -8,4 +8,4 @@ const root = ReactDOM.createRoot(
     document.getElementById('root') as Container
 );
 
-root.render(<BrowserRouter><App /></BrowserRouter>);
+root.render(<BrowserRouter basename={process.env.BASE_URL ? process.env.BASE_URL : '/'}><App /></BrowserRouter>);
