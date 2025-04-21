@@ -1,8 +1,9 @@
 .menu {
     background-color: #0B3B4A;
-    width: 30%;
+    width: max-content;
+    max-width: 24rem;
     height: max-content;
-    box-shadow: 2px 2px 2px 2px rgba(39, 169, 169, 0.96);
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
     position: fixed;
     top: 0;
     left: 0;
@@ -16,8 +17,7 @@
     align-items: center;
     justify-content: space-between;
     color: white;
-    padding:1rem 1.5rem;
-    font-size: 1.5rem;
+    padding: 0.5rem 1.5rem;
 }
 
 .menu-top h3 {
@@ -25,15 +25,49 @@
     font-family: 'Joti One', serif;
 }
 
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-items li {
+    position: relative;
+    padding: 0.5rem 1rem 0.5rem 2rem;
+}
+
+.menu-items li::before {
+    content: '•';
+    color: white;
+    position: absolute;
+    left: 0.7rem;
+    top: 0.5rem;
+}
 
 
+
+.menu-items li:nth-child(even) {
+    background-color: #072933;
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    width: 100%;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
 
 .auth{
+
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0.5rem;
-    gap: 1.2rem;
+    gap: 0.8rem;
 }
 
 .pers{
@@ -42,10 +76,7 @@
 @media only screen and (max-width: 768px) {
     .menu {
        width: 100%;
-    }
-    .menu-top {
-        padding:0.7rem 1.5rem;
-        font-size: 1.3rem;
+
     }
 
 }
