@@ -8,25 +8,9 @@
     font-size: 4rem;
 
 }
-
-.message{
-    margin: auto;
-    font-size: 2rem;
-    align-items: center;
-    text-align: center;
-    color: #94bae3;
-}
-
-
-
 @media only screen and (max-width: 768px) {
     .main-page{
         gap: 2rem;
     }
-    .message{
-        font-size: 1.4rem;
-        white-space: normal;
-        word-wrap: break-word;
-        hyphens: auto;
-    }
+
 }

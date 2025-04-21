@@ -26,12 +26,12 @@ export const StrangerThings: Story = {
         vote_average: 8.7,
         vote_count: 15234,
         cast: [
-            { id: 1, actor: 'Millie Bobby Brown' },
-            { id: 2, actor: 'Finn Wolfhard' },
-            { id: 3, actor: 'Winona Ryder' },
-            { id: 4, actor: 'David Harbour' },
-            { id: 5, actor: 'Gaten Matarazzo' },
-            { id: 6, actor: 'Caleb McLaughlin' }
+            { id: 1, name: 'Millie Bobby Brown' },
+            { id: 2, name: 'Finn Wolfhard' },
+            { id: 3, name: 'Winona Ryder' },
+            { id: 4, name: 'David Harbour' },
+            { id: 5, name: 'Gaten Matarazzo' },
+            { id: 6, name: 'Caleb McLaughlin' }
         ]
     }
 };
