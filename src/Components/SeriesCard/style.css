@@ -3,13 +3,21 @@
     flex-direction: column;
     align-items: center;
     background-color: #022731;
-    width: 20%;
-    height: auto;
+    width: 100%;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
-    color: #338AA4;
     cursor: pointer;
+    position: relative;
+    z-index: 0;
 }
+.defaultImage{
+    padding-bottom: 8.3rem;
 
+}
+.card-buttons{
+    width: 100%;
+    margin-top: auto;
+    padding-bottom: 0.5rem;
+}
 .series-card .image {
     object-fit: contain;
     margin: 0.1rem 0 0 0;
@@ -27,6 +35,9 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    font-size: 1.5rem;
+    color: #338AA4;
+    text-align: center;
 
 }
 
@@ -64,14 +75,7 @@
     transform: scale(1.1);
 }
 
-.buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-}
+
 .buttons-rating{
     display: flex;
     justify-content: center;

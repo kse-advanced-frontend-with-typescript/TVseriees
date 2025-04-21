@@ -7,11 +7,15 @@
 
 }
 .actor h2{
-    margin: 0;
+    font-size: 2rem;
     padding-bottom: 0.4rem;
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
-
+    margin-bottom: 0.6rem;
 }
+.actor article h3{
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+ }
 
 .actor article p{
     font-family: "Indie Flower", cursive;
@@ -27,16 +31,28 @@
 .actor p{
     padding-top: 0.4rem;
 }
-a{
+.actor .link{
     color:  #3c888a;
     text-decoration: none;
 
 }
-a:hover{
+.actor .link:hover{
     text-decoration: underline;
 }
 .actor h2, .actor h3{
     color: #020f1b;
 
+}
+
+@media only screen and (max-width: 768px) {
+    .actor{
+        max-width: 100%;
+    }
+    .actor h2{
+        font-size: 1.6rem;
+        padding-bottom: 0.4rem;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+        margin-bottom: 0.6rem;
+    }
 }
 

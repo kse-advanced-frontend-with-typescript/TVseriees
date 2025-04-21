@@ -1,6 +1,5 @@
 .pictures-container{
     width: 85%;
-    padding: 1rem;
     background-color: #011a21;
     text-align: center;
     display: flex;
@@ -8,6 +7,8 @@
     align-items: center;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
     margin: 0 auto;
+    gap: 1.4rem;
+    padding: 2rem 1rem;
 
 }
 .pictures{
@@ -22,12 +23,20 @@
 .pictures-container h2{
     margin-top: 0.3rem;
     color: #163b5d;
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 @media only screen and (max-width: 768px) {
     .pictures-container h2{
-        margin-bottom: 0.5rem;
-        font-size: 1.8rem;
+        margin-bottom: 0.3rem;
+        font-size: 1.5rem;
+        margin-top: 0;
+
+    }
+    .pictures-container{
+
+        gap: 1.4rem;
+        padding: 1.5rem 1rem;
+
     }
 }

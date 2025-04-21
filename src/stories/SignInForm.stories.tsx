@@ -1,9 +1,9 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {SignUpForm} from '../Components/AuthForm/SignUpForm';
+import {RegisterForm} from '../Components/AuthForm/RegisterForm';
 import {fn} from '@storybook/test';
 
-const meta : Meta<typeof  SignUpForm>={
-    component: SignUpForm,
+const meta : Meta<typeof  RegisterForm>={
+    component: RegisterForm,
     title: 'SignUpForm',
 
 };

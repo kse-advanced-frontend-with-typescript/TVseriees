@@ -1,12 +1,19 @@
-.reviews{
+.reviews-container{
     background-color: #0B3B4A;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
     padding: 1.5rem 1.7rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
+    width: 87%;
+    box-sizing: border-box;
+}
+.reviews{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 0.5rem;
-
 }
 p{
     margin: 0;

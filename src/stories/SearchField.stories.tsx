@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
-
 import {SearchField} from '../Components/SearchField/SearchField';
+import {fn} from '@storybook/test';
 
 const meta : Meta<typeof  SearchField>={
     component: SearchField,
@@ -15,7 +15,17 @@ export const Primary: Story ={
         genres: ['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Romance', 'Thriller', 'Animation'],
         languages: ['English', 'Spanish', 'French', 'Japanese', 'Korean', 'German', 'Italian', 'Russian'],
         countries: ['USA', 'UK', 'France', 'Japan', 'South Korea', 'Germany', 'Canada', 'Australia'],
-        sortOptions: ['Most Popular', 'Newest First', 'Oldest First', 'Highest Rated', 'Alphabetical A-Z', 'Alphabetical Z-A']
+        sortOptions: ['Most Popular', 'Newest First', 'Oldest First', 'Highest Rated', 'Alphabetical A-Z', 'Alphabetical Z-A'],
+        filter: {
+            genre: '',
+            language: '',
+            country: '',
+            sortOption: '',
+            year: '',
+            name: ''
+        },
+        onFilterChange: fn(),
 
     }
 };
+

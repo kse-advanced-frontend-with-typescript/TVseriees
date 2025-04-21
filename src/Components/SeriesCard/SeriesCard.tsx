@@ -2,116 +2,100 @@ import React from 'react';
 import styles from './style.css';
 import { MiniButton } from '../MiniButton/MiniButton';
 import { Rating } from '../Rating/Rating';
+import { Link } from 'react-router';
+import classNames from 'classnames';
+import defaultImage from '../../Images/DefaultSerie.png';
+import {Collection, SeriesCardProps} from '../../types';
+import { UserButtons } from '../UserButtons/UserButtons';
+import {userMap} from '../../BusinessData';
 
-type ButtonStates = {
-    star: boolean;
-    heart: boolean;
-    circle: boolean;
-};
 
-type SeriesCardBaseProps = {
-    imagePath: string;
-    name: string;
-};
+export const SeriesCard: React.FC<SeriesCardProps & {authorized: boolean}> = (props) => {
+    const { imagePath, name, topicOfCard } = props;
 
-type UsualCardProps = {
-    onStarClick: ()=>void
-    onHeartClick: ()=>void
-    onCircleClick: ()=>void
-};
-
-type SeriesCardProps =
-    (SeriesCardBaseProps & UsualCardProps &{
-        topicOfCard: 'usual'
-    }) |
-    (SeriesCardBaseProps & {
-        topicOfCard: 'favourites' | 'to-watch' | 'watched'
-        voteCount: number
-        averageVote: number
-        onIconClick: () => void;
-    });
-
-export const SeriesCard: React.FC<SeriesCardProps> = (props) => {
-    const { imagePath, name, topicOfCard} = props;
+    const renderButtons = () => {
+        switch (topicOfCard) {
+            case 'usual':
+                return (
+                    <UserButtons
+                        id={props.id}
+                        onDelete={props.onDelete}
+                        onAdd={props.onAdd}
+                    />
+                );
+            case 'favorites':
+                return (
+                    <OtherButtons
+                        id={props.id}
+                        displayType="heart"
+                        voteCount={props.voteCount}
+                        averageVote={props.averageVote}
+                        onDelete={props.onDelete}
+                    />
+                );
+            case 'future':
+                return (
+                    <OtherButtons
+                        id={props.id}
+                        displayType="star"
+                        voteCount={props.voteCount}
+                        averageVote={props.averageVote}
+                        onDelete={props.onDelete}
+                    />
+                );
+            case 'watched':
+                return (
+                    <OtherButtons
+                        id={props.id}
+                        displayType="circle"
+                        voteCount={props.voteCount}
+                        averageVote={props.averageVote}
+                        onDelete={props.onDelete}
+                    />
+                );
+        }
+    };
 
     return (
         <div className={styles.seriesCard}>
-            <img className={styles.image} src={imagePath} alt={`${name} image`}/>
-            <div className={styles.h3}><h3>{name}</h3></div>
-            {topicOfCard === 'usual' && (<UsualButtons onCircleClick={props.onCircleClick} onHeartClick={props.onHeartClick} onStarClick={props.onStarClick}/>)}
-            {topicOfCard === 'favourites' && (
-                <OtherButtons
-                    displayType="heart"
-                    voteCount={props.voteCount}
-                    averageVote={props.averageVote}
-                    onButtonClick={props.onIconClick}
+                <img
+                    className={classNames(styles.image, {
+                        [styles.defaultImage]: !imagePath
+                    })}
+                    src={imagePath ? imagePath : defaultImage}
+                    alt={`${name} image`}
                 />
-            )}
-            {topicOfCard === 'to-watch' && (
-                <OtherButtons
-                    displayType="star"
-                    voteCount={props.voteCount}
-                    averageVote={props.averageVote}
-                    onButtonClick={props.onIconClick}
-                />
-            )}
-            {topicOfCard === 'watched' && (
-                <OtherButtons
-                    displayType="circle"
-                    voteCount={props.voteCount}
-                    averageVote={props.averageVote}
-                    onButtonClick={props.onIconClick}
-                />
-            )}
+                <Link to={`/serie/${props.id}`}>
+                    <div className={styles.h3}>{name}</div>
+                </Link>
+            {props.authorized && <div className={styles.cardButtons}>
+                {renderButtons()}
+            </div>}
         </div>
     );
 };
 
 type OtherButtonsProps = {
+    id: number,
     voteCount: number;
     averageVote: number;
     displayType: 'star' | 'heart' | 'circle';
-    onButtonClick: () => void;
+    onDelete: (serie_id: number, collection: Collection) => void;
 };
 
-const OtherButtons: React.FC<OtherButtonsProps> = ({voteCount, averageVote, displayType, onButtonClick}) => {
+const OtherButtons: React.FC<OtherButtonsProps> = ({voteCount, averageVote, displayType, onDelete, id
+}) => {
     return (
         <div className={styles.buttonsRating}>
-            <Rating averageVote={averageVote} voteCount={voteCount} size='small'/>
-            <MiniButton topic={displayType} size='mini' onClick={onButtonClick}/>
-        </div>
-    );
-};
-
-const UsualButtons: React.FC<UsualCardProps> = ({onHeartClick, onStarClick, onCircleClick}) => {
-    const [topic, setTopic] = React.useState<ButtonStates>({
-        star: false,
-        heart: false,
-        circle: false,
-    });
-    const onClick = (type: keyof ButtonStates, callback: ()=>void) => {
-        setTopic(previousState => ({
-            ...previousState,
-            [type]: !previousState[type]
-        }));
-        callback();
-    };
-    return (
-        <div className={styles.buttons}>
-            <MiniButton
-                topic={topic.star ? 'star' : 'empty-star'}
-                size='mini'
-                onClick={() => onClick('star', onStarClick)}
+            <Rating
+                averageVote={averageVote}
+                voteCount={voteCount}
+                size='premedium'
             />
             <MiniButton
-                topic={topic.heart ? 'heart' : 'empty-heart'}
+                topic={displayType}
                 size='mini'
-                onClick={() => onClick('heart', onHeartClick)}
-            />
-            <MiniButton
-                topic={topic.circle ? 'circle' : 'empty-circle'}
-                size='mini'
-                onClick={() => onClick('circle', onCircleClick)}
+                onClick={()=> onDelete(id, userMap.get(String(displayType)) as Collection)}
             />
         </div>
     );

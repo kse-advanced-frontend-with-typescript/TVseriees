@@ -1,6 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
-import {MenuButton, links} from '../Components/MenuButton/MenuButton';
+import {MenuButton} from '../Components/MenuButton/MenuButton';
+import {links} from '../BusinessData';
 
 const meta : Meta<typeof  MenuButton>={
     component: MenuButton,

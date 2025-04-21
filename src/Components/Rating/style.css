@@ -10,6 +10,7 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
+    font-size: 1.3rem;
 }
 
 .text {
@@ -35,6 +36,12 @@
     text-align: justify;
 }
 
-.small .text {
-    font-size: 1rem;
+@media only screen and (max-width: 768px) {
+    .group {
+        font-size: 1.1rem;
+    }
+
+    .small .group {
+        font-size: 0.8rem;
+    }
 }
