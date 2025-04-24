@@ -13,7 +13,8 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/'
+        publicPath: process.env.BASE_URL ?? '/',
+        clean: true
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js']
