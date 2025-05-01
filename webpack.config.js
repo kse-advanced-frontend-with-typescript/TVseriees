@@ -5,6 +5,8 @@ const webpack = require('webpack');
 
 const localEnv = dotenv.config().parsed;
 
+const baseUrl = process.env.BASE_URL ?? '/'
+
 module.exports = {
     entry: './src/index.tsx',
     devServer: {
@@ -13,7 +15,7 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: process.env.BASE_URL ?? '/',
+        publicPath: baseUrl,
         clean: true
     },
     resolve: {
@@ -54,6 +56,9 @@ module.exports = {
                 use: [
                     {
                         loader: 'file-loader',
+                        options: {
+                            publicPath: baseUrl,
+                        },
                     },
                 ],
             }
