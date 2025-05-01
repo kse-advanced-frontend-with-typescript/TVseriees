@@ -60,7 +60,7 @@ export const Icon: React.FC<IconProps> = ({topic, size, mirror})=>{
                 [styles.big]: size === 'big',
                 [styles.premedium]: size === 'premedium'
             })}
-            src={`${process.env.BASE_URL}${getSource()}`}
+            src={getSource()}
             alt={`${topic} icon`}
         />
     );
