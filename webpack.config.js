@@ -56,9 +56,6 @@ module.exports = {
                         loader: 'file-loader',
                     },
                 ],
-                options: {
-                    publicPath: process.env.BASE_URL ?? '/'
-                }
             }
         ]
     },
