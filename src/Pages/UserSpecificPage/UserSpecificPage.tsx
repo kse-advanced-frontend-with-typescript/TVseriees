@@ -133,6 +133,10 @@ export const UserSpecificPage: React.FC = () => {
                                     onPageSelect={(page: number)=>{
                                         setSearchParams(setNewPageInQueryParams(page, searchParams));
                                         setState(prev => ({...prev, series: [], currentPage: page}));
+                                        window.scrollTo({
+                                            top: 0,
+                                            behavior: 'smooth'
+                                        });
                                     }}
                                     onClick={() => setSearchParams(setNewPageInQueryParams(Math.min(state.pageToFetch + 1, numberOfPages), searchParams))}
                                     page={state.currentPage}
