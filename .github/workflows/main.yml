@@ -43,7 +43,7 @@ jobs:
     env:
       REST_API_KEY: ${{ secrets.REST_API_KEY }}
       API_KEY: ${{ secrets.API_KEY }}
-      BASE_URL: /${{ github.event.repository.name }}
+      BASE_URL: /${{ github.event.repository.name }}/
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
